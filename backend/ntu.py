@@ -75,6 +75,7 @@ def merging(x, term):
             i += 1
     return merged
 
+# should i condense this into a for loop?
 merged_Preqs = merging(merged_Preqs, 'OR')
 merged_Preqs = merging(merged_Preqs, 'OR ')
 merged_Preqs = merging(merged_Preqs, 'OR')
