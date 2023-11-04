@@ -26,4 +26,6 @@ for moduleCode in ntuModuleCodes:
             review = review + " " + text
         allReviews.append(review.strip())
     ntuModuleReviews[moduleCode] = allReviews
-print(ntuModuleReviews)
+
+# uncomment line to check output: dict of key-value pairs, where key = module code, value = reviews of module
+#print(ntuModuleReviews)
