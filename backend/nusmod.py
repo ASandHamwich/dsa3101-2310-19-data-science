@@ -44,13 +44,12 @@ for x in range(len(NusDseModsCode)):
     table = soup.find('h1',attrs={"class":"kbFQ8zbG"}).contents[-1]
     NusDseDescriptionList.append(''.join(ls))
     NusDseTitleList.append(str(table))
-a = NusDsaModsCode + NusDseModsCode
-b = NusDsaTitleList + NusDseTitleList
-c = NusDsaDescriptionList + NusDseDescriptionList
-d = ['DSA'] * len(NusDsaModsCode) + ['DSE'] * len(NusDseModsCode)
-data = {'NUS Module Code': a, 'NUS Module Title': b, 'NUS Module Description': c, 'NUS DSA/DSE': d}
-df = pd.DataFrame.from_dict(data)
-df.to_csv('NusMods.csv', index= False)
+Dsadata = {'NUS Module Code': NusDsaModsCode, 'NUS Module Title': NusDsaTitleList, 'NUS Module Description': NusDsaDescriptionList}
+Dsadf = pd.DataFrame.from_dict(Dsadata)
+Dsadf.to_csv('NusDsaMods.csv', index= False)
+Dsedata = {'NUS Module Code': NusDseModsCode, 'NUS Module Title': NusDseTitleList, 'NUS Module Description': NusDseDescriptionList}
+Dsedf = pd.DataFrame.from_dict(Dsedata)
+Dsedf.to_csv('NusDseMods.csv', index= False)
 
 
 
