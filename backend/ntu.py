@@ -108,5 +108,35 @@ df = df.drop_duplicates(subset='Course Code')
 df['Course Description'].replace('', 'Course Description unavailable. Please google for more info :)', inplace = True)
 relevant = ['CS', 'CZ', 'MH', 'SC']
 df = df[df['Course Code'].str[:2].isin(relevant)]
+
+#adding reviews and sentiment score columns
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import csv
+from selenium.webdriver.support import expected_conditions as EC
+sentiment = SentimentIntensityAnalyzer()
+driver = webdriver.Chrome()
+ntuModuleCodes = df['Course Code']
+url = "https://www.nanyangmods.com/modules/"
+ntuModuleReviews = []
+ntuModuleScores = []
+for moduleCode in ntuModuleCodes:
+    mod_url = f'{url}{moduleCode}'
+    driver.get(mod_url)
+    allBodyElements = driver.find_elements(By.CLASS_NAME, "rx_body")
+    allReviews = ''
+    for bodyElements in allBodyElements:
+        pElements = bodyElements.find_elements(By.TAG_NAME, "p")
+        review = ""
+        for p in pElements:
+            text = p.text
+            review = review + " " + text
+        allReviews = allReviews + review.strip()
+    ntuModuleReviews.append(allReviews)
+    ntuModuleScores.append(sentiment.polarity_scores(allReviews)['compound'])
+df['Reviews'] = ntuModuleReviews
+df['Score'] = ntuModuleScores
+
 csv_file = "ntu.csv"
 df.to_csv(csv_file, index=False)
+
+
