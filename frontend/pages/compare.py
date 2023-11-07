@@ -5,7 +5,7 @@ import pandas as pd
 
 import dash_bootstrap_components as dbc
 
-dash.register_page(__name__, path_template = '/compare')
+dash.register_page(__name__, path_template = '/compare/course1=<uni_code_1>&course2=<uni_code_2>')
 
 #Layout for each individual course information page.
 
@@ -68,14 +68,12 @@ def half_layout(uni_code):
         ]
     )
 
-left_child = half_layout("nus1")
-right_child = half_layout("smu1")
 
-
-layout = html.Div(
-    children = [
-        html.Div(children = left_child, className = 'compare--child1'),
-        html.Div(children = right_child, className = 'compare--child2')
-    ],
-    className = 'compare'
-)
+def layout(uni_code_1, uni_code_2):
+    return html.Div(
+        children = [
+            html.Div(children = half_layout(uni_code_1), className = 'compare--child'),
+            html.Div(children = half_layout(uni_code_2), className = 'compare--child')
+        ],
+        className = 'compare'
+    )

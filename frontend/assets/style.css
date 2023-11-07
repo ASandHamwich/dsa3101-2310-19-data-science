@@ -24,7 +24,7 @@
 .info {
     width: 1237px;
     height: 53px;
-    border-radius: 20px;
+    border-radius: 15px;
     background: #D9D9D9;
     display: flex;
     align-items: center;
@@ -45,15 +45,43 @@
     display: flex;
 }
 
-.compare .compare--child1 {
-    flex: 1;
-    margin: 20px;
-    padding: 5px;
-}
-
-.compare .compare--child2 {
+.compare .compare--child {
     flex: 1;
     margin: 25px;
     padding: 5px;
+}
 
+.course {
+    display: flex;
+    margin: 40px;
+}
+
+.course .course--rect{
+    flex: 1;
+    width: 265px;
+    height: 371px;
+    border-radius: 34px;
+    background: #E5E5E5;
+    margin: 40px;
+}
+
+.course .course--link{
+    font-size: 30px;
+    font-family: Inter;
+    padding: 40px 0;
+    border: 0px;
+    margin: 10px auto;
+    background: none;
+    display: flex;
+}
+
+.course .course--link:hover{
+    background-color: red;
+}
+
+.course .course--add{
+    position: absolute;
+    bottom: 80px;
+    margin-left: 180px;
+    transform: scale(3);
 }
