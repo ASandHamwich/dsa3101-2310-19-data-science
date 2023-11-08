@@ -85,3 +85,16 @@
     margin-left: 180px;
     transform: scale(3);
 }
+
+.module{
+    display: flex;
+}
+
+.module .module--col{
+    width: 500px;
+    border-radius: 34px;
+    background: #E5E5E5;
+    margin: 10px;
+    text-align: center;
+    padding-top: 10px;
+}
