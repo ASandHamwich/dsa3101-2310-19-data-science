@@ -146,7 +146,14 @@ def layout(uni_code):
 
             html.Div(
                 children = [
-                    html.H2('More Information')
+                    html.H2('More Information'),
+                    #temporary fake links, replace soon
+                    html.H3('NUSMods: for more NUS modules',
+                            style = {'text-decoration':'underline'}),
+                    html.H3('NUS bus app',
+                            style = {'text-decoration':'underline'}),
+                    html.H3('NUS College of Humanities and Sciences: Common curriculum and study plan',
+                            style = {'text-decoration':'underline'})
                 ]
             )
         ]
