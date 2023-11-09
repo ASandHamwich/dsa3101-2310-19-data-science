@@ -1,12 +1,15 @@
 from flask import Flask, jsonify, abort
 import csv
 import requests
+from pathlib import Path
 
 app = Flask(__name__)
 
+path = Path(__file__).parent
+
 def load_smu_modules():
     smu_modules = {}
-    with open('smu.csv', 'r') as f:
+    with (path / "smu.csv").open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['Module Code']
@@ -16,7 +19,7 @@ smu_modules_data = load_smu_modules()
 
 def load_nus_dsa_modules():
     nus_modules = {}
-    with open('NusDsaMods.csv', 'r') as f:
+    with (path / 'NusDsaMods.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['NUS Module Code']
@@ -26,7 +29,7 @@ nus_dsa_modules_data = load_nus_dsa_modules()
 
 def load_nus_dse_modules():
     nus_modules = {}
-    with open('NusDseMods.csv', 'r') as f:
+    with (path / 'NusDseMods.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['NUS Module Code']
@@ -36,7 +39,7 @@ nus_dse_modules_data = load_nus_dse_modules()
 
 def load_ntu_modules():
     ntu_modules = {}
-    with open('ntu.csv', 'r') as f:
+    with (path / 'ntu.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['Course Code']
