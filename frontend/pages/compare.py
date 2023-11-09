@@ -125,7 +125,7 @@ def half_layout(uni_code):
                                 'selector':'edge',
                                 'style':{'target-arrow-color':'#999999', 'target-arrow-shape':'triangle', 'curve-style':'bezier'}
                             }
-                        ]
+                        ],
                         panningEnabled=False,
                         userPanningEnabled=False,
                         minZoom=1,
