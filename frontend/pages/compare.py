@@ -126,6 +126,10 @@ def half_layout(uni_code):
                                 'style':{'target-arrow-color':'#999999', 'target-arrow-shape':'triangle', 'curve-style':'bezier'}
                             }
                         ]
+                        panningEnabled=False,
+                        userPanningEnabled=False,
+                        minZoom=1,
+                        maxZoom=1
                     )
                 ]
             ),
