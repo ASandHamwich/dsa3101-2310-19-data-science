@@ -74,14 +74,15 @@ def layout(uni_code):
                     html.H3('Course Tree'),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
                     #INSERT TREE HERE
+                    dcc.Location(id = 'location'),
                     cyto.Cytoscape(
                         id = 'cytoscape',
                         elements = [
-                            {'data':{'id':'dsa1101', 'label': 'DSA1101'}},
+                            {'data':{'id':'dsa1101', 'label': 'DSA1101', 'url':'/module/nus/dsa1101'}},
                             {'data':{'id':'st2131', 'label':'ST2131'}},
                             {'data':{'id':'ma2001', 'label':'MA2001'}},
                             {'data':{'id':'dsa2101', 'label':'DSA2101'}},
-                            {'data':{'id':'dsa3101', 'label':'DSA3101'}},
+                            {'data':{'id':'dsa3101', 'label':'DSA3101', 'url':'/module/nus/dsa3101'}},
                             {'data':{'id':'cs2040', 'label':'CS2040'}},
                             {'data':{'id':'dsa2102', 'label':'DSA2102'}},
                             {'data':{'id':'ma2002', 'label':'MA2002'}},
@@ -158,3 +159,11 @@ def layout(uni_code):
             )
         ]
     )
+
+@callback(
+    Output("location", "href"),
+    Input("cytoscape", "tapNodeData"),
+    prevent_initial_call=True,
+)
+def navigate_to_url(node_data):
+    return f"{node_data['url']}"
