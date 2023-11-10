@@ -2,10 +2,9 @@ import dash
 from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
 import pandas as pd
+import requests
 
 import dash_bootstrap_components as dbc
-
-#https://dash.plotly.com/external-resources
 
 app = Dash(__name__, use_pages=True, suppress_callback_exceptions=True)
 
@@ -23,10 +22,13 @@ header = html.Div(
     ]
 )
 
-app.layout = html.Div([
-    header,
-    dash.page_container
-])
+
+app.layout = html.Div(
+    [
+        header,
+        dash.page_container
+    ]
+)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9001, debug=True)  # Change the port if necessary
+    app.run(host='0.0.0.0', port=9001, debug=True)
