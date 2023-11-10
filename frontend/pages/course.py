@@ -88,7 +88,7 @@ def layout(uni_code):
                             {'data':{'id':'ma2002', 'label':'MA2002'}},
                             {'data':{'id':'ma2311', 'label':'MA2311'}},
                             {'data':{'id':'st2132', 'label':'ST2132'}},
-                            {'data':{'id':'cs3244', 'label':'cs3244'}},
+                            {'data':{'id':'cs3244', 'label':'CS3244'}},
                             {'data':{'id':'dsa3102', 'label':'DSA3102'}},
                             {'data':{'id':'st3131', 'label':'ST3131'}},
                             {'data':{'id':'dsa426x', 'label':'DSA426X'}},
