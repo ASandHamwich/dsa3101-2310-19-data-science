@@ -23,7 +23,6 @@ header = html.Div(
     ]
 )
 
-
 app.layout = html.Div([
     header,
     dash.page_container

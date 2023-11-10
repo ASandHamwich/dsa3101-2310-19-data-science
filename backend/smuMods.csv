@@ -1,0 +1,21 @@
+Modules Code,Modules Title,Type(Core/Elective(Data Analysis/Computing Technology)), Other Preclusion Mods 
+IS450,Text Mining and Language Processing,Elective(DA)
+STAT201,Probability Theory and Applications,Core
+DSA201,Statistical Inference for Data Science,Core
+DSA211,Statistical Learning with R*,Core
+DSA212,Data Analytics with R,Core
+COR-IS1702,Computational Thinking**,Core
+
+
+DSA301,Time Series Data Analysis,Elective(DA),ECON233
+DSA303,Spatial Data Analysis,Elective(DA)
+DSA305,Panel Data Analysis,Elective(DA)
+DSA306,Big Data Analytics,Elective(DA)
+ECON245,Applied Healthcare Analytics,Elective(DA)
+MKTG228,Marketing Analytics,Elective(DA),OPIM326
+IS424,Data Mining and Business Analytics,Elective(DA),IS417
+
+
+COR1305,Spreadsheet Modeling and Analytics,Elective(CT),IS112/IS105
+CS420,Introduction to Artificial Intelligence,Elective(CT)
+CS421,Principles of Machine Learning,Elective(CT),IS460
