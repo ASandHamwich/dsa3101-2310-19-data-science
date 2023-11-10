@@ -31,15 +31,13 @@ if response.status_code == 200:
 else:
     print("Failed to retrieve the web page. Status code:", response.status_code)
 
-print(glossary_list)
-
 # process module descriptions and match them with previously generated keywords
 nlp = spacy.load('en_core_web_sm')
 
 # loading data
 nus_dsa_df = pd.read_csv("NusDsaMods.csv")
 nus_dse_df = pd.read_csv("NusDseMods.csv")
-ntu_df = pd.read_csv("ntu.csv")
+ntu_df = pd.read_csv("ntu_db_sentiment.csv")
 smu_df = pd.read_csv("smu.csv")
 
 # function to lemmatize text and remove stop words
@@ -66,11 +64,21 @@ def count_frequency(tokenized_list):
     cleaned_frequency_dict = {key: value for key, value in frequency_dict.items() if len(key.split()) == len(set(key.split()))}
     return(cleaned_frequency_dict)
 
+additional_words = ['optimisation', 'Python', 'Java', 'programming', 'calculus', 'probability', 'data structure', 'vision', 'cryptocurrencies', 'digital currencies', 'fintech']
+for word in additional_words:
+    lemma = lemmatize(word)
+    tokenized_description = tokenize(lemma, ngram_range=(1, 2))
+    glossary_list.extend(tokenized_description)
+glossary_list.append('statistics')
+print(glossary_list)
+
 tokenised = []
 for index, row in smu_df.iterrows():
     lemma = lemmatize(row['Module Description'])
     tokenized_description = tokenize(lemma, ngram_range=(1, 2))
+    print(tokenized_description)
     tokenised.append(tokenized_description)
+
 
 # extracting keywords associated to each module
 keywords = []
@@ -86,8 +94,7 @@ keywords_df = pd.DataFrame(keywords, columns=['Key Concepts'])
 smu_df = smu_df.reset_index(drop=True)
 keywords_df = keywords_df.reset_index(drop=True)
 combined_df = pd.concat([smu_df, keywords_df], ignore_index=True)
-combined_df.to_csv('smu_with_concepts.csv', index=False)
-
+combined_df.to_csv('smu_with_concepts_reviews.csv', index=False)
 
 # ############################ SMU ############################
 # smu_df['lemmatized_text'] = smu_df['Module Description'].apply(lemmatize)
