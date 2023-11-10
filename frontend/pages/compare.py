@@ -108,7 +108,10 @@ def half_layout(uni_code):
                             {'data': {'source': 'dsa2102', 'target': 'dse4212'}}
                         ],
                         layout={'name': 'cose'},
-                        style={'width': '600px', 'height': '400px'},
+                        #style={'width': '600px', 'height': '400px'},
+                        style={'width': '100%', 'height': '100vh'},
+                        minZoom=0.5,
+                        maxZoom=2,
                         stylesheet=[
                             {
                                 'selector': 'node',
