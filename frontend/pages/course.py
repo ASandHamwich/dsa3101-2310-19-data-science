@@ -144,17 +144,17 @@ def layout(uni_code):
                     )
                 ]
             ),
-
             html.Div(
                 children = [
                     html.H2('More Information'),
-                    #temporary fake links, replace soon
-                    html.H3('NUSMods: for more NUS modules',
-                            style = {'text-decoration':'underline'}),
-                    html.H3('NUS bus app',
-                            style = {'text-decoration':'underline'}),
-                    html.H3('NUS College of Humanities and Sciences: Common curriculum and study plan',
-                            style = {'text-decoration':'underline'})
+                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics', href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/', 
+                        target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'), 
+                        style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum', href='https://chs.nus.edu.sg/programmes/common-curriculum/', 
+                        target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS bus app: for NUS bus timings and routes', href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1', 
+                        target='_blank'), style={'text-decoration': 'underline'})
                 ]
             )
         ]
