@@ -62,7 +62,8 @@ def half_layout(uni_code):
 
                     # INSERT TREE HERE
                     cyto.Cytoscape(
-                        id='cytoscape',
+                        # id='cytoscape',
+                        id='cytoscape-layout-4',
                         elements=[
                             {'data': {'id': 'dsa1101', 'label': 'DSA1101'}},
                             {'data': {'id': 'st2131', 'label': 'ST2131'}},
@@ -107,7 +108,10 @@ def half_layout(uni_code):
                             {'data': {'source': 'dsa2102', 'target': 'dse4211'}},
                             {'data': {'source': 'dsa2102', 'target': 'dse4212'}}
                         ],
-                        layout={'name': 'cose'},
+                        #layout={'name': 'cose'},
+                        layout={'name': 'breadthfirst', 
+                        'roots': '[id = "dsa1101"], [id = "ma2001"], [id = "cs1010s"], [id = "ma2002"]'  # Specify the nodes with only arrows going out
+                        },
                         #style={'width': '600px', 'height': '400px'},
                         style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
