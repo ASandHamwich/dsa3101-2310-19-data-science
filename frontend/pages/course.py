@@ -161,22 +161,88 @@ def layout(uni_code):
                 children = [
                     html.H3('Course Tree'),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
-                    str(generate_content(uni_code)),
-                    dcc.Location(id = 'location')
-                    
+                    #INSERT TREE HERE
+                    dcc.Location(id = 'location'),
+                    cyto.Cytoscape(
+                        id = 'cytoscape',
+                        elements = [
+                            {'data':{'id':'dsa1101', 'label': 'DSA1101', 'url':'/module/nus/dsa1101'}},
+                            {'data':{'id':'st2131', 'label':'ST2131'}},
+                            {'data':{'id':'ma2001', 'label':'MA2001'}},
+                            {'data':{'id':'dsa2101', 'label':'DSA2101'}},
+                            {'data':{'id':'dsa3101', 'label':'DSA3101', 'url':'/module/nus/dsa3101'}},
+                            {'data':{'id':'cs2040', 'label':'CS2040'}},
+                            {'data':{'id':'dsa2102', 'label':'DSA2102'}},
+                            {'data':{'id':'ma2002', 'label':'MA2002'}},
+                            {'data':{'id':'ma2311', 'label':'MA2311'}},
+                            {'data':{'id':'st2132', 'label':'ST2132'}},
+                            {'data':{'id':'cs3244', 'label':'CS3244'}},
+                            {'data':{'id':'dsa3102', 'label':'DSA3102'}},
+                            {'data':{'id':'st3131', 'label':'ST3131'}},
+                            {'data':{'id':'dsa426x', 'label':'DSA426X'}},
+                            {'data':{'id':'cs1010s', 'label':'CS1010S'}},
+                            {'data':{'id':'dsa4211', 'label':'DSA4211'}},
+                            {'data':{'id':'dsa4212', 'label':'DSA4212'}},
+                            {'data':{'id':'dse4211', 'label':'DSE4211'}},
+                            {'data':{'id':'dse4212', 'label':'DSE4212'}},
+                            {'data': {'source':'dsa1101', 'target':'dsa2101'}},
+                            {'data': {'source':'ma2001', 'target':'dsa2101'}},
+                            {'data': {'source':'ma2001', 'target':'dsa3102'}},
+                            {'data': {'source':'ma2001', 'target':'dsa4212'}},
+                            {'data': {'source':'ma2001', 'target':'dsa2102'}},
+                            {'data': {'source':'ma2002', 'target':'st2131'}},
+                            {'data': {'source':'ma2002', 'target':'dsa2102'}},
+                            {'data': {'source':'ma2002', 'target':'ma2311'}},
+                            {'data': {'source':'cs1010s', 'target':'dsa3102'}},
+                            {'data': {'source':'cs1010s', 'target':'cs2040'}},
+                            {'data': {'source':'dsa2101', 'target':'dsa3101'}},
+                            {'data': {'source':'st2131', 'target':'dsa2101'}},
+                            {'data': {'source':'st2131', 'target':'st2132'}},
+                            {'data': {'source':'st2131', 'target':'st3131'}},
+                            {'data': {'source':'st3131', 'target':'dsa4211'}},
+                            {'data': {'source':'dsa3101', 'target':'dsa426x'}},
+                            {'data': {'source':'cs2040', 'target':'cs3244'}},
+                            {'data': {'source':'cs3244', 'target':'dsa426x'}},
+                            {'data': {'source':'st2132', 'target':'dsa3101'}},
+                            {'data': {'source':'st2132', 'target':'dsa4212'}},
+                            {'data': {'source':'ma2311', 'target':'dsa4212'}},
+                            {'data': {'source':'dsa2102', 'target':'dse4211'}},
+                            {'data': {'source':'dsa2102', 'target':'dse4212'}}
+                        ],
+                        layout={'name':'cose'},
+                        style={'width':'1200px', 'height':'800px'},
+                        stylesheet = [
+                            {
+                                'selector':'node',
+                                'style':{
+                                    'content':'data(label)',
+                                    'text-valign': 'center',
+                                    'text-halign':'center',
+                                    'height':'30px',
+                                    'width':'85px',
+                                    'shape':'rectangle',
+                                    'background-color':'#8BB4DB'
+                                }
+                            },
+                            {
+                                'selector':'edge',
+                                'style':{'target-arrow-color':'#999999', 'target-arrow-shape':'triangle', 'curve-style':'bezier'}
+                            }
+                        ]
+                    )
                 ]
             ),
-
             html.Div(
                 children = [
                     html.H2('More Information'),
-                    #temporary fake links, replace soon
-                    html.H3('NUSMods: for more NUS modules',
-                            style = {'text-decoration':'underline'}),
-                    html.H3('NUS bus app',
-                            style = {'text-decoration':'underline'}),
-                    html.H3('NUS College of Humanities and Sciences: Common curriculum and study plan',
-                            style = {'text-decoration':'underline'})
+                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics', href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/', 
+                        target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'), 
+                        style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum', href='https://chs.nus.edu.sg/programmes/common-curriculum/', 
+                        target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS bus app: for NUS bus timings and routes', href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1', 
+                        target='_blank'), style={'text-decoration': 'underline'})
                 ]
             )
         ]
