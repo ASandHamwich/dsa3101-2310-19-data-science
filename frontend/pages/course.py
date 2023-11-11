@@ -4,6 +4,8 @@ import plotly.express as px
 import pandas as pd
 import dash_cytoscape as cyto
 
+import requests
+
 import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path_template = '/course/<uni_code>')
@@ -37,10 +39,92 @@ def course_layout(uni_code):
     
     return name, school, desc, img_path 
 
+# Cytoscape Format
+# LIST
+    # DICTIONARY OF DATA
+        # DICTIONARY OF ID, LABEL, AND URL
+        # + 
+        # DICTIONARY OF SOURCE + TARGET
 
-def prereq_tree():
-    return None
 
+def fetch_data(uni_code):
+    url = f"http://localhost:5001/{uni_code}" #prereq information 
+    uni = uni_code[0:3]
+    full_module_data = eval(str(requests.get(url).text))[uni]["modules"] # returns a list of dictionaries for all mods
+    # Note that some prereqs are not part of the core curriculum; those will be left out of the final graph.
+
+    # Fetch list of mods that will show up in the tree itself; i.e. the mods that are directly related to data science
+    mod_list = []
+    for dct in full_module_data:
+        mod_list.append(dct['name'])
+    
+    return mod_list, full_module_data
+
+
+def node_dict(module, uni_code):
+    node_id = module.lower()
+    label = module.upper()
+    url = f'/module/{uni_code}/{node_id}'
+    return {'data': {'id': node_id, 'label': label, 'url': url}}
+
+def edge_dict(source, target):
+    source = source.lower()
+    target = target.lower()
+    return {'data': {'source': source, 'target': target}}
+
+
+def flattenCheck(mod_list, curr_data):
+    prereq_str = str(curr_data["pre-requisites"])
+    #print("CHECKPOINT 2")
+    #print(prereq_str)
+    source_list = []
+
+    for mod in mod_list:
+        if prereq_str.find(mod) != -1:
+            source_list.append(mod)
+    
+    #print('CHECKPOINT 3')
+    #print(source_list)
+    return source_list
+
+
+def generate_edge(mod_list, curr_data, uni_code, mod):
+
+    source_list = flattenCheck(mod_list, curr_data)
+    result = []
+
+    for source in source_list:
+        result.append(edge_dict(source, mod))
+
+    return result
+
+
+
+def generate_content(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+
+    content = []
+    
+    # Add all the Node data in first.
+    for index in range(len(mod_list)):
+        mod = mod_list[index]
+
+        # Node data
+        node_data = node_dict(mod, uni_code)
+        content.append(node_data)
+    
+    #Add all the edge data in.
+    for index in range(len(mod_list)):
+        mod = mod_list[index]
+        curr_data = full_module_data[index]
+        #print("CHECKPOINT 1")
+        #print(curr_data)
+
+        # Edge data
+        edge_list = generate_edge(mod_list, curr_data, uni_code, mod)
+        content.extend(edge_list)
+
+    return content
 
 def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
@@ -77,7 +161,7 @@ def layout(uni_code):
                 children = [
                     html.H3('Course Tree'),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
-                    #INSERT TREE HERE
+                    str(generate_content(uni_code)),
                     dcc.Location(id = 'location')
                     
                 ]
