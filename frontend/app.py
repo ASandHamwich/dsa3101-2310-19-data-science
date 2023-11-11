@@ -15,7 +15,7 @@ header = html.Div(
         dcc.Link(
             id = "header",
             children = [
-                html.Img(src = 'assets\logo.png', className = "logo")
+                html.Img(src = '/assets/logo.png', className = "logo")
             ], 
             href = '/home'
         )
