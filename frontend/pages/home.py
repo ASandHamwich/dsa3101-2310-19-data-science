@@ -43,10 +43,10 @@ layout = html.Div(
         html.Div(
             children = [
                 dcc.Location(id = 'url'),
-                buttonFormat('NUS: Data Science and Analytics', 'nus1'),
-                buttonFormat('NUS: Data Science and Economics', 'nus2'),
-                buttonFormat('NTU: Data Science and Artificial Intelligence', 'ntu1'),
-                buttonFormat('SMU: Data Science and Analytics (2nd Major)', 'smu1')
+                buttonFormat('NUS: Data Science and Analytics', 'nus-dsa'),
+                buttonFormat('NUS: Data Science and Economics', 'nus-dse'),
+                buttonFormat('NTU: Data Science and Artificial Intelligence', 'ntu-dsa'),
+                buttonFormat('SMU: Data Science and Analytics (2nd Major)', 'smu-dsa')
             ],
             className = 'course'
         ),
@@ -62,27 +62,27 @@ layout = html.Div(
 
 @callback(
     Output('url', 'pathname'), [
-        Input('nus1', 'n_clicks'),
-        Input('nus2', 'n_clicks'),
-        Input('ntu1', 'n_clicks'),
-        Input('smu1', 'n_clicks'),
+        Input('nus-dsa', 'n_clicks'),
+        Input('nus-dse', 'n_clicks'),
+        Input('ntu-dsa', 'n_clicks'),
+        Input('smu-dsa', 'n_clicks'),
         Input('comp', 'n_clicks'),
-        Input('checkbox_nus1', 'value'),
-        Input('checkbox_nus2', 'value'),
-        Input('checkbox_ntu1', 'value'),
-        Input('checkbox_smu1', 'value')
+        Input('checkbox_nus-dsa', 'value'),
+        Input('checkbox_nus-dse', 'value'),
+        Input('checkbox_ntu-dsa', 'value'),
+        Input('checkbox_smu-dsa', 'value')
     ]
 )
 
 def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkbox_nus1, checkbox_nus2, checkbox_ntu1, checkbox_smu1):
     if nus1_clicks is not None:
-        return '/course/nus1'
+        return '/course/nus-dsa'
     if nus2_clicks is not None:
-        return '/course/nus2'
+        return '/course/nus-dse'
     if ntu1_clicks is not None:
-        return '/course/ntu1'
+        return '/course/ntu-dsa'
     if smu1_clicks is not None:
-        return '/course/smu1'
+        return '/course/smu-dsa'
 
     #Checkbox
     if comp is not None:
