@@ -9,20 +9,6 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path = '/home')
 
-search_bar = html.Div(
-    children = [
-        dcc.Location(id = 'search_nav'),
-        dcc.Input(
-            id = 'search', 
-            type = 'text',
-            placeholder = 'Search Universities, Modules here...', 
-            size = '70', 
-            style = {'margin': '50px auto', 'height': '30px', 'font-size': '20px'},
-        ),
-    ],
-    style = {'display': 'flex', 'justifyContent': 'center'}
-)
-
 def buttonFormat(name, id):
     return html.Div(
         children = [
@@ -34,7 +20,6 @@ def buttonFormat(name, id):
 
 layout = html.Div(
     children = [
-        search_bar,
         
         html.Div(
             children= html.P('Course credit conversion for the universities: 4MC (NUS) = 3AU (NTU) = 2CU(SMU)', className = 'info--text'), 
@@ -104,16 +89,3 @@ def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkb
     else:
         return None
 
-
-@callback(
-    Output("search_nav", "pathname"),
-    [
-        Input("search", "value"), 
-        Input("search", "n_submit")
-    ],
-    prevent_initial_call = True
-)
-
-def searchFunction(query, submit):
-    if submit == 1:
-        return f'/search={query}'
