@@ -87,6 +87,22 @@ def flattenCheck(mod_list, curr_data):
     #print(source_list)
     return source_list
 
+def root(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    is_root = True
+    root_list = ''
+    for index in range(len(mod_list)):
+        mod = mod_list[index]
+        module_data = full_module_data[index]
+        source_list = flattenCheck(mod_list, module_data)
+        if not source_list:
+            if root_list == '':
+                root_list += f'[id = "{mod.lower()}"]'
+            else:
+                root_list += f', [id = "{mod.lower()}"]'
+    return(root_list)
+        
+
 
 def generate_edge(mod_list, curr_data, uni_code, mod):
 
@@ -166,7 +182,8 @@ def layout(uni_code):
                     cyto.Cytoscape(
                         id = 'cytoscape',
                         elements = generate_content(uni_code),
-                        layout={'name':'cose'},
+                        layout={'name':'breadthfirst',
+                                'roots': root(uni_code)},
                         style={'width':'1200px', 'height':'800px'},
                         stylesheet = [
                             {
