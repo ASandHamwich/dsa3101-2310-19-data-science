@@ -186,7 +186,8 @@ def layout(uni_code):
                         elements=generate_content(uni_code),
                         layout={'name': 'breadthfirst',
                                 'roots': root(uni_code)},
-                        style={'width': '1200px', 'height': '800px'},
+                        #style={'width': '1200px', 'height': '800px'},
+                        style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
                         maxZoom=1.5,
                         stylesheet=[
