@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Orbitron:wght@700&display=swap');
+
+
+
+.compare {
+    display: flex;
+    margin: 10px auto
+}
+
+.compare .compare--child {
+    flex: 1;
+    margin: 25px;
+    padding: 5px;
+}
+
