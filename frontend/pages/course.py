@@ -147,83 +147,89 @@ def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
 
     return html.Div(
-        children = [
+        style={
+            'padding': '10px',
+        },
+        children=[
             html.Div(
-                style={'display':"inline-block",
-                       'width':'750px'},
-                children = [
+                style={'display': "inline-block", 'width': '750px'},
+                children=[
                     html.H1(name),
                     html.H3(school),
-                    html.P(desc)                
+                    html.P(desc)
                 ]
             ),
 
             html.Div(
-                style={'display':'inline-block',
-                       'margin':'30px'},
-                children = [
-                    html.Img(src=img_path,
-                             style={'height':'200px',
-                                    'width':'400px'}),
+                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'},  # Adjusted margin-top to reduce the gap
+                children=[
+                    html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
                 ]
             ),
 
             html.Div(
-                children = [
+                className='header-section',
+                children=[
                     html.Header('What you will learn'),
                 ]
             ),
 
             html.Div(
-                children = [
+                style={'margin-bottom': '10px'},  # Added margin-bottom to reduce the gap
+                children=[
                     html.H3('Course Tree'),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
-                    #INSERT TREE HERE
-                    dcc.Location(id = 'location'),
+                    # INSERT TREE HERE
+                    dcc.Location(id='location'),
                     cyto.Cytoscape(
-                        id = 'cytoscape',
-                        elements = generate_content(uni_code),
-                        layout={'name':'breadthfirst',
+                        id='cytoscape',
+                        elements=generate_content(uni_code),
+                        layout={'name': 'breadthfirst',
                                 'roots': root(uni_code)},
-                        style={'width':'1200px', 'height':'800px'},
-                        minZoom = 0.5,
-                        maxZoom = 1.5,
-                        stylesheet = [
+                        style={'width': '1200px', 'height': '800px'},
+                        minZoom=0.5,
+                        maxZoom=1.5,
+                        stylesheet=[
                             {
-                                'selector':'node',
-                                'style':{
-                                    'content':'data(label)',
+                                'selector': 'node',
+                                'style': {
+                                    'content': 'data(label)',
                                     'text-valign': 'center',
-                                    'text-halign':'center',
-                                    'height':'30px',
-                                    'width':'85px',
-                                    'shape':'rectangle',
-                                    'background-color':'#8BB4DB'
+                                    'text-halign': 'center',
+                                    'height': '30px',
+                                    'width': '85px',
+                                    'shape': 'rectangle',
+                                    'background-color': '#8BB4DB'
                                 }
                             },
                             {
-                                'selector':'edge',
-                                'style':{'target-arrow-color':'#999999', 'target-arrow-shape':'triangle', 'curve-style':'bezier'}
+                                'selector': 'edge',
+                                'style': {'target-arrow-color': '#999999', 'target-arrow-shape': 'triangle',
+                                          'curve-style': 'bezier'}
                             }
                         ]
                     )
                 ]
             ),
             html.Div(
-                children = [
+                children=[
                     html.H2('More Information'),
-                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics', href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'), 
-                        style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum', href='https://chs.nus.edu.sg/programmes/common-curriculum/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS bus app: for NUS bus timings and routes', href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1', 
-                        target='_blank'), style={'text-decoration': 'underline'})
+                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics',
+                                   href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/',
+                                   target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'),
+                            style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum',
+                                   href='https://chs.nus.edu.sg/programmes/common-curriculum/',
+                                   target='_blank'), style={'text-decoration': 'underline'}),
+                    html.H4(html.A('NUS bus app: for NUS bus timings and routes',
+                                   href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
+                                   target='_blank'), style={'text-decoration': 'underline'})
                 ]
             )
         ]
     )
+
 
 @callback(
     Output("location", "href"),
