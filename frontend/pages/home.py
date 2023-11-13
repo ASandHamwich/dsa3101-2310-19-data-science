@@ -5,26 +5,26 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path='/home')
 
-def course_layout(uni_code):
+def course_layout(uni_code): # thinking of implementing this so as to reduce hardcoding
     if uni_code == 'nus-dsa':
         name = "Data Science & Analytics"
         school = "NUS"
-        img_path = "/assets/nus_pic.png"
+        img_path = "/assets/nus_logo.png"
 
     if uni_code == 'nus-dse':
         name = "Data Science & Economics"
         school = "NUS"
-        img_path = "/assets/nus_pic.png"
+        img_path = "/assets/nus_logo.png"
 
     if uni_code == 'ntu-dsa':
         name = "Data Science and Artificial Intelligence"
         school = "NTU"
-        img_path = "/assets/ntu_pic.jpg"
+        img_path = "/assets/ntu_logo.jpg"
 
     if uni_code == 'smu-dsa':
         name = "Data Science & Analytics (2nd Major)"
         school = "SMU"
-        img_path = '/assets/smu_pic.jpg'
+        img_path = '/assets/smu_logo.jpg'
 
     return name, school, img_path
 
@@ -32,9 +32,8 @@ def buttonFormat(name, id, image_url, img_style=None):
     return html.Div(
         children=[
             html.Img(src=image_url, className='checkbox-image', style=img_style),
-            dbc.Checkbox(id=f'checkbox_{id}', className='course--add', style={'margin-top': '10px'}),
+            dbc.Checkbox(id=f'checkbox_{id}', className='course--add', style={'margin-top': '0px'}),
             html.Button(name, id=id, className='course--link', style={'margin-top': '0px', 'color': '#0A1173'})
-            #html.Button(name, id=id, className='course--link', style={'margin-top': '0px'})
         ],
         className='course--rect'
     )
