@@ -49,13 +49,13 @@ layout = html.Div(
             children=[
                 dcc.Location(id='url'),
                 buttonFormat('NUS: Data Science and Analytics', 'nus-dsa', '/assets/nus_logo.png', 
-                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '20px'}),
+                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '30px'}),
                 buttonFormat('NUS: Data Science and Economics', 'nus-dse', '/assets/nus_logo.png', 
-                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '20px'}),
+                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '30px'}),
                 buttonFormat('NTU: Data Science and Artificial Intelligence', 'ntu-dsa', '/assets/ntu_logo.png', 
-                    img_style={'width': '170px', 'height': '75px', 'margin-left': '30px', 'margin-top': '20px'}),
+                    img_style={'width': '170px', 'height': '75px', 'margin-left': '30px', 'margin-top': '30px'}),
                 buttonFormat('SMU: Data Science and Analytics (2nd Major)', 'smu-dsa', '/assets/smu_logo.png', 
-                    img_style={'width': '160px', 'height': '85px', 'margin-left': '30px', 'margin-top': '10px'})
+                    img_style={'width': '160px', 'height': '85px', 'margin-left': '30px', 'margin-top': '20px'})
             ],
             className='course'
         ),
