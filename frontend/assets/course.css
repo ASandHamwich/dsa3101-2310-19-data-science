@@ -1,11 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Orbitron:wght@700&display=swap');
 
+.coursepage {
+    padding: 40px;
+}
+
+.coursepage .coursepage--name {
+    font-family: Inter;
+}
+
+.coursepage .coursepage--school {
+    font-family: Inter;
+}
+
+.coursepage .coursepage--desc{
+    font-family: Inter;
+}
+
+.coursepage .coursepage--link{
+    font-family: Inter;
+    text-decoration: underline;
+}
 
 
 .compare {
     display: flex;
-    margin: 10px auto
+    margin: 10px auto;
 }
 
 .compare .compare--child {
@@ -13,4 +33,6 @@
     margin: 25px;
     padding: 5px;
 }
+
+
 

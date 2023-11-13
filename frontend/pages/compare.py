@@ -138,12 +138,13 @@ def half_layout(uni_code):
     name, school, desc = course_layout(uni_code)
 
     return html.Div(
+        className="coursepage",
         children=[
             html.Div(
                 children=[
-                    html.H1(name),
-                    html.H3(school),
-                    html.P(desc)
+                    html.H1(name, className = "coursepage--name"),
+                    html.H3(school, className = "coursepage--school"),
+                    html.P(desc, className = "coursepage--desc")
                 ]
             ),
 
@@ -201,20 +202,6 @@ def half_layout(uni_code):
                             html.P('Module A → Module B : A needs to be taken before B can be taken', style={'font-size': '14px', 'margin-bottom': '1px'}),
                         ]
                     ),
-                ]
-            ),
-
-            html.Div(
-                children = [
-                    html.H2('More Information'),
-                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics', href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'), 
-                        style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum', href='https://chs.nus.edu.sg/programmes/common-curriculum/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS bus app: for NUS bus timings and routes', href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1', 
-                        target='_blank'), style={'text-decoration': 'underline'})
                 ]
             )
         ]

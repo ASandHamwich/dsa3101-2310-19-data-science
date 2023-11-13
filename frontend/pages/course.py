@@ -39,6 +39,92 @@ def course_layout(uni_code):
     
     return name, school, desc, img_path 
 
+def course_links(uni_code):
+    if uni_code == 'nus-dsa':
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        'NUS Official Website: Major in Data Science & Analytics', 
+                        href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUSMods: For More NUS Modules', 
+                        href='https://nusmods.com/', 
+                        target='_blank'
+                    ),
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS College of Humanities and Sciences: Common Curriculum',
+                        href='https://chs.nus.edu.sg/programmes/common-curriculum/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS Bus App: For NUS Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                )
+            ]
+        )
+
+    if uni_code == 'nus-dse':
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        'NUS Official Website: Major in Data Science & Economics', 
+                        href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-economics/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUSMods: For More NUS Modules', 
+                        href='https://nusmods.com/', 
+                        target='_blank'
+                    ),
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS College of Humanities and Sciences: Common Curriculum',
+                        href='https://chs.nus.edu.sg/programmes/common-curriculum/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS Bus App: For NUS Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                )
+            ]
+        )
+
+    if uni_code == 'ntu-dsa':
+        return html.Div('Pending')
+
+    if uni_code == 'smu-dsa':
+        return html.Div('Pending')
+
+
 # Cytoscape Format
 # LIST
     # DICTIONARY OF DATA
@@ -147,21 +233,19 @@ def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
 
     return html.Div(
-        style={
-            'padding': '20px',
-        },
+        className="coursepage",
         children=[
             html.Div(
                 style={'display': "inline-block", 'width': '750px'},
                 children=[
-                    html.H1(name),
-                    html.H3(school),
-                    html.P(desc)
+                    html.H1(name, className = "coursepage--name"),
+                    html.H3(school, className = "coursepage--school"),
+                    html.P(desc, className = "coursepage--desc")
                 ]
             ),
 
             html.Div(
-                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'},  # Adjusted margin-top to reduce the gap
+                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'}, # Adjusted margin-top to reduce the gap 
                 children=[
                     html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
                 ]
@@ -170,15 +254,15 @@ def layout(uni_code):
             html.Div(
                 className='header-section',
                 children=[
-                    html.H3('What you will learn'),
+                    html.H3('What You Will Learn', className = "coursepage--desc"),
                 ]
             ),
 
             html.Div(
                 style={'margin-bottom': '10px'},  # Added margin-bottom to reduce the gap
                 children=[
-                    html.H3('Course Tree'),
-                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
+                    html.H4('Course Tree', className = "coursepage--school"),
+                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
                     # INSERT TREE HERE
                     dcc.Location(id='location'),
                     cyto.Cytoscape(
@@ -212,22 +296,7 @@ def layout(uni_code):
                     )
                 ]
             ),
-            html.Div(
-                children=[
-                    html.H2('More Information'),
-                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics',
-                                   href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/',
-                                   target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'),
-                            style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum',
-                                   href='https://chs.nus.edu.sg/programmes/common-curriculum/',
-                                   target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS bus app: for NUS bus timings and routes',
-                                   href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
-                                   target='_blank'), style={'text-decoration': 'underline'})
-                ]
-            )
+            course_links(uni_code)
         ]
     )
 
