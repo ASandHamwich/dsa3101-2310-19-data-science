@@ -39,7 +39,7 @@
 .course .course--link{
     font-size: 30px;
     font-family: Inter;
-    padding: 40px 0;
+    padding: 40px 20;
     border: 0px;
     margin: 10px 10px 20px 10px;
     background: none;
@@ -52,7 +52,7 @@
 
 .course .course--add{
     position: relative;
-    top: 220px;
+    top: 200px;
     bottom: 0px;
     margin-left: 180px;
     transform: scale(3);
