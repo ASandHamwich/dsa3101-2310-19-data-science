@@ -35,13 +35,15 @@ def page_layout(uni_code, mod_code):
     page = html.Div(
         children = [
             html.Div(
+                style = {'padding': '20px',
+                },
                 children = [
                     html.H1(header),
                     html.H2(title),
                     html.P(desc)
                 ]
             ),
-            html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR")
+            html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR") # i havent bothered to do the border for this yet
         ],
         className = "module"
     )
