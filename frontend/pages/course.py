@@ -170,7 +170,7 @@ def layout(uni_code):
             html.Div(
                 className='header-section',
                 children=[
-                    html.Header('What you will learn'),
+                    html.H3('What you will learn'),
                 ]
             ),
 
