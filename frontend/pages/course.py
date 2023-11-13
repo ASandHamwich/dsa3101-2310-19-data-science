@@ -119,53 +119,10 @@ def course_links(uni_code):
         )
 
     if uni_code == 'ntu-dsa':
-        return html.Div(
-            children=[
-                html.H2('More Information', className='coursepage--desc'),
-                html.H4(
-                    html.A(
-                        "NTU Official Website: Bachelor of Science in Data Science and Artificial Intelligence",
-                        href='https://www.ntu.edu.sg/education/undergraduate-programme/bachelor-of-science-in-data-science-artificial-intelligence',
-                        target='_blank'
-                    ),
-                        className='coursepage--link'
-                ),
-                html.H4(
-                    html.A(
-                        'NTU Content of Courses: For More NTU Modules',
-                        href='https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main',
-                        target='_blank'
-                    ),
-                ),
-                html.H4(
-                    html.A(
-                        'Nanyang Mods: For Reviews on NTU Modules',
-                        href='https://www.nanyangmods.com/',
-                        target='_blank'
-                    )
-                ),
-                html.H4(
-                    html.A(
-                        'NTU Omnibus: For NTU Bus Timings and Routes',
-                        href='https://play.google.com/store/apps/details?id=sg.edu.ntu.apps.ntuomnibus&hl=en&gl=US',
-                        target='_blank'
-                    )
-                )
-            ]
-        )
+        return html.Div('Pending')
 
     if uni_code == 'smu-dsa':
-        return html.Div(
-            children=[
-                html.H4(
-                    html.A(
-                        'SMU Official Website: 2nd Major in Data Science and Analytics',
-                        href='https://economics.smu.edu.sg/bachelor-science-economics/curriculum/2nd-major-data-science-and-analytics',
-                        target='_blank'
-                    )
-                )
-            ]
-        )
+        return html.Div('Pending')
 
 
 # Cytoscape Format
@@ -307,6 +264,8 @@ def layout(uni_code):
                     html.H4('Course Tree', className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
                     # INSERT TREE HERE
+                    html.H4('Legend', className = "coursepage--desc"),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
                     dcc.Location(id='location'),
                     cyto.Cytoscape(
                         id='cytoscape',

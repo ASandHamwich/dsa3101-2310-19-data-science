@@ -150,15 +150,17 @@ def half_layout(uni_code):
 
             html.Div(
                 children=[
-                    html.H4('What you will learn')
+                    html.H4('What you will learn', className = "coursepage--desc")
                 ]
             ),
 
             html.Div(
                 className='course-tree-container',
                 children=[
-                    html.H3('Course Tree'),
-                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
+                    html.H3('Course Tree',className = "coursepage--school"),
+                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.',className = "coursepage--desc"),
+                    html.H4('Legend', className = "coursepage--desc"),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
                     #html.P(generate_content(uni_code)),
                     # INSERT TREE HERE
                     cyto.Cytoscape(
@@ -192,16 +194,16 @@ def half_layout(uni_code):
                                           'curve-style': 'bezier'}
                             }
                         ]
-                    ),
+                    )
                     
                     # Legend beside the course tree ( for some reason i cant make it go beside and its stuck beneath :( ))
-                    html.Div(
-                        className='legend',
-                        children=[
-                            html.H5('Legend', style={'font-size': '16px', 'margin-bottom': '1px'}),
-                            html.P('Module A → Module B : A needs to be taken before B can be taken', style={'font-size': '14px', 'margin-bottom': '1px'}),
-                        ]
-                    ),
+                    #html.Div(
+                        #className='legend',
+                        #children=[
+                            #html.H5('Legend', style={'font-size': '16px', 'margin-bottom': '1px'}),
+                            #html.P('Module A → Module B : A needs to be taken before B can be taken', style={'font-size': '14px', 'margin-bottom': '1px'}),
+                        #]
+                    #)
                 ]
             )
         ]
