@@ -47,12 +47,13 @@
 }
 
 .course .course--link:hover{
-    background-color: red;
+    background-color: transparent;
 }
 
 .course .course--add{
-    position: absolute;
-    bottom: 80px;
+    position: relative;
+    top: 220px;
+    bottom: 0px;
     margin-left: 180px;
     transform: scale(3);
 }
