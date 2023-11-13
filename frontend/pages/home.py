@@ -32,11 +32,11 @@ def course_layout(uni_code):
 
     return name, school, desc, img_path
 
-def buttonFormat(name, id, image_url):
+def buttonFormat(name, id, image_url, img_style=None):
     return html.Div(
         children=[
-            html.Img(src=image_url, className='checkbox-image', style={'width': '150px', 'height': '75px', 'margin-left': '30px', 'margin-top': '15px'}),
-            dbc.Checkbox(id=f'checkbox_{id}', className='course--add',style={'margin-top': '100px'}),
+            html.Img(src=image_url, className='checkbox-image', style=img_style),
+            dbc.Checkbox(id=f'checkbox_{id}', className='course--add', style={'margin-top': '10px'}),
             html.Button(name, id=id, className='course--link', style={'margin-top': '0px'})
         ],
         className='course--rect'
@@ -52,10 +52,14 @@ layout = html.Div(
         html.Div(
             children=[
                 dcc.Location(id='url'),
-                buttonFormat('NUS: Data Science and Analytics', 'nus-dsa', '/assets/nus_logo.png'),
-                buttonFormat('NUS: Data Science and Economics', 'nus-dse', '/assets/nus_logo.png'),
-                buttonFormat('NTU: Data Science and Artificial Intelligence', 'ntu-dsa', '/assets/nus_logo.png'),
-                buttonFormat('SMU: Data Science and Analytics (2nd Major)', 'smu-dsa', '/assets/nus_logo.png')
+                buttonFormat('NUS: Data Science and Analytics', 'nus-dsa', '/assets/nus_logo.png', 
+                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '15px'}),
+                buttonFormat('NUS: Data Science and Economics', 'nus-dse', '/assets/nus_logo.png', 
+                    img_style={'width': '150px', 'height': '80px', 'margin-left': '30px', 'margin-top': '15px'}),
+                buttonFormat('NTU: Data Science and Artificial Intelligence', 'ntu-dsa', '/assets/ntu_logo.png', 
+                    img_style={'width': '250px', 'height': '250px', 'margin-left': '30px', 'margin-top': '0px'}),
+                buttonFormat('SMU: Data Science and Analytics (2nd Major)', 'smu-dsa', '/assets/smu-logo.png', 
+                    img_style={'width': '120px', 'height': '80px', 'margin-left': '30px', 'margin-top': '15px'})
             ],
             className='course'
         ),
@@ -116,4 +120,3 @@ def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkb
 
     else:
         return None
-
