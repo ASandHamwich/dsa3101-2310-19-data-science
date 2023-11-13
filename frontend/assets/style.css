@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Orbitron:wght@700&display=swap');
 
+*{
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0
+}
 .header {
-    height: 89px;
+    height: 60px;
     background: #F9CA84;
     display: flex;
     align-items: center;
-
 }
 
 .header .header--title {
@@ -43,10 +47,12 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    margin-top: 20px;
 }
 
 .compare {
     display: flex;
+    margin: 10px auto
 }
 
 .compare .compare--child {
@@ -74,7 +80,7 @@
     font-family: Inter;
     padding: 40px 0;
     border: 0px;
-    margin: 10px auto;
+    margin: 10px 10px 20px 10px;
     background: none;
     display: flex;
 }
