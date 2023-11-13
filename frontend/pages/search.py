@@ -54,7 +54,9 @@ def queryCheck(query):
 
     uni_code_list = ['nus-dsa', 'ntu-dsa', 'smu-dsa']
     #IDEA: run through every school's module information
-    results = [html.H1(f"Search Results for \"{query}\"")]
+    results = [html.H1(
+        children = [f"Search Results for \"{query}\""], 
+        style = {'padding':'0px 40px 20px 40px'})]
     for uni_code in uni_code_list:
         mod_list = fetch_list_data(uni_code)
 
@@ -64,11 +66,13 @@ def queryCheck(query):
             
             if header.lower().find(query.lower()) != -1 or title.lower().find(query.lower()) != -1 or desc.lower().find(query.lower()) != -1:
                 section = html.Div(
+                    style = {'padding':'0px 40px 20px 40px'},
                     children = [
                         html.H1(header),
                         html.H2(title),
                         html.P(desc),
-                        html.A("See More Here", href = url)
+                        html.A("See More Here", href = url),
+                        html.Br()
                     ]
                 )
                 results.append(section)
