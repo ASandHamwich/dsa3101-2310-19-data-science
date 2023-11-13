@@ -142,6 +142,7 @@ def generate_content(uni_code):
 
     return content
 
+
 def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
 
@@ -169,7 +170,7 @@ def layout(uni_code):
 
             html.Div(
                 children = [
-                    html.Header('What you will learn')
+                    html.Header('What you will learn'),
                 ]
             ),
 
@@ -185,6 +186,8 @@ def layout(uni_code):
                         layout={'name':'breadthfirst',
                                 'roots': root(uni_code)},
                         style={'width':'1200px', 'height':'800px'},
+                        minZoom = 0.5,
+                        maxZoom = 1.5,
                         stylesheet = [
                             {
                                 'selector':'node',
