@@ -148,7 +148,7 @@ def layout(uni_code):
 
     return html.Div(
         style={
-            'padding': '10px',
+            'padding': '20px',
         },
         children=[
             html.Div(
