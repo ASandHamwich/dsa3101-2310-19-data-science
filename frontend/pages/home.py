@@ -80,7 +80,7 @@ def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkb
         if 'comp' in changed_id:
 
             checkbox = []
-            cb_dict = {'nus1':checkbox_nus1, 'nus2':checkbox_nus2, 'ntu1':checkbox_ntu1, 'smu1':checkbox_smu1}
+            cb_dict = {'nus-dsa':checkbox_nus1, 'nus-dse':checkbox_nus2, 'ntu-dsa':checkbox_ntu1, 'smu-dsa':checkbox_smu1}
             for key in cb_dict:
                 if  cb_dict[key] == None:
                     continue
