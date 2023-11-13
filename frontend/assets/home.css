@@ -47,7 +47,7 @@
 }
 
 .course .course--link:hover{
-    background-color: transparent;
+    transform: scale(0.9);
 }
 
 .course .course--add{
