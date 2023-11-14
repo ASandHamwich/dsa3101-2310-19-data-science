@@ -9,7 +9,7 @@ path = Path(__file__).parent
 
 def load_smu_modules():
     smu_modules = {}
-    with (path / "smu.csv").open(encoding='utf-8') as f:
+    with (path / "smu.csv").open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['Module Code']
@@ -19,7 +19,7 @@ smu_modules_data = load_smu_modules()
 
 def load_nus_dsa_modules():
     nus_modules = {}
-    with (path / 'NusDsaMods.csv').open(encoding='utf-8') as f:
+    with (path / 'NusDsaMods.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['NUS Module Code']
@@ -29,7 +29,7 @@ nus_dsa_modules_data = load_nus_dsa_modules()
 
 def load_nus_dse_modules():
     nus_modules = {}
-    with (path / 'NusDseMods.csv').open(encoding='utf-8') as f:
+    with (path / 'NusDseMods.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['NUS Module Code']
@@ -39,7 +39,7 @@ nus_dse_modules_data = load_nus_dse_modules()
 
 def load_ntu_modules():
     ntu_modules = {}
-    with (path / 'ntu.csv').open(encoding='utf-8') as f:
+    with (path / 'ntu.csv').open() as f:
         reader = csv.DictReader(f)
         for row in reader:
             module_name = row['Course Code']
@@ -61,7 +61,7 @@ def get_prereq_dict():
         prereqTree["nus dsa"]["modules"].append(dic)
 
     prereqTree["nus dse"] = {"modules": []}
-    for mod in nus_dsa_modules_data.keys():
+    for mod in nus_dse_modules_data.keys():
         response = requests.get(f'https://api.nusmods.com/v2/2023-2024/modules/{mod}.json')
         data = response.json()
         dic = {"name": mod,
@@ -159,6 +159,37 @@ def get_ntu_module_description(module_code):
         return jsonify(module)
     else:
         abort(404, description="module not found")
+#====================================================================
+# Add the following function to get all modules with descriptions
+
+def get_all_modules():
+    all_modules = {"nus-dsa": [], "nus-dse": [], "ntu": [], "smu": []}
+
+    # Add NUS modules
+    for mod_code, mod_data, in nus_dsa_modules_data.items():
+        all_modules["nus-dsa"].append({"Module Code": mod_code,"Module Description": mod_data.get("NUS Module Description")})
+
+    for mod_code, mod_data, in nus_dse_modules_data.items():
+        all_modules["nus-dse"].append({"Module Code": mod_code,"Module Description": mod_data.get("NUS Module Description")})
+
+    # Add NTU modules
+    for mod_code, mod_data in ntu_modules_data.items():
+        all_modules["ntu"].append({"Module Code": mod_code,"Module Description": mod_data.get("Course Description")})
+
+    # Add SMU modules
+    for mod_code, mod_data in smu_modules_data.items():
+        all_modules["smu"].append({"Module Code": mod_code,"Module Description": mod_data.get("Module Description")})
+    
+    return all_modules
+
+@app.route('/nus-ntu-smu/all-modules/', methods=['GET'])
+def get_all_modules_endpoint():
+    modules = get_all_modules()
+
+    # Convert the data to a JSON response
+    response = jsonify(modules)
+    response.status_code = 200
+    return response
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001)
+    app.run(host='127.0.0.1', port=5000)

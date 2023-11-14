@@ -2,6 +2,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import nlp
+
+############################################### MODULE SCRAPING ###############################################
 
 course_options = []
 for i in range(1,5):
@@ -89,10 +93,10 @@ counter = 0
 for i in range(len(merged_Preqs)):
     if not merged_Preqs[i]:
         counter += 1
-        if counter % 2 == 0 or merged_Preqs[i-1] == 'Prerequisite: for students who fail QET' or merged_Preqs[i-1] == 'Prerequisite: H2 Maths or equivalent' or merged_Preqs[i-1] == 'Prerequisite: Only for Premier Scholars Programme students.':
+        if counter % 2 == 0 or merged_Preqs[i-1] == 'Prerequisite: for students who fail QET' or merged_Preqs[i-1] == 'Prerequisite: H2 Maths or equivalent' or merged_Preqs[i-1] == 'Prerequisite: Only for Premier Scholars Programme students.' or merged_Preqs[i-1] == 'Prerequisite: No prior knowledge of the language. Declaration is required.':
             continue
         merged_Preqs2.append(merged_Preqs[i])
-    elif merged_Preqs[i] == 'Prerequisite: Placement Test or' or merged_Preqs[i] == 'Prerequisite: Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Study Year 3 standing':
+    elif merged_Preqs[i] == 'Prerequisite: Placement Test or' or merged_Preqs[i] == 'Prerequisite: Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Study Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Placement Test or Able to read simple Arabic scripts or':
         continue
     else:
         merged_Preqs2.append(merged_Preqs[i])
@@ -100,22 +104,41 @@ for i in range(len(merged_Preqs)):
 merged_Preqs_clean = [item.replace('Prerequisite: ', '') for item in merged_Preqs2]
 
 # writing lists into a csv file
-data = {'Course Code': CCode_list, 'Course Name': CName_list, 'Course Description': CDesc_list, 'Prerequisites': merged_Preqs_clean}
+data = {'module_code': CCode_list, 'module_name': CName_list, 'module_description': CDesc_list, 'prerequisites': merged_Preqs_clean}
 df = pd.DataFrame(data)
-df = df.drop_duplicates(subset='Course Code')
+df = df.drop_duplicates(subset='module_code')
 
 # removing redundant non-DSA modules
-df['Course Description'].replace('', 'Course Description unavailable. Please google for more info :)', inplace = True)
+df['module_description'].replace('', 'Module Description unavailable. Please google for more info :)', inplace = True)
 relevant = ['CS', 'CZ', 'MH', 'SC']
-df = df[df['Course Code'].str[:2].isin(relevant)]
+df = df[df['module_code'].str[:2].isin(relevant)]
+
+############################################### KEY CONCEPTS ###############################################
+
+glossary_list = nlp.get_glossary_list()
+tokenised = []
+for index, row in df.iterrows():
+    lemma = nlp.lemmatize(row['module_description'])
+    tokenized_description = nlp.tokenize(lemma, ngram_range=(1, 2))
+    tokenised.append(tokenized_description)
+
+# extracting keywords associated to each module
+keywords = []
+for i in range(len(tokenised)):
+    words = []
+    for j in range(len(tokenised[i])):
+        if tokenised[i][j] in glossary_list and tokenised[i][j] not in words:
+            words.append(tokenised[i][j])
+    keywords.append(words)
+keywords = [', '.join(inner_list) for inner_list in keywords]
+df['key_concepts'] = keywords
+
+############################################### REVIEWS + SENTIMENTS ###############################################
 
 #adding reviews and sentiment score columns
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import csv
-from selenium.webdriver.support import expected_conditions as EC
 sentiment = SentimentIntensityAnalyzer()
 driver = webdriver.Chrome()
-ntuModuleCodes = df['Course Code']
+ntuModuleCodes = df['module_code']
 url = "https://www.nanyangmods.com/modules/"
 ntuModuleReviews = []
 ntuModuleScores = []
@@ -133,10 +156,8 @@ for moduleCode in ntuModuleCodes:
         allReviews = allReviews + review.strip()
     ntuModuleReviews.append(allReviews)
     ntuModuleScores.append(sentiment.polarity_scores(allReviews)['compound'])
-df['Reviews'] = ntuModuleReviews
-df['Score'] = ntuModuleScores
+df['reviews'] = ntuModuleReviews
+df['sentiment_rating'] = ntuModuleScores
 
 csv_file = "ntu.csv"
 df.to_csv(csv_file, index=False)
-
-
