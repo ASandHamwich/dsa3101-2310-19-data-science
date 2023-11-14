@@ -119,10 +119,53 @@ def course_links(uni_code):
         )
 
     if uni_code == 'ntu-dsa':
-        return html.Div('Pending')
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        "NTU Official Website: Bachelor of Science in Data Science and Artificial Intelligence",
+                        href='https://www.ntu.edu.sg/education/undergraduate-programme/bachelor-of-science-in-data-science-artificial-intelligence',
+                        target='_blank'
+                    ),
+                        className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NTU Content of Courses: For More NTU Modules',
+                        href='https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main',
+                        target='_blank'
+                    ),
+                ),
+                html.H4(
+                    html.A(
+                        'Nanyang Mods: For Reviews on NTU Modules',
+                        href='https://www.nanyangmods.com/',
+                        target='_blank'
+                    )
+                ),
+                html.H4(
+                    html.A(
+                        'NTU Omnibus: For NTU Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=sg.edu.ntu.apps.ntuomnibus&hl=en&gl=US',
+                        target='_blank'
+                    )
+                )
+            ]
+        )
 
     if uni_code == 'smu-dsa':
-        return html.Div('Pending')
+        return html.Div(
+            children=[
+                html.H4(
+                    html.A(
+                        'SMU Official Website: 2nd Major in Data Science and Analytics',
+                        href='https://economics.smu.edu.sg/bachelor-science-economics/curriculum/2nd-major-data-science-and-analytics',
+                        target='_blank'
+                    )
+                )
+            ]
+        )
 
 
 # Cytoscape Format
@@ -274,6 +317,10 @@ def layout(uni_code):
                     # INSERT TREE HERE
                     html.H4('Legend', className = "coursepage--desc"),
                     html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Blue Nodes: Level 1000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Red Nodes: Level 2000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Dark Green Nodes: Level 3000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Orange Nodes: Level 4000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
                     dcc.Location(id='location'),
                     cyto.Cytoscape(
                         id='cytoscape',
@@ -313,19 +360,19 @@ def layout(uni_code):
                             {
                                 'selector': '.2k',
                                 'style':{
-                                    'background-color':'#C2DF13'
+                                    'background-color':'tomato'
                                 }
                             },
                             {
                                 'selector':'.3k',
                                 'style':{
-                                    'background-color':'#6B8522'
+                                    'background-color':'olivedrab'
                                 }
                             },
                             {
                                 'selector':'.4k',
                                 'style':{
-                                    'background-color':'#F39000'
+                                    'background-color':'darkorange'
                                 }
                             }
                         ]
