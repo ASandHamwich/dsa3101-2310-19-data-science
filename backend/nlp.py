@@ -66,4 +66,4 @@ for word in additional_words:
 glossary_list.append('statistics')
 
 def get_glossary_list():
-    return glossary_list
+  return glossary_list
