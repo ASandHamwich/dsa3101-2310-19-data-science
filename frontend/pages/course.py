@@ -3,8 +3,9 @@ from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
 import pandas as pd
 import dash_cytoscape as cyto
-
+import regex as re
 import requests
+import seaborn as sns
 
 import dash_bootstrap_components as dbc
 
@@ -190,22 +191,63 @@ def fetch_data(uni_code):
     return mod_list, full_module_data
 
 
+def nodepalette(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    prefix_list = []
+    for mod in mod_list:
+        for index, char in enumerate(mod):
+            if char in "01234956789":
+                prefix = mod[:index].lower()
+                break
+        if prefix not in prefix_list:
+            prefix_list.append(prefix)
+    palette = sns.color_palette("RdYlBu", len(prefix_list))
+    hex = palette.as_hex()
+    return prefix_list, hex
+
+def treestylesheet(uni_code):
+    lst, backgroundhex = nodepalette(uni_code)
+    stylesheet = [
+        {
+            'selector': 'edge',
+            'style': {'target-arrow-color': '#999999', 'target-arrow-shape': 'triangle','curve-style': 'bezier'}
+        },
+        {
+            'selector': 'node',
+            'style': {
+                'content': 'data(label)',
+                'text-valign':'center',
+                'text-halign': 'center',
+                'height': '30px',
+                'width': '100px',
+                'shape': 'round-rectangle',
+                'color':'black'
+            }
+        }
+    ]
+    for i in range(len(backgroundhex)):
+        dic = {
+            'selector': f".{lst[i]}",
+            'style':{
+                'background-color': f"{backgroundhex[i]}"
+            }
+        }
+        stylesheet.append(dic)
+    return(stylesheet)
+    
+
+
+
 def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
     url = f'/module/{uni_code}/{node_id}'
-    if 'cs' in node_id or 'cz' in node_id or 'sc' in node_id or 'is' in node_id or 'cor' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'cs',}
-    if 'dsa' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dsa',}
-    if 'ma' in node_id or 'st' in node_id or 'mh' in node_id or 'stat' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'math',}
-    if 'dse' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dse',}
-    if 'econ' in node_id or 'ec' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'econ',}
-    if 'mktg' in node_id or 'opim' in node_id:
-        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'business',}
+
+    for index, char in enumerate(node_id):
+        if char in "0123456789":
+            prefix = node_id[:index]
+            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': f"{prefix}"}
+
 
 def edge_dict(source, target):
     source = source.lower()
@@ -242,6 +284,16 @@ def root(uni_code):
                 root_list += f', [id = "{mod.lower()}"]'
     return(root_list)
         
+
+def treelayout(uni_code):
+    if 'smu' in uni_code:
+        layout = {
+            'name': 'grid'
+        }
+    else:
+        layout = {'name': 'breadthfirst',
+                'roots': root(uni_code)}
+    return layout
 
 
 def generate_edge(mod_list, curr_data, uni_code, mod):
@@ -282,6 +334,7 @@ def generate_content(uni_code):
 
     return content
 
+
 def treelayout(uni_code):
     if 'smu' in uni_code:
         layout = {
@@ -292,6 +345,7 @@ def treelayout(uni_code):
                 'roots': root(uni_code)}
     return layout
 
+
 def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
 
@@ -299,7 +353,7 @@ def layout(uni_code):
         className="coursepage",
         children=[
             html.Div(
-                style={'display': "inline-block", 'width': '750px'},
+                style={'display': "inline-block", 'width': '700px'},
                 children=[
                     html.H1(name, className = "coursepage--name"),
                     html.H3(school, className = "coursepage--school"),
@@ -308,7 +362,7 @@ def layout(uni_code):
             ),
 
             html.Div(
-                style={'display': 'inline-block', 'margin': '10px 30px 10px 30px'}, # Adjusted margin-top to reduce the gap 
+                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'}, # Adjusted margin-top to reduce the gap 
                 children=[
                     html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
                 ]
@@ -337,68 +391,13 @@ def layout(uni_code):
                     cyto.Cytoscape(
                         id='cytoscape',
                         elements=generate_content(uni_code),
-                        layout= treelayout(uni_code),
+                        layout = treelayout(uni_code),
                         #style={'width': '1200px', 'height': '800px'},
                         style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
                         maxZoom=1.5,
-                        stylesheet=[
-                            {
-                                'selector': 'edge',
-                                'style': {'target-arrow-color': '#999999', 'target-arrow-shape': 'triangle',
-                                          'curve-style': 'bezier'}
-                            },
-                            # Group selectors
-                            {
-                                'selector': 'node',
-                                'style': {
-                                    'content': 'data(label)',
-                                    'text-valign':'center',
-                                    'text-halign': 'center',
-                                    'height': '30px',
-                                    'width': '100px',
-                                    'shape': 'round-rectangle',
-                                    'color':'white'
-                                }
-                            },
-            # Class selectors
-                            {
-                                'selector': '.cs',
-                                'style': {
-                                'background-color': '#CF4C4C',
-                                }
-                            },
-                            {
-                                'selector': '.math',
-                                'style':{
-                                    'background-color':'#6A93C4'
-                                }
-                            },
-                            {
-                                'selector':'.econ',
-                                'style':{
-                                    'background-color':'#8FA50B'
-                                }
-                            },
-                            {
-                                'selector':'.dsa',
-                                'style':{
-                                    'background-color':'darkorange'
-                                }
-                            },
-                            {
-                                'selector':'.dse',
-                                'style':{
-                                    'background-color':'#E2BE00'
-                                }
-                            },
-                            {
-                                'selector':'.business',
-                                'style':{
-                                    'background-color':'#267229'
-                                }
-                            }
-                        ]
+                        stylesheet=treestylesheet(uni_code)
+
                     )
                 ]
             ),

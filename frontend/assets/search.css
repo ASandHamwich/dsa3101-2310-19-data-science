@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Orbitron:wght@700&display=swap');
+
+.searchpage{
+    padding: 0px 40px 20px 40px;
+}
+
+.searchpage .searchpage--result{
+    padding-top: 30px;
+
+}
+
+.searchpage .searchpage--header{
+    font-family: Inter;
+}
+
+.searchpage .searchpage--title{
+    font-family: Inter;
+}
+
+.searchpage .searchpage--desc{
+    font-family: Inter;
+}
+
+.searchpage .searchpage--link{
+    font-family: Inter;
+}

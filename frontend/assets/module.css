@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+
+.modInfo{
+    padding: '20px'
+}
+
+.modInfo .modInfo--header {
+    font-family: Inter;
+}
+
+.modInfo .modInfo--title {
+    font-family: Inter;
+}
+
+.modInfo .modInfo--desc {
+    font-family: Inter;
+    font-weight: 300;
+}
+
+.module{
+    display: flex;
+}
+
+.mod_sidebar {
+    background: #E4E4E4;
+    padding: 30px;
+    min-width: 130px;
+    border-radius: 20px;
+    text-align: center;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.modreview {
+    border-radius: 30px;
+    background: #ECECEC;
+    width: 600px;
+    height: 185px;
+    border: 0px;
+    margin-top: 50px;
+    text-align: left;
+    text-indent: 10px;
+    text-anchor: start;
+    font-family: Inter;
+    
+
+}
