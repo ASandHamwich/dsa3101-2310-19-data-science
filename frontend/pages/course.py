@@ -136,20 +136,23 @@ def course_links(uni_code):
                         href='https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main',
                         target='_blank'
                     ),
+                    className='coursepage--link'
                 ),
                 html.H4(
                     html.A(
                         'Nanyang Mods: For Reviews on NTU Modules',
                         href='https://www.nanyangmods.com/',
                         target='_blank'
-                    )
+                    ),
+                    className='coursepage--link'
                 ),
                 html.H4(
                     html.A(
                         'NTU Omnibus: For NTU Bus Timings and Routes',
                         href='https://play.google.com/store/apps/details?id=sg.edu.ntu.apps.ntuomnibus&hl=en&gl=US',
                         target='_blank'
-                    )
+                    ),
+                    className='coursepage--link'
                 )
             ]
         )
@@ -157,12 +160,14 @@ def course_links(uni_code):
     if uni_code == 'smu-dsa':
         return html.Div(
             children=[
+                html.H2('More Information', className='coursepage--desc'),
                 html.H4(
                     html.A(
                         'SMU Official Website: 2nd Major in Data Science and Analytics',
                         href='https://economics.smu.edu.sg/bachelor-science-economics/curriculum/2nd-major-data-science-and-analytics',
                         target='_blank'
-                    )
+                    ),
+                    className='coursepage--link'
                 )
             ]
         )
