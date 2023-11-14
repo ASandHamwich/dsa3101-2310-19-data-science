@@ -39,6 +39,135 @@ def course_layout(uni_code):
     
     return name, school, desc, img_path 
 
+def course_links(uni_code):
+    if uni_code == 'nus-dsa':
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        'NUS Official Website: Major in Data Science & Analytics', 
+                        href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUSMods: For More NUS Modules', 
+                        href='https://nusmods.com/', 
+                        target='_blank'
+                    ),
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS College of Humanities and Sciences: Common Curriculum',
+                        href='https://chs.nus.edu.sg/programmes/common-curriculum/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS Bus App: For NUS Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                )
+            ]
+        )
+
+    if uni_code == 'nus-dse':
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        'NUS Official Website: Major in Data Science & Economics', 
+                        href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-economics/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUSMods: For More NUS Modules', 
+                        href='https://nusmods.com/', 
+                        target='_blank'
+                    ),
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS College of Humanities and Sciences: Common Curriculum',
+                        href='https://chs.nus.edu.sg/programmes/common-curriculum/',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NUS Bus App: For NUS Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1',
+                        target='_blank'
+                    ), 
+                    className='coursepage--link'
+                )
+            ]
+        )
+
+    if uni_code == 'ntu-dsa':
+        return html.Div(
+            children=[
+                html.H2('More Information', className='coursepage--desc'),
+                html.H4(
+                    html.A(
+                        "NTU Official Website: Bachelor of Science in Data Science and Artificial Intelligence",
+                        href='https://www.ntu.edu.sg/education/undergraduate-programme/bachelor-of-science-in-data-science-artificial-intelligence',
+                        target='_blank'
+                    ),
+                        className='coursepage--link'
+                ),
+                html.H4(
+                    html.A(
+                        'NTU Content of Courses: For More NTU Modules',
+                        href='https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main',
+                        target='_blank'
+                    ),
+                ),
+                html.H4(
+                    html.A(
+                        'Nanyang Mods: For Reviews on NTU Modules',
+                        href='https://www.nanyangmods.com/',
+                        target='_blank'
+                    )
+                ),
+                html.H4(
+                    html.A(
+                        'NTU Omnibus: For NTU Bus Timings and Routes',
+                        href='https://play.google.com/store/apps/details?id=sg.edu.ntu.apps.ntuomnibus&hl=en&gl=US',
+                        target='_blank'
+                    )
+                )
+            ]
+        )
+
+    if uni_code == 'smu-dsa':
+        return html.Div(
+            children=[
+                html.H4(
+                    html.A(
+                        'SMU Official Website: 2nd Major in Data Science and Analytics',
+                        href='https://economics.smu.edu.sg/bachelor-science-economics/curriculum/2nd-major-data-science-and-analytics',
+                        target='_blank'
+                    )
+                )
+            ]
+        )
+
+
 # Cytoscape Format
 # LIST
     # DICTIONARY OF DATA
@@ -65,7 +194,18 @@ def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
     url = f'/module/{uni_code}/{node_id}'
-    return {'data': {'id': node_id, 'label': label, 'url': url}}
+    if 'cs' in node_id or 'cz' in node_id or 'sc' in node_id or 'is' in node_id or 'cor' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'cs',}
+    if 'dsa' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dsa',}
+    if 'ma' in node_id or 'st' in node_id or 'mh' in node_id or 'stat' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'math',}
+    if 'dse' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dse',}
+    if 'econ' in node_id or 'ec' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'econ',}
+    if 'mktg' in node_id or 'opim' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'business',}
 
 def edge_dict(source, target):
     source = source.lower()
@@ -86,6 +226,22 @@ def flattenCheck(mod_list, curr_data):
     #print('CHECKPOINT 3')
     #print(source_list)
     return source_list
+
+def root(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    is_root = True
+    root_list = ''
+    for index in range(len(mod_list)):
+        mod = mod_list[index]
+        module_data = full_module_data[index]
+        source_list = flattenCheck(mod_list, module_data)
+        if not source_list:
+            if root_list == '':
+                root_list += f'[id = "{mod.lower()}"]'
+            else:
+                root_list += f', [id = "{mod.lower()}"]'
+    return(root_list)
+        
 
 
 def generate_edge(mod_list, curr_data, uni_code, mod):
@@ -126,84 +282,130 @@ def generate_content(uni_code):
 
     return content
 
+def treelayout(uni_code):
+    if 'smu' in uni_code:
+        layout = {
+            'name': 'grid'
+        }
+    else:
+        layout={'name': 'breadthfirst',
+                'roots': root(uni_code)}
+    return layout
+
 def layout(uni_code):
     name, school, desc, img_path = course_layout(uni_code)
 
     return html.Div(
-        children = [
+        className="coursepage",
+        children=[
             html.Div(
-                style={'display':"inline-block",
-                       'width':'750px'},
-                children = [
-                    html.H1(name),
-                    html.H3(school),
-                    html.P(desc)                
+                style={'display': "inline-block", 'width': '750px'},
+                children=[
+                    html.H1(name, className = "coursepage--name"),
+                    html.H3(school, className = "coursepage--school"),
+                    html.P(desc, className = "coursepage--desc")
                 ]
             ),
 
             html.Div(
-                style={'display':'inline-block',
-                       'margin':'30px'},
-                children = [
-                    html.Img(src=img_path,
-                             style={'height':'200px',
-                                    'width':'400px'}),
+                style={'display': 'inline-block', 'margin': '10px 30px 10px 30px'}, # Adjusted margin-top to reduce the gap 
+                children=[
+                    html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
                 ]
             ),
 
             html.Div(
-                children = [
-                    html.Header('What you will learn')
+                className='header-section',
+                children=[
+                    html.H3('What You Will Learn', className = "coursepage--desc"),
                 ]
             ),
 
             html.Div(
-                children = [
-                    html.H3('Course Tree'),
-                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.'),
-                    #INSERT TREE HERE
-                    dcc.Location(id = 'location'),
+                style={'margin-bottom': '10px'},  # Added margin-bottom to reduce the gap
+                children=[
+                    html.H4('Course Tree', className = "coursepage--school"),
+                    html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
+                    # INSERT TREE HERE
+                    html.H4('Legend', className = "coursepage--desc"),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Blue Nodes: Level 1000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Red Nodes: Level 2000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Dark Green Nodes: Level 3000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Orange Nodes: Level 4000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                    dcc.Location(id='location'),
                     cyto.Cytoscape(
-                        id = 'cytoscape',
-                        elements = generate_content(uni_code),
-                        layout={'name':'cose'},
-                        style={'width':'1200px', 'height':'800px'},
-                        stylesheet = [
+                        id='cytoscape',
+                        elements=generate_content(uni_code),
+                        layout= treelayout(uni_code),
+                        #style={'width': '1200px', 'height': '800px'},
+                        style={'width': '100%', 'height': '100vh'},
+                        minZoom=0.5,
+                        maxZoom=1.5,
+                        stylesheet=[
                             {
-                                'selector':'node',
-                                'style':{
-                                    'content':'data(label)',
-                                    'text-valign': 'center',
-                                    'text-halign':'center',
-                                    'height':'30px',
-                                    'width':'85px',
-                                    'shape':'rectangle',
-                                    'background-color':'#8BB4DB'
+                                'selector': 'edge',
+                                'style': {'target-arrow-color': '#999999', 'target-arrow-shape': 'triangle',
+                                          'curve-style': 'bezier'}
+                            },
+                            # Group selectors
+                            {
+                                'selector': 'node',
+                                'style': {
+                                    'content': 'data(label)',
+                                    'text-valign':'center',
+                                    'text-halign': 'center',
+                                    'height': '30px',
+                                    'width': '100px',
+                                    'shape': 'round-rectangle',
+                                    'color':'white'
+                                }
+                            },
+            # Class selectors
+                            {
+                                'selector': '.cs',
+                                'style': {
+                                'background-color': '#CF4C4C',
                                 }
                             },
                             {
-                                'selector':'edge',
-                                'style':{'target-arrow-color':'#999999', 'target-arrow-shape':'triangle', 'curve-style':'bezier'}
+                                'selector': '.math',
+                                'style':{
+                                    'background-color':'#6A93C4'
+                                }
+                            },
+                            {
+                                'selector':'.econ',
+                                'style':{
+                                    'background-color':'#8FA50B'
+                                }
+                            },
+                            {
+                                'selector':'.dsa',
+                                'style':{
+                                    'background-color':'darkorange'
+                                }
+                            },
+                            {
+                                'selector':'.dse',
+                                'style':{
+                                    'background-color':'#E2BE00'
+                                }
+                            },
+                            {
+                                'selector':'.business',
+                                'style':{
+                                    'background-color':'#267229'
+                                }
                             }
                         ]
                     )
                 ]
             ),
-            html.Div(
-                children = [
-                    html.H2('More Information'),
-                    html.H4(html.A('NUS Official Website: Major in Data Science & Analytics', href='https://www.stat.nus.edu.sg/prospective-students/undergraduate-programme/data-science-and-analytics/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUSMods: for more NUS modules', href='https://nusmods.com/', target='_blank'), 
-                        style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS College of Humanities and Sciences: Common Curriculum', href='https://chs.nus.edu.sg/programmes/common-curriculum/', 
-                        target='_blank'), style={'text-decoration': 'underline'}),
-                    html.H4(html.A('NUS bus app: for NUS bus timings and routes', href='https://play.google.com/store/apps/details?id=nus.ais.mobile.android.shuttlebus&hl=en&gl=US&pli=1', 
-                        target='_blank'), style={'text-decoration': 'underline'})
-                ]
-            )
+            course_links(uni_code)
         ]
     )
+
 
 @callback(
     Output("location", "href"),
