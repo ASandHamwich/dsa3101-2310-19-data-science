@@ -21,15 +21,30 @@
 
 .module{
     display: flex;
-    padding: 20px;
 }
 
-.module .module--col{
-    width: 500px;
-    border-radius: 34px;
-    background: #E5E5E5;
-    margin: 10px;
+.mod_sidebar {
+    background: #E4E4E4;
+    padding: 30px;
+    min-width: 130px;
+    border-radius: 20px;
     text-align: center;
-    padding-top: 10px;
-    padding-left: 20px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.modreview {
+    border-radius: 30px;
+    background: #ECECEC;
+    width: 600px;
+    height: 185px;
+    border: 0px;
+    margin-top: 50px;
+    text-align: left;
+    text-indent: 10px;
+    text-anchor: start;
+    font-family: Inter;
+    
+
 }

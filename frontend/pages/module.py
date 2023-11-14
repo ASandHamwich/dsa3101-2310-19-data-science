@@ -13,6 +13,10 @@ def fetch_data(uni_code, mod_code):
     url = f"http://localhost:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
 
+
+def sidebar(uni_code, mod_code):
+    return html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR", className = 'mod_sidebar')
+
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
     #Note: All unis have different keys.
@@ -30,7 +34,6 @@ def page_layout(uni_code, mod_code):
         header = "[SMU] " + data_dict["Module Code"]
         title = data_dict["Module Name"]
         desc = data_dict["Module Description"]
-
     
     page = html.Div(
         children = [
@@ -42,7 +45,7 @@ def page_layout(uni_code, mod_code):
                     html.P(desc, className = 'modInfo--desc')
                 ]
             ),
-            html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR") # i havent bothered to do the border for this yet
+            sidebar(uni_code, mod_code)
         ],
         className = "module"
     )
@@ -51,7 +54,8 @@ def page_layout(uni_code, mod_code):
 def layout(uni_code, mod_code):
     return html.Div(
         children = [
-            page_layout(uni_code, mod_code)
+            page_layout(uni_code, mod_code),
+            dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview')
         ],
-    className = 'module'
+        style = {'padding-left': '45px', 'padding-right': '45px'}
     )
