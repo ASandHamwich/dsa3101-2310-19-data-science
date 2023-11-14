@@ -151,7 +151,15 @@ def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
     url = f'/module/{uni_code}/{node_id}'
-    return {'data': {'id': node_id, 'label': label, 'url': url}}
+    for char in enumerate(node_id):
+        if char[1]=='1':
+            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '1k',}
+        if char[1] == '2':
+            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '2k',}
+        if char[1] == '3':
+            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '3k',}
+        if char[1] =='4':
+            return {'data': {'id': node_id, 'label': label, 'url': url},'classes':'4k'}
 
 def edge_dict(source, target):
     source = source.lower()
@@ -278,21 +286,47 @@ def layout(uni_code):
                         maxZoom=1.5,
                         stylesheet=[
                             {
-                                'selector': 'node',
-                                'style': {
-                                    'content': 'data(label)',
-                                    'text-valign': 'center',
-                                    'text-halign': 'center',
-                                    'height': '30px',
-                                    'width': '85px',
-                                    'shape': 'rectangle',
-                                    'background-color': '#8BB4DB'
-                                }
-                            },
-                            {
                                 'selector': 'edge',
                                 'style': {'target-arrow-color': '#999999', 'target-arrow-shape': 'triangle',
                                           'curve-style': 'bezier'}
+                            },
+                            # Group selectors
+                            {
+                                'selector': 'node',
+                                'style': {
+                                    'content': 'data(label)',
+                                    'text-valign':'center',
+                                    'text-halign': 'center',
+                                    'height': '30px',
+                                    'width': '85px',
+                                    'shape': 'round-rectangle',
+                                    'color':'white'
+                                }
+                            },
+            # Class selectors
+                            {
+                                'selector': '.1k',
+                                'style': {
+                                'background-color': '#5E85A9',
+                                }
+                            },
+                            {
+                                'selector': '.2k',
+                                'style':{
+                                    'background-color':'#C2DF13'
+                                }
+                            },
+                            {
+                                'selector':'.3k',
+                                'style':{
+                                    'background-color':'#6B8522'
+                                }
+                            },
+                            {
+                                'selector':'.4k',
+                                'style':{
+                                    'background-color':'#F39000'
+                                }
                             }
                         ]
                     )
