@@ -9,40 +9,40 @@ path = Path(__file__).parent
 
 def load_smu_modules():
     smu_modules = {}
-    with (path / "smu.csv").open() as f:
+    with (path / "smu.csv").open(encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            module_name = row['Module Code']
+            module_name = row['module_code']
             smu_modules[module_name] = row
     return smu_modules
 smu_modules_data = load_smu_modules()
 
 def load_nus_dsa_modules():
     nus_modules = {}
-    with (path / 'NusDsaMods.csv').open() as f:
+    with (path / 'nus-dsa.csv').open(encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            module_name = row['NUS Module Code']
+            module_name = row['module_code']
             nus_modules[module_name] = row
     return nus_modules
 nus_dsa_modules_data = load_nus_dsa_modules()
 
 def load_nus_dse_modules():
     nus_modules = {}
-    with (path / 'NusDseMods.csv').open() as f:
+    with (path / 'nus-dse.csv').open(encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            module_name = row['NUS Module Code']
+            module_name = row['module_code']
             nus_modules[module_name] = row
     return nus_modules
 nus_dse_modules_data = load_nus_dse_modules()
 
 def load_ntu_modules():
     ntu_modules = {}
-    with (path / 'ntu.csv').open() as f:
+    with (path / 'ntu.csv').open(encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            module_name = row['Course Code']
+            module_name = row['module_code']
             ntu_modules[module_name] = row
     return ntu_modules
 ntu_modules_data = load_ntu_modules()
@@ -71,7 +71,7 @@ def get_prereq_dict():
     prereqTree["ntu"] = {"modules": []}
     for mod in ntu_modules_data.keys():
         dic = {"name": mod,
-                "pre-requisites": ntu_modules_data[mod]['Prerequisites']}
+                "pre-requisites": ntu_modules_data[mod]['prerequisites']}
         prereqTree["ntu"]["modules"].append(dic)
     
     prereqTree["smu"] = {"modules": []}
@@ -85,6 +85,8 @@ prereq_dict = get_prereq_dict()
 
 @app.route('/<chosen_uni>/', methods=['GET'])
 def get_prereq(chosen_uni):
+    output = {}
+
     if chosen_uni == "nus-dsa":
         output = {"nus": prereq_dict["nus dsa"]}
     
@@ -192,4 +194,4 @@ def get_all_modules_endpoint():
     return response
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=5001)
