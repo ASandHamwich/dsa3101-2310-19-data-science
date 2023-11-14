@@ -190,6 +190,54 @@ def treestylesheet(uni_code):
         }
         stylesheet.append(dic)
     return(stylesheet)
+
+def module_type(mod_code):
+    if mod_code == 'cs':
+        return('Computer Science')
+    if mod_code == 'dsa':
+        return('Data Science and Analytics')
+    if mod_code == 'dse':
+        return ('Data Science and Economics')
+    if mod_code == 'ma' or mod_code=='mh':
+        return('Mathematics')
+    if mod_code == 'st' or mod_code=='stat':
+        return ('Statistics')
+    if mod_code == 'cz':
+        return ('Computer Science (Before 21/22)')
+    if mod_code == 'sc':
+        return ('Computer Science (21/22 Onwards)')
+    if mod_code == 'is':
+        return ('Information Systems')
+    if mod_code == 'cor-is':
+        return ('Computational Thinking')
+    if mod_code == 'econ':
+        return ('Economics')
+    if mod_code == 'mktg':
+        return ('Marketing')
+    if mod_code == 'opim':
+        return ('Operations Management')
+    if mod_code == 'cor':
+        return ('Spreadsheet Modelling and Analytics')
+
+def legend(uni_code):
+    lst, backgroundhex = nodepalette(uni_code)
+    output=[]
+    for i in range(len(backgroundhex)):
+        output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
+                             style={
+                                 'font-size': '14px', 
+                                 'background-color':f"{backgroundhex[i]}",
+                                 'padding':'0px 30px 0px 30px',
+                                 'width': '200px'
+                                },
+                            className = "coursepage--desc"
+                            ),
+                        )
+    return output
+
+
+
+
     
 
 
@@ -212,15 +260,20 @@ def half_layout(uni_code):
                     html.H4('What you will learn', className = "coursepage--desc")
                 ]
             ),
-
             html.Div(
-                className='course-tree-container',
                 children=[
                     html.H3('Course Tree',className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.',className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
                     html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
-                    #html.P(generate_content(uni_code)),
+                ]
+            ),
+            html.Div(
+                children=legend(uni_code)
+            ),
+            html.Div(
+                className='course-tree-container',
+                children=[
                     # INSERT TREE HERE
                     cyto.Cytoscape(
                         # id='cytoscape',
