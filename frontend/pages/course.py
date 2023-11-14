@@ -194,15 +194,18 @@ def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
     url = f'/module/{uni_code}/{node_id}'
-    for char in enumerate(node_id):
-        if char[1]=='1':
-            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '1k',}
-        if char[1] == '2':
-            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '2k',}
-        if char[1] == '3':
-            return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': '3k',}
-        if char[1] =='4':
-            return {'data': {'id': node_id, 'label': label, 'url': url},'classes':'4k'}
+    if 'cs' in node_id or 'cz' in node_id or 'sc' in node_id or 'is' in node_id or 'cor' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'cs',}
+    if 'dsa' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dsa',}
+    if 'ma' in node_id or 'st' in node_id or 'mh' in node_id or 'stat' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'math',}
+    if 'dse' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'dse',}
+    if 'econ' in node_id or 'ec' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'econ',}
+    if 'mktg' in node_id or 'opim' in node_id:
+        return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': 'business',}
 
 def edge_dict(source, target):
     source = source.lower()
@@ -352,27 +355,39 @@ def layout(uni_code):
                             },
             # Class selectors
                             {
-                                'selector': '.1k',
+                                'selector': '.cs',
                                 'style': {
-                                'background-color': '#5E85A9',
+                                'background-color': '#CF4C4C',
                                 }
                             },
                             {
-                                'selector': '.2k',
+                                'selector': '.math',
                                 'style':{
-                                    'background-color':'tomato'
+                                    'background-color':'#6A93C4'
                                 }
                             },
                             {
-                                'selector':'.3k',
+                                'selector':'.econ',
                                 'style':{
-                                    'background-color':'olivedrab'
+                                    'background-color':'#8FA50B'
                                 }
                             },
                             {
-                                'selector':'.4k',
+                                'selector':'.dsa',
                                 'style':{
                                     'background-color':'darkorange'
+                                }
+                            },
+                            {
+                                'selector':'.dse',
+                                'style':{
+                                    'background-color':'#E2BE00'
+                                }
+                            },
+                            {
+                                'selector':'.business',
+                                'style':{
+                                    'background-color':'#267229'
                                 }
                             }
                         ]
