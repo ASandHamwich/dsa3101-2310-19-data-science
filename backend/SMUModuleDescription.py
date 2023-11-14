@@ -1,11 +1,17 @@
 import csv
+import requests
+import pandas as pd
 from selenium import webdriver #have to pip install selenium
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import NoSuchElementException
 import re
 import pandas as pd
 from pathlib import Path
+import nlp
 
 path = Path(__file__).parent
 
@@ -13,7 +19,7 @@ filename = path / "smuMods.csv"
 
 # extract the rows of the file
 rows = []
-with filename.open() as file:
+with open(filename, "r") as file:
     csvreader = csv.reader(file) # using csv.reader object to read the CSV file
     header = next(csvreader)
     for row in csvreader:
@@ -86,15 +92,50 @@ for i in range(len(SMUModuleCodes)): # iterating through the list of module code
     moduleDescription = moduleDescriptionElement.text
 
     # adding the module description into a dictionary
-    SMUModules[SMUModuleCodes[i]] = (moduleName, moduleDescription)
+    SMUModules[SMUModuleCodes[i]] = [moduleName, moduleDescription]
 
-filename = path / "smu.csv"
+#================================================================================
+# extracting key concepts from module description
+
+tokenised = []
+for module_code, [module_name, module_description] in SMUModules.items():
+    lemma = nlp.lemmatize(module_description)
+    tokenized_description = nlp.tokenize(lemma, ngram_range=(1, 2))
+    # print(tokenized_description)
+    tokenised.append(tokenized_description)
+
+# extracting keywords associated to each module
+glossary_list = nlp.get_glossary_list()
+keywords = []
+for i in range(len(tokenised)):
+    words = []
+    for j in range(len(tokenised[i])):
+        if tokenised[i][j] in glossary_list and tokenised[i][j] not in words:
+            words.append(tokenised[i][j])
+    keywords.append(words)
+keywords = [', '.join(inner_list) for inner_list in keywords]
+
+# print(keywords) # a nested list
+# print(len(keywords))
+
+if len(keywords) == len(SMUModules):
+    module_code = list(SMUModules.keys())
+    for i in range(len(SMUModules)):
+        key_concepts = keywords[i]
+        SMUModules[module_code[i]].append(key_concepts)
+else:
+    print(f'Lists have different lengths')
+# print(SMUModules)
+
+#================================================================================
 # Writing to the CSV file
-header = ["Module Code", "Module Name", "Module Description"]
+
+filename = "smu.csv"
+header = ["module_code", "module_name", "module_description", "key_concepts"]
 with open(filename, 'w') as csv_file:
     writer = csv.writer(csv_file)
     # Write the header
     writer.writerow(header)
     # Write the dictionary values
-    for code, (name, desc) in SMUModules.items():
-        writer.writerow([code, name, desc])
+    for code, [name, desc, keywords] in SMUModules.items():
+        writer.writerow([code, name, desc, keywords])
