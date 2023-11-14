@@ -39,6 +39,7 @@
 .course .course--link{
     font-size: 30px;
     font-family: Inter;
+    font-weight: bold;
     padding: 40px 20;
     border: 0px;
     margin: 10px 10px 20px 10px;
