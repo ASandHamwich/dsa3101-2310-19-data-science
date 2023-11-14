@@ -1,0 +1,9 @@
+plotly
+dash
+pandas
+dash_bootstrap_components
+requests
+datetime
+dash_cytoscape
+regex
+seaborn
