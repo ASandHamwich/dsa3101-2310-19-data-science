@@ -3,7 +3,7 @@ from dash import html, dcc, callback, Output, Input
 from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 
-dash.register_page(__name__, path='/home')
+dash.register_page(__name__, path='/')
 
 def course_layout(uni_code): # thinking of implementing this so as to reduce hardcoding
     if uni_code == 'nus-dsa':
