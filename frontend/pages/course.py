@@ -242,7 +242,15 @@ def root(uni_code):
                 root_list += f', [id = "{mod.lower()}"]'
     return(root_list)
         
-
+def treelayout(uni_code):
+    if 'smu' in uni_code:
+        layout = {
+            'name': 'grid'
+        }
+    else:
+        layout = {'name': 'breadthfirst',
+                'roots': root(uni_code)}
+    return layout
 
 def generate_edge(mod_list, curr_data, uni_code, mod):
 
@@ -328,8 +336,7 @@ def layout(uni_code):
                     cyto.Cytoscape(
                         id='cytoscape',
                         elements=generate_content(uni_code),
-                        layout={'name': 'breadthfirst',
-                                'roots': root(uni_code)},
+                        layout = treelayout(uni_code),
                         #style={'width': '1200px', 'height': '800px'},
                         style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
@@ -348,7 +355,7 @@ def layout(uni_code):
                                     'text-valign':'center',
                                     'text-halign': 'center',
                                     'height': '30px',
-                                    'width': '85px',
+                                    'width': '100px',
                                     'shape': 'round-rectangle',
                                     'color':'white'
                                 }
