@@ -242,10 +242,12 @@ def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
     url = f'/module/{uni_code}/{node_id}'
+
     for index, char in enumerate(node_id):
         if char in "0123456789":
             prefix = node_id[:index]
             return {'data': {'id': node_id, 'label': label,'url': url}, 'classes': f"{prefix}"}
+
 
 def edge_dict(source, target):
     source = source.lower()
@@ -282,6 +284,7 @@ def root(uni_code):
                 root_list += f', [id = "{mod.lower()}"]'
     return(root_list)
         
+
 def treelayout(uni_code):
     if 'smu' in uni_code:
         layout = {
@@ -291,6 +294,7 @@ def treelayout(uni_code):
         layout = {'name': 'breadthfirst',
                 'roots': root(uni_code)}
     return layout
+
 
 def generate_edge(mod_list, curr_data, uni_code, mod):
 
@@ -329,6 +333,17 @@ def generate_content(uni_code):
         content.extend(edge_list)
 
     return content
+
+
+def treelayout(uni_code):
+    if 'smu' in uni_code:
+        layout = {
+            'name': 'grid'
+        }
+    else:
+        layout={'name': 'breadthfirst',
+                'roots': root(uni_code)}
+    return layout
 
 
 def layout(uni_code):
@@ -382,6 +397,7 @@ def layout(uni_code):
                         minZoom=0.5,
                         maxZoom=1.5,
                         stylesheet=treestylesheet(uni_code)
+
                     )
                 ]
             ),
