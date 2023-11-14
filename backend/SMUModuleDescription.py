@@ -1,13 +1,8 @@
 import csv
-import requests
-import pandas as pd
 from selenium import webdriver #have to pip install selenium
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import StaleElementReferenceException
-from selenium.common.exceptions import NoSuchElementException
 import re
 import pandas as pd
 from pathlib import Path
@@ -23,8 +18,6 @@ with filename.open() as file:
     header = next(csvreader)
     for row in csvreader:
         rows.append(row)
-# print(header)
-# print(rows)
 
 SMUModuleCodes = []
 for row in rows:
@@ -87,13 +80,10 @@ for i in range(len(SMUModuleCodes)): # iterating through the list of module code
     moduleName = moduleNameElement.text
     moduleNameElement.click()
 
-    # rowElement.find_element(By.XPATH, f'.//a[contains(text(), "{moduleName}")]').click()
-
     moduleDescriptionElement = WebDriverWait(driver, timeoutDuration).until(
         EC.presence_of_element_located((By.ID, 'SSR_CRSE_OFF_VW_DESCRLONG$0'))
     )
     moduleDescription = moduleDescriptionElement.text
-    # print(moduleDescription)
 
     # adding the module description into a dictionary
     SMUModules[SMUModuleCodes[i]] = (moduleName, moduleDescription)
