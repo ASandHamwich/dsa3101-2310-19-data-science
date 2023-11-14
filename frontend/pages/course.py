@@ -308,7 +308,7 @@ def layout(uni_code):
             ),
 
             html.Div(
-                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'}, # Adjusted margin-top to reduce the gap 
+                style={'display': 'inline-block', 'margin': '10px 30px 10px 30px'}, # Adjusted margin-top to reduce the gap 
                 children=[
                     html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
                 ]
@@ -356,7 +356,7 @@ def layout(uni_code):
                                     'text-valign':'center',
                                     'text-halign': 'center',
                                     'height': '30px',
-                                    'width': '85px',
+                                    'width': '100px',
                                     'shape': 'round-rectangle',
                                     'color':'white'
                                 }
