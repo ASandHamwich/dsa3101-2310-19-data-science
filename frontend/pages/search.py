@@ -49,14 +49,22 @@ def fetch_mod_desc(uni_code, mod_code):
 
     return header, title, desc
 
+def descShorten(desc):
+    # Only leaves the first sentence in the description.
+    sentenceEndIndex = desc.find(".")
+    if sentenceEndIndex != len(desc) + 1 and sentenceEndIndex != -1:
+        shortDesc = desc[0: sentenceEndIndex + 1]
+        shortDesc += " ..."
+        return shortDesc
+    else:
+        return desc
+
 def queryCheck(query):
     query = cleanQuery(query)
 
     uni_code_list = ['nus-dsa', 'ntu-dsa', 'smu-dsa']
     #IDEA: run through every school's module information
-    results = [html.H1(
-        children = [f"Search Results for \"{query}\""], 
-        style = {'padding':'0px 40px 20px 40px'})]
+    results = [html.H1(f"Search Results for \"{query}\"", className = 'searchpage--header')]
     for uni_code in uni_code_list:
         mod_list = fetch_list_data(uni_code)
 
@@ -66,23 +74,23 @@ def queryCheck(query):
             
             if header.lower().find(query.lower()) != -1 or title.lower().find(query.lower()) != -1 or desc.lower().find(query.lower()) != -1:
                 section = html.Div(
-                    style = {'padding':'0px 40px 20px 40px'},
                     children = [
-                        html.H1(header),
-                        html.H2(title),
-                        html.P(desc),
-                        html.A("See More Here", href = url),
+                        html.H1(header, className = 'searchpage--header'),
+                        html.H2(title, className = 'searchpage--title'),
+                        html.P(descShorten(desc), className = 'searchpage--desc'),
+                        html.A("See More Here", href = url, className = 'searchpage--link'),
                         html.Br()
-                    ]
+                    ],
+                    className = 'searchpage--result'
                 )
                 results.append(section)
 
     if len(results) == 1:
-        results.append(html.H2("Sorry, your search has no results. Try some other keywords!"))
+        results.append(html.H2("Sorry, your search has no results. Try some other keywords!", className = 'searchpage--desc'))
 
     return results
 
 
 def layout(query):
     results = queryCheck(query)
-    return html.Div(results)
+    return html.Div(results, className = 'searchpage')

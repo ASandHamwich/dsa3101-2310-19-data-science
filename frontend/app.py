@@ -16,7 +16,7 @@ header = html.Div(
             children=[
                 html.Img(src='/assets/logo.png', className="logo")
             ],
-            href='/home'
+            href='/'
         )
     ]
 )
