@@ -20,20 +20,18 @@ def sidebar(uni_code, mod_code):
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
     #Note: All unis have different keys.
+
     if(uni_code.startswith("nus")):
-        header = "[NUS] " + data_dict["NUS Module Code"]
-        title = data_dict["NUS Module Title"]
-        desc = data_dict["NUS Module Description"]
+        header = "[NUS] " + data_dict["module_code"]
     
     if(uni_code.startswith("ntu")):
-        header = "[NTU] " + data_dict["Course Code"]
-        title = data_dict["Course Name"]
-        desc = data_dict["Course Description"]
-    
+        header = "[NTU] " + data_dict["module_code"]
+
     if(uni_code.startswith("smu")):
-        header = "[SMU] " + data_dict["Module Code"]
-        title = data_dict["Module Name"]
-        desc = data_dict["Module Description"]
+        header = "[SMU] " + data_dict["module_code"]
+
+    title = data_dict["module_name"]
+    desc = data_dict["module_description"]
     
     page = html.Div(
         children = [
