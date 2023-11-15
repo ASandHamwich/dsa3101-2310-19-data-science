@@ -125,7 +125,8 @@ def layout(uni_code, mod_code):
         children = [
             page_layout(uni_code, mod_code),
             conceptsBar(uni_code, mod_code),
-            dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview')
+            html.H3("Reviews", style = {'font-family': 'Inter'}),
+            dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview', style = {'margin': '0px 10px 10px 10px'})
         ],
         style = {'padding-left': '45px', 'padding-right': '45px'}
     )
