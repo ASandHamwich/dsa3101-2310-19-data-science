@@ -13,9 +13,15 @@ def fetch_data(uni_code, mod_code):
     url = f"http://localhost:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
 
+def fetch_all():
+    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
 
-def sidebar(uni_code, mod_code):
-    return html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR", className = 'mod_sidebar')
+
+def sidebar(concepts):
+    if not concepts:
+        return None
+    else:
+        return html.Div("No Related Mods", className = 'mod_sidebar')
 
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
@@ -32,6 +38,8 @@ def page_layout(uni_code, mod_code):
 
     title = data_dict["module_name"]
     desc = data_dict["module_description"]
+
+    concepts = data_dict["key_concepts"]
     
     page = html.Div(
         children = [
@@ -43,7 +51,7 @@ def page_layout(uni_code, mod_code):
                     html.P(desc, className = 'modInfo--desc')
                 ]
             ),
-            sidebar(uni_code, mod_code)
+            sidebar(concepts)
         ],
         className = "module"
     )
