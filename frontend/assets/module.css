@@ -51,10 +51,9 @@
 .conceptBar {
     display: inline-block;
     font-family: Inter;
-    background: #85B3DA;
+    background: #b2d8f0;
     border-radius: 10px;
-    border: 1px solid black;
-    padding: 5px;
+    padding: 10px 20px;
 }
 
 .bartitle{
