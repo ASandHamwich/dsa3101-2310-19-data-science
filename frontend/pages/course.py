@@ -280,7 +280,7 @@ def module_type(mod_code):
         return ('Information Systems')
     if mod_code == 'cor-is':
         return ('Computational Thinking')
-    if mod_code == 'econ':
+    if mod_code == 'econ' or mod_code == 'ec':
         return ('Economics')
     if mod_code == 'mktg':
         return ('Marketing')
@@ -448,7 +448,7 @@ def layout(uni_code):
                     html.H4('Course Tree', className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
-                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'})
                 ]
             ),
 
@@ -470,7 +470,6 @@ def layout(uni_code):
                         minZoom=0.5,
                         maxZoom=1.5,
                         stylesheet=treestylesheet(uni_code)
-
                     )
                 ]
             ),
@@ -486,3 +485,11 @@ def layout(uni_code):
 )
 def navigate_to_url(node_data):
     return f"{node_data['url']}"
+
+
+# @callback(
+#     Output('nodeHover', 'children'),
+#     Input('cytoscape', 'mouseoverNodeData'))
+# def displayTapNodeData(node_data):
+#     if node_data:
+#         return f"The module you are looking at is: {node_data['label']}"

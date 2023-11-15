@@ -210,7 +210,7 @@ def module_type(mod_code):
         return ('Information Systems')
     if mod_code == 'cor-is':
         return ('Computational Thinking')
-    if mod_code == 'econ':
+    if mod_code == 'econ' or mod_code == "ec":
         return ('Economics')
     if mod_code == 'mktg':
         return ('Marketing')
@@ -312,4 +312,5 @@ def layout(uni_code_1, uni_code_2):
         ],
         className = 'compare'
     )
+
 
