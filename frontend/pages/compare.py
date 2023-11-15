@@ -157,7 +157,7 @@ def nodepalette(uni_code):
                 break
         if prefix not in prefix_list:
             prefix_list.append(prefix)
-    palette = sns.color_palette("RdYlBu", len(prefix_list))
+    palette = sns.color_palette("pastel", len(prefix_list))
     hex = palette.as_hex()
     return prefix_list, hex
 
@@ -224,13 +224,10 @@ def legend(uni_code):
     output=[]
     for i in range(len(backgroundhex)):
         output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
-                             style={
-                                 'font-size': '14px', 
+                             style={ 
                                  'background-color':f"{backgroundhex[i]}",
-                                 'padding':'0px 30px 0px 30px',
-                                 'width': '200px'
                                 },
-                            className = "coursepage--desc"
+                            className = "coursepage--legend2"
                             ),
                         )
     return output
@@ -265,7 +262,7 @@ def half_layout(uni_code):
                     html.H3('Course Tree',className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.',className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
-                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--legend1"),
                 ]
             ),
             html.Div(
@@ -279,23 +276,12 @@ def half_layout(uni_code):
                         # id='cytoscape',
                         id='cytoscape-layout-4',
                         elements= generate_content(uni_code),
-                        #layout={'name': 'cose'},
                         layout=treelayout(uni_code),
-                        #style={'width': '600px', 'height': '400px'},
                         style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
                         maxZoom=2,
                         stylesheet=treestylesheet(uni_code)
                     )
-                    
-                    # Legend beside the course tree ( for some reason i cant make it go beside and its stuck beneath :( ))
-                    #html.Div(
-                        #className='legend',
-                        #children=[
-                            #html.H5('Legend', style={'font-size': '16px', 'margin-bottom': '1px'}),
-                            #html.P('Module A → Module B : A needs to be taken before B can be taken', style={'font-size': '14px', 'margin-bottom': '1px'}),
-                        #]
-                    #)
                 ]
             )
         ]

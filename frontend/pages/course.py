@@ -227,7 +227,7 @@ def nodepalette(uni_code):
                 break
         if prefix not in prefix_list:
             prefix_list.append(prefix)
-    palette = sns.color_palette("RdYlBu", len(prefix_list))
+    palette = sns.color_palette("pastel", len(prefix_list))
     hex = palette.as_hex()
     return prefix_list, hex
 
@@ -295,12 +295,9 @@ def legend(uni_code):
     for i in range(len(backgroundhex)):
         output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
                              style={
-                                 'font-size': '14px', 
                                  'background-color':f"{backgroundhex[i]}",
-                                 'padding':'0px 30px 0px 30px',
-                                 'width': '200px'
                                 },
-                            className = "coursepage--desc"
+                            className = "coursepage--legend2"
                             ),
                         )
     return output
@@ -421,18 +418,18 @@ def layout(uni_code):
         className="coursepage",
         children=[
             html.Div(
-                style={'display': "inline-block", 'width': '700px'},
                 children=[
                     html.H1(name, className = "coursepage--name"),
                     html.H3(school, className = "coursepage--school"),
                     html.P(desc, className = "coursepage--desc")
-                ]
+                ],
+                className = "coursepage--courseinfo"
             ),
 
-            html.Div(
-                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'}, # Adjusted margin-top to reduce the gap 
+            html.Div( # Adjusted margin-top to reduce the gap 
+                className = "coursepage--schimg",
                 children=[
-                    html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
+                    html.Img(src=img_path, className = "coursepage--courseimg"),
                 ]
             ),
 
@@ -448,7 +445,7 @@ def layout(uni_code):
                     html.H4('Course Tree', className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
-                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'})
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--legend1")
                 ]
             ),
 
