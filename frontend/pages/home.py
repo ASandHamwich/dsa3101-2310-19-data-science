@@ -61,16 +61,13 @@ layout = html.Div(
         ),
 
         html.Div(
-            html.Button('Compare', id='comp', style={
-                'background-color': '#F9CA84', 'border-color': '#F9CA84', 'font-size': '25px',
-                'border-radius': '10px', 'margin': '0px 20px 20px 20px', 'color': '#591414', 'font-weight':'bold'
-            }),
-            style={'display': 'flex', 'margin': '20px', 'justifyContent': 'center'}
+            html.Button('Compare', id='comp'),
+            className='compare-container'
         ),
 
         html.Br()
     ],
-    style={'background-color': 'white'}
+    className = 'container'
 )
 
 @callback(
