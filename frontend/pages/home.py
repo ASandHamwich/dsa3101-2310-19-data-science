@@ -32,8 +32,8 @@ def buttonFormat(name, id, image_url, img_style=None):
     return html.Div(
         children=[
             html.Img(src=image_url, className='checkbox-image', style=img_style),
-            dbc.Checkbox(id=f'checkbox_{id}', className='course--add', style={'margin-top': '0px'}),
-            html.Button(name, id=id, className='course--link', style={'margin-top': '0px', 'color': '#0A1173'})
+            dbc.Checkbox(id=f'checkbox_{id}', className='course--add'),
+            html.Button(name, id=id, className='course--link')
         ],
         className='course--rect'
     )
