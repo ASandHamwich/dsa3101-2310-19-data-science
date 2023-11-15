@@ -75,7 +75,7 @@ def sidebar(concepts, data_dict, uni_code, mod_code):
         if uni_code_2.startswith("ntu") or uni_code_2.startswith("smu"):
             uni_code_2 = uni_code_2 + "-dsa"
         res = html.A(
-            f"{data[2].upper()} {data[0]}: {data[1]}", 
+            f"{data[2].upper()} {data[0]}", 
             href = f'/modcompare/{uni_code}&{mod_code}/{uni_code_2}&{data[0]}',
             style = {"display": "inline-block", "padding-bottom": "5px"}
         )
