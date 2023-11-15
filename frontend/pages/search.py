@@ -16,6 +16,15 @@ def cleanQuery(query):
     final = query.replace("%20", " ")
     return final
 
+def descShorten(desc):
+    # Only leaves the first sentence in the description.
+    sentenceEndIndex = desc.find(".")
+    if sentenceEndIndex != len(desc) + 1 and sentenceEndIndex != -1:
+        shortDesc = desc[0: sentenceEndIndex + 1]
+        shortDesc += " ..."
+        return shortDesc
+    else:
+        return desc
 
 def fetch_list_data(uni_code):
     url = f"http://localhost:5001/{uni_code}" #prereq information 
@@ -32,37 +41,28 @@ def fetch_mod_desc(uni_code, mod_code):
     url = f"http://localhost:5001/{uni_code}/{mod_code}"
     data_dict = eval(str(requests.get(url).text))
 
-    if(uni_code.startswith("nus")):
-        header = "[NUS] " + data_dict["NUS Module Code"]
-        title = data_dict["NUS Module Title"]
-        desc = data_dict["NUS Module Description"]
+    if(uni_code.startswith("nus-dsa")):
+        header = "[NUS] (DSA) " + data_dict["module_code"]
+    
+    if(uni_code.startswith("nus-dse")):
+        header = "[NUS] (DSE) " + data_dict["module_code"]
     
     if(uni_code.startswith("ntu")):
-        header = "[NTU] " + data_dict["Course Code"]
-        title = data_dict["Course Name"]
-        desc = data_dict["Course Description"]
-    
+        header = "[NTU] " + data_dict["module_code"]
+
     if(uni_code.startswith("smu")):
-        header = "[SMU] " + data_dict["Module Code"]
-        title = data_dict["Module Name"]
-        desc = data_dict["Module Description"]
+        header = "[SMU] " + data_dict["module_code"]
+
+    title = data_dict["module_name"]
+    desc = data_dict["module_description"]
 
     return header, title, desc
 
-def descShorten(desc):
-    # Only leaves the first sentence in the description.
-    sentenceEndIndex = desc.find(".")
-    if sentenceEndIndex != len(desc) + 1 and sentenceEndIndex != -1:
-        shortDesc = desc[0: sentenceEndIndex + 1]
-        shortDesc += " ..."
-        return shortDesc
-    else:
-        return desc
 
 def queryCheck(query):
     query = cleanQuery(query)
 
-    uni_code_list = ['nus-dsa', 'ntu-dsa', 'smu-dsa']
+    uni_code_list = ['nus-dsa', 'nus-dse', 'ntu-dsa', 'smu-dsa']
     #IDEA: run through every school's module information
     results = [html.H1(f"Search Results for \"{query}\"", className = 'searchpage--header')]
     for uni_code in uni_code_list:
@@ -79,7 +79,8 @@ def queryCheck(query):
                         html.H2(title, className = 'searchpage--title'),
                         html.P(descShorten(desc), className = 'searchpage--desc'),
                         html.A("See More Here", href = url, className = 'searchpage--link'),
-                        html.Br()
+                        html.P("   "),
+                        html.Hr()
                     ],
                     className = 'searchpage--result'
                 )
@@ -89,6 +90,9 @@ def queryCheck(query):
         results.append(html.H2("Sorry, your search has no results. Try some other keywords!", className = 'searchpage--desc'))
 
     return results
+
+# def fetch_data():
+#     url = "http://localhost:5001/nus-ntu-smu/all-modules/"
 
 
 def layout(query):

@@ -13,27 +13,33 @@ def fetch_data(uni_code, mod_code):
     url = f"http://localhost:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
 
+def fetch_all():
+    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
 
-def sidebar(uni_code, mod_code):
-    return html.Div("INTENDED FEATURE: BUILD RELATED MODS BAR", className = 'mod_sidebar')
+
+def sidebar(concepts):
+    if not concepts:
+        return None
+    else:
+        return html.Div("No Related Mods", className = 'mod_sidebar')
 
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
     #Note: All unis have different keys.
+
     if(uni_code.startswith("nus")):
-        header = "[NUS] " + data_dict["NUS Module Code"]
-        title = data_dict["NUS Module Title"]
-        desc = data_dict["NUS Module Description"]
+        header = "[NUS] " + data_dict["module_code"]
     
     if(uni_code.startswith("ntu")):
-        header = "[NTU] " + data_dict["Course Code"]
-        title = data_dict["Course Name"]
-        desc = data_dict["Course Description"]
-    
+        header = "[NTU] " + data_dict["module_code"]
+
     if(uni_code.startswith("smu")):
-        header = "[SMU] " + data_dict["Module Code"]
-        title = data_dict["Module Name"]
-        desc = data_dict["Module Description"]
+        header = "[SMU] " + data_dict["module_code"]
+
+    title = data_dict["module_name"]
+    desc = data_dict["module_description"]
+
+    concepts = data_dict["key_concepts"]
     
     page = html.Div(
         children = [
@@ -45,7 +51,7 @@ def page_layout(uni_code, mod_code):
                     html.P(desc, className = 'modInfo--desc')
                 ]
             ),
-            sidebar(uni_code, mod_code)
+            sidebar(concepts)
         ],
         className = "module"
     )

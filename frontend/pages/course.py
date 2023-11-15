@@ -137,20 +137,26 @@ def course_links(uni_code):
                         href='https://wis.ntu.edu.sg/webexe/owa/aus_subj_cont.main',
                         target='_blank'
                     ),
+                        className='coursepage--link'
+
                 ),
                 html.H4(
                     html.A(
                         'Nanyang Mods: For Reviews on NTU Modules',
                         href='https://www.nanyangmods.com/',
                         target='_blank'
-                    )
+                    ),
+                        className='coursepage--link'
+
                 ),
                 html.H4(
                     html.A(
                         'NTU Omnibus: For NTU Bus Timings and Routes',
                         href='https://play.google.com/store/apps/details?id=sg.edu.ntu.apps.ntuomnibus&hl=en&gl=US',
                         target='_blank'
-                    )
+                    ),
+                        className='coursepage--link'
+
                 )
             ]
         )
@@ -158,12 +164,32 @@ def course_links(uni_code):
     if uni_code == 'smu-dsa':
         return html.Div(
             children=[
+                html.H2('More Information', className='coursepage--desc'),
                 html.H4(
                     html.A(
                         'SMU Official Website: 2nd Major in Data Science and Analytics',
                         href='https://economics.smu.edu.sg/bachelor-science-economics/curriculum/2nd-major-data-science-and-analytics',
                         target='_blank'
-                    )
+                    ),
+                        className='coursepage--link'
+
+                ),
+                html.H4(
+                    html.A(
+                        'SMU Student Life: For Clubs and CCAs',
+                        href='https://vivace.smu.edu.sg/',
+                        target='_blank'
+                    ),
+                        className='coursepage--link'
+
+                ),
+                html.H4(
+                    html.A(
+                        'SMU School Publication: The Blue and Gold',
+                        href='https://theblueandgold.sg/about',
+                        target='_blank'
+                    ),
+                        className='coursepage--link'
                 )
             ]
         )
@@ -235,7 +261,49 @@ def treestylesheet(uni_code):
         stylesheet.append(dic)
     return(stylesheet)
     
-
+def module_type(mod_code):
+    if mod_code == 'cs':
+        return('Computer Science')
+    if mod_code == 'dsa':
+        return('Data Science and Analytics')
+    if mod_code == 'dse':
+        return ('Data Science and Economics')
+    if mod_code == 'ma' or mod_code=='mh':
+        return('Mathematics')
+    if mod_code == 'st' or mod_code=='stat':
+        return ('Statistics')
+    if mod_code == 'cz':
+        return ('Computer Science (Before 21/22)')
+    if mod_code == 'sc':
+        return ('Computer Science (21/22 Onwards)')
+    if mod_code == 'is':
+        return ('Information Systems')
+    if mod_code == 'cor-is':
+        return ('Computational Thinking')
+    if mod_code == 'econ':
+        return ('Economics')
+    if mod_code == 'mktg':
+        return ('Marketing')
+    if mod_code == 'opim':
+        return ('Operations Management')
+    if mod_code == 'cor':
+        return ('Spreadsheet Modelling and Analytics')
+    
+def legend(uni_code):
+    lst, backgroundhex = nodepalette(uni_code)
+    output=[]
+    for i in range(len(backgroundhex)):
+        output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
+                             style={
+                                 'font-size': '14px', 
+                                 'background-color':f"{backgroundhex[i]}",
+                                 'padding':'0px 30px 0px 30px',
+                                 'width': '200px'
+                                },
+                            className = "coursepage--desc"
+                            ),
+                        )
+    return output
 
 
 def node_dict(module, uni_code):
@@ -376,18 +444,23 @@ def layout(uni_code):
             ),
 
             html.Div(
-                style={'margin-bottom': '10px'},  # Added margin-bottom to reduce the gap
-                children=[
+                children = [
                     html.H4('Course Tree', className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
-                    # INSERT TREE HERE
                     html.H4('Legend', className = "coursepage--desc"),
                     html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
-                    html.P('Blue Nodes: Level 1000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
-                    html.P('Red Nodes: Level 2000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
-                    html.P('Dark Green Nodes: Level 3000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
-                    html.P('Orange Nodes: Level 4000 Modules', className="coursepage--desc", style = {'font-size':'14px'}),
+                ]
+            ),
+
+            html.Div(
+                children = legend(uni_code)
+            ),
+
+            html.Div(
+                style={'margin-bottom': '10px'},  # Added margin-bottom to reduce the gap
+                children=[
                     dcc.Location(id='location'),
+                    # INSERT TREE HERE
                     cyto.Cytoscape(
                         id='cytoscape',
                         elements=generate_content(uni_code),
