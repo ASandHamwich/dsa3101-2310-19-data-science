@@ -46,5 +46,17 @@
     text-anchor: start;
     font-family: Inter;
     
+}
 
+.conceptBar {
+    display: inline-block;
+    font-family: Inter;
+    background: #85B3DA;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.bartitle{
+    font-family: Inter;
 }

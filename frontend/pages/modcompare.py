@@ -30,7 +30,8 @@ def half_page_layout(uni_code, mod_code):
     title = data_dict["module_name"]
     desc = data_dict["module_description"]
 
-    concepts = data_dict["key_concepts"]
+    concepts = data_dict["key_concepts"].upper()
+    concepts = concepts.replace(",", " | ")
 
     link = html.A(
         children = [html.H5("See More Here")], 
@@ -46,6 +47,8 @@ def half_page_layout(uni_code, mod_code):
                     html.H1(header, className = 'modInfo--header'),
                     html.H2(title, className = 'modInfo--title'),
                     html.P(desc, className = 'modInfo--desc'),
+                    html.H3("Key Concepts:", className = 'bartitle'),
+                    html.H4(concepts, className = 'conceptBar'),
                     link
                 ]
             )

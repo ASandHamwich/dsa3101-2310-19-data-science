@@ -41,7 +41,7 @@ search_bar = html.Div(
                 dcc.Input(
                     id='search',
                     type='text',
-                    placeholder='Search Universities, Modules here...',
+                    placeholder='Search Concepts, Modules here...',
                     size='70',
                     style={
                         'height': '30px',

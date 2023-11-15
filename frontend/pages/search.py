@@ -26,53 +26,37 @@ def descShorten(desc):
     else:
         return desc
 
-def fetch_list_data(uni_code):
-    url = f"http://localhost:5001/{uni_code}" #prereq information 
-    uni = uni_code[0:3]
-    full_module_data = eval(str(requests.get(url).text))[uni]["modules"] 
-    mod_list = []
-    for dct in full_module_data:
-        mod_list.append(dct['name'])
-    
-    return mod_list
 
-def fetch_mod_desc(uni_code, mod_code):
-    mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://localhost:5001/{uni_code}/{mod_code}"
+def fetch_data():
+    url = "http://localhost:5001/nus-ntu-smu/all-modules/"
     data_dict = eval(str(requests.get(url).text))
 
-    if(uni_code.startswith("nus-dsa")):
-        header = "[NUS] (DSA) " + data_dict["module_code"]
-    
-    if(uni_code.startswith("nus-dse")):
-        header = "[NUS] (DSE) " + data_dict["module_code"]
-    
-    if(uni_code.startswith("ntu")):
-        header = "[NTU] " + data_dict["module_code"]
-
-    if(uni_code.startswith("smu")):
-        header = "[SMU] " + data_dict["module_code"]
-
-    title = data_dict["module_name"]
-    desc = data_dict["module_description"]
-
-    return header, title, desc
-
+    return data_dict
 
 def queryCheck(query):
+    data_dict = fetch_data()
     query = cleanQuery(query)
-
-    uni_code_list = ['nus-dsa', 'nus-dse', 'ntu-dsa', 'smu-dsa']
-    #IDEA: run through every school's module information
+    uni_code_list = ['nus-dsa', 'nus-dse', 'ntu', 'smu']
+    
     results = [html.H1(f"Search Results for \"{query}\"", className = 'searchpage--header')]
-    for uni_code in uni_code_list:
-        mod_list = fetch_list_data(uni_code)
 
-        for mod in mod_list:
-            header, title, desc = fetch_mod_desc(uni_code, mod)
-            url = f"/module/{uni_code}/{mod.upper()}"
-            
-            if header.lower().find(query.lower()) != -1 or title.lower().find(query.lower()) != -1 or desc.lower().find(query.lower()) != -1:
+    for uni_code in uni_code_list:
+        uni_mods = data_dict[uni_code]
+        
+        for mod in uni_mods:
+            header = mod["Module Code"]
+            title = mod["Module Name"]
+            desc = mod["Module Description"]
+            concepts = mod["Key Concepts"]
+
+            if header.lower().find(query.lower()) != -1 or title.lower().find(query.lower()) != -1 or desc.lower().find(query.lower()) != -1 or concepts.find(query.lower()) != -1:
+                if uni_code == "ntu" or uni_code == "smu":
+                    url = f"/module/{uni_code}-dsa/{header.upper()}"
+                else:
+                    url = f"/module/{uni_code}/{header.upper()}"
+                
+                header = f"[{uni_code.upper()}] {header}"
+                
                 section = html.Div(
                     children = [
                         html.H1(header, className = 'searchpage--header'),
@@ -91,8 +75,8 @@ def queryCheck(query):
 
     return results
 
-# def fetch_data():
-#     url = "http://localhost:5001/nus-ntu-smu/all-modules/"
+
+
 
 
 def layout(query):
