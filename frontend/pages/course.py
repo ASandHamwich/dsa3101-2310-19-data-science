@@ -6,6 +6,9 @@ import dash_cytoscape as cyto
 import regex as re
 import requests
 import seaborn as sns
+from matplotlib import pyplot as plt
+import numpy as np
+import pandas as pd
 
 import dash_bootstrap_components as dbc
 
@@ -216,6 +219,29 @@ def fetch_data(uni_code):
     
     return mod_list, full_module_data
 
+def fetch_all():
+    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
+    return eval(str(requests.get(url).text))
+
+
+#get all module data for each uni
+#key concepts in mod page, already have mod names in mod_list, loop thru
+#filter by uni
+#retrieve key concepts and add it to a list
+#plot pie chart
+
+def key_concepts(uni_code):
+    full_dict = fetch_all()
+    all_key_concepts = []
+    uni_mods=full_dict[uni_code]
+    for mod in uni_mods:
+        key_concepts=mod["Key Concepts"].split(", ")
+        all_key_concepts.extend(key_concepts)
+    unique, counts = np.unique(all_key_concepts, return_counts=True)
+    df=pd.DataFrame([unique, counts], index=['unique','counts']).T
+    fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
+    #return dcc.Graph(id='concept-pie', figure=fig)
+    html.Div(unique)
 
 def nodepalette(uni_code):
     mod_list, full_module_data = fetch_data(uni_code)
@@ -439,6 +465,8 @@ def layout(uni_code):
                     html.H3('What You Will Learn', className = "coursepage--desc"),
                 ]
             ),
+
+            key_concepts(uni_code),
 
             html.Div(
                 children = [
