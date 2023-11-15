@@ -60,3 +60,29 @@
     margin-top: 0px;
     color: #0A1173;
 }
+
+#comp {
+    background-color: #F9CA84;
+    border-color: #F9CA84;
+    font-size: 25px;
+    border-radius: 10px;
+    margin: 0px 20px 20px 20px;
+    color: #591414;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#comp:hover {
+    background-color: #E5B772;
+    border-color: #E5B772;
+}
+
+.compare-container {
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+.container {
+    background-color: white;
+}
