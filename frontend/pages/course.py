@@ -224,11 +224,6 @@ def fetch_all():
     return eval(str(requests.get(url).text))
 
 
-#get all module data for each uni
-#key concepts in mod page, already have mod names in mod_list, loop thru
-#filter by uni
-#retrieve key concepts and add it to a list
-#plot pie chart
 
 def key_concepts(uni_code):
     full_dict = fetch_all()
@@ -240,8 +235,8 @@ def key_concepts(uni_code):
     unique, counts = np.unique(all_key_concepts, return_counts=True)
     df=pd.DataFrame([unique, counts], index=['unique','counts']).T
     fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
-    #return dcc.Graph(id='concept-pie', figure=fig)
-    html.Div(unique)
+    return dcc.Graph(id='concept-pie', figure=fig)
+    
 
 def nodepalette(uni_code):
     mod_list, full_module_data = fetch_data(uni_code)
