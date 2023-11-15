@@ -77,7 +77,7 @@ def sidebar(concepts, data_dict, uni_code, mod_code):
         res = html.A(
             f"{data[2].upper()} {data[0]}", 
             href = f'/modcompare/{uni_code}&{mod_code}/{uni_code_2}&{data[0]}',
-            style = {"display": "inline-block", "padding-bottom": "5px"}
+            className = "relatedmods"
         )
         concept_children.append(res)
 
@@ -126,7 +126,7 @@ def layout(uni_code, mod_code):
             page_layout(uni_code, mod_code),
             conceptsBar(uni_code, mod_code),
             html.H3("Reviews", style = {'font-family': 'Inter'}),
-            dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview', style = {'margin': '0px 10px 10px 10px'})
+            dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview')
         ],
-        style = {'padding-left': '45px', 'padding-right': '45px'}
+        className="modlayout"
     )

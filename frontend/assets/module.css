@@ -40,7 +40,7 @@
     width: 600px;
     height: 185px;
     border: 0px;
-    margin-top: 50px;
+    margin-top: 0px 10px 10px 10px;
     text-align: left;
     text-indent: 10px;
     text-anchor: start;
@@ -56,6 +56,16 @@
     padding: 10px 20px;
 }
 
-.bartitle{
+.bartitle {
     font-family: Inter;
+}
+
+.relatedmods{
+    display:inline-block;
+    padding-bottom:5px;
+}
+
+.modlayout {
+    padding-left:45px;
+    padding-left: 45px;
 }
