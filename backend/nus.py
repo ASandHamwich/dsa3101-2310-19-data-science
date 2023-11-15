@@ -55,7 +55,7 @@ dsa_df = pd.DataFrame.from_dict(dsa_data)
 dse_data = {'module_code': NusDseModsCode, 'module_name': NusDseTitleList, 'module_description': NusDseDescriptionList}
 dse_df = pd.DataFrame.from_dict(dse_data)
 
-############################################### MODULE SCRAPING ###############################################
+############################################### KEY CONCEPTS ###############################################
 
 # NUS DSA
 glossary_list = nlp.get_glossary_list()
