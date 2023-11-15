@@ -79,7 +79,8 @@ def queryCheck(query):
                         html.H2(title, className = 'searchpage--title'),
                         html.P(descShorten(desc), className = 'searchpage--desc'),
                         html.A("See More Here", href = url, className = 'searchpage--link'),
-                        html.Br()
+                        html.P("   "),
+                        html.Hr()
                     ],
                     className = 'searchpage--result'
                 )
