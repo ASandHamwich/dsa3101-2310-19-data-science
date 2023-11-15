@@ -169,18 +169,18 @@ def get_all_modules():
 
     # Add NUS modules
     for mod_code, mod_data, in nus_dsa_modules_data.items():
-        all_modules["nus-dsa"].append({"Module Code": mod_code,"Module Description": mod_data.get("NUS Module Description")})
+        all_modules["nus-dsa"].append({"Module Code": mod_code, "Module Name": mod_data.get("module_name"), "Module Description": mod_data.get("module_description"), "Key Concepts": mod_data.get("key_concepts")})
 
     for mod_code, mod_data, in nus_dse_modules_data.items():
-        all_modules["nus-dse"].append({"Module Code": mod_code,"Module Description": mod_data.get("NUS Module Description")})
+        all_modules["nus-dse"].append({"Module Code": mod_code, "Module Name": mod_data.get("module_name"), "Module Description": mod_data.get("module_description"), "Key Concepts": mod_data.get("key_concepts")})
 
     # Add NTU modules
     for mod_code, mod_data in ntu_modules_data.items():
-        all_modules["ntu"].append({"Module Code": mod_code,"Module Description": mod_data.get("Course Description")})
+        all_modules["ntu"].append({"Module Code": mod_code, "Module Name": mod_data.get("module_name"), "Module Description": mod_data.get("module_description"), "Key Concepts": mod_data.get("key_concepts")})
 
     # Add SMU modules
     for mod_code, mod_data in smu_modules_data.items():
-        all_modules["smu"].append({"Module Code": mod_code,"Module Description": mod_data.get("Module Description")})
+        all_modules["smu"].append({"Module Code": mod_code, "Module Name": mod_data.get("module_name"), "Module Description": mod_data.get("module_description"), "Key Concepts": mod_data.get("key_concepts")})
     
     return all_modules
 
