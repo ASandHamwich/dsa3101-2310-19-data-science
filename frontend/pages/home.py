@@ -106,10 +106,11 @@ def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkb
             cb_dict = {'nus-dsa': checkbox_nus1, 'nus-dse': checkbox_nus2, 'ntu-dsa': checkbox_ntu1,
                        'smu-dsa': checkbox_smu1}
             for key in cb_dict:
-                if cb_dict[key] is None:
+                if not cb_dict[key]:
                     continue
                 else:
                     checkbox.append(key)
+                    print(cb_dict[key])
 
             if len(checkbox) == 2:
                 return f'/compare/course1={checkbox[0]}&course2={checkbox[1]}'
