@@ -1,11 +1,12 @@
 version: "3"
 services:
-  web:
+  frontend:
     build:
       context: .
       dockerfile: frontend/frontend_dockerfile
     ports:
       - "9001:9001"
+
 
 
 
