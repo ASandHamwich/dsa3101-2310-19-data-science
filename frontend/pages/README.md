@@ -6,6 +6,6 @@ This directory contains the all the web pages in the form of python scripts for 
 
 ---
 
-[home.py](frontend/pages/home.py)
+[home.py](/home.py)
 
 * Python script containing layout of the home page/landing page
