@@ -133,8 +133,8 @@ for mod_name in dsa_mods:
                 review = review + " " + text
         all_reviews = all_reviews + review.strip()
     nusDsaModuleScores.append(sentiment.polarity_scores(all_reviews)['compound'])
-dsa_df['module_score'] = nusDsaModuleScores
-dsa_df.to_csv('nus_dsa.csv', index = False)
+dsa_df['sentiment_rating'] = nusDsaModuleScores
+dsa_df.to_csv('nus-dsa.csv', index = False)
 
 # extracting reviews and getting sentiment score for DSE modules
 for mod_name in dse_mods:
@@ -158,5 +158,5 @@ for mod_name in dse_mods:
                 review = review + " " + text
         all_reviews = all_reviews + review.strip()
     nusDseModuleScores.append(sentiment.polarity_scores(all_reviews)['compound'])
-dse_df['module_score'] = nusDseModuleScores
-dse_df.to_csv('nus_dse.csv', index = False)
+dse_df['sentiment_rating'] = nusDseModuleScores
+dse_df.to_csv('nus-dse.csv', index = False)
