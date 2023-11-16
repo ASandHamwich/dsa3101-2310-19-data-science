@@ -48,7 +48,7 @@ To get started,
 
 `docker compose up -d`
 
-4. You should have 1 container up and running:
+4. You should have 2 container up and running:
    1. `frontend-web` - This will be hosting our frontend website (Served on port 9001)
 
 5. Go to `http://localhost:9001` and you should be able to see the website
@@ -117,7 +117,7 @@ The purpose of the course page is to provide you with information about the sele
 1. Course Description: a short description about the program
 2. What you will learn: a pie chart showing the proportion of each subject offered under the Data Science Program, this provides additional information on the subjects the program focuses on. Hovering over a section of the pie chart will provide additional information about what the subject is and how many modules are offered.
 3. Course Tree: a course tree depicting the prerequisites and relationships between the modules in the program. If you are interested in learning more about a module, clicking on its node will bring you to the corresponding module page of the selected module
-   (SMU does not have links in their course tree as their prerequisite information was inaccessible to the public)
+   (SMU does not have links in their course tree as their prerequisite information is inaccessible to the public)
 ----
 ### Course Comparison page
 #Add picture of course comparison page
@@ -132,7 +132,7 @@ The course comparison page provides a side by side view of two of your selected 
 The module page provides information on the selected module. In the module page, you will find:
 1. Module description:  the module description was taken from the respective universities official module websites
 2. Key concepts bar: key concepts identified in the module description are placed in the key concepts bar for prospecctive students to easily see the key concepts they will learn in this module without having to read the description for more detail. Hovering on each key concept brings up a short explanation of the concept for students who are not familiar with the technical terms
-3.  Module recommendation sidebar: the sidebar contains similar modules to the currently selected module. The top 5 most similar modules from other universities are selected based on the similarity of their key concepts to allow proespective students to explore and compare similar modules. If you click on a module in the sidebar, it brings you to the module comparison page with the currently selected module and the similar module.
+3.  Related modules sidebar: the sidebar contains similar modules to the currently selected module. The top 5 most similar modules from other universities are selected based on the similarity of their key concepts to allow proespective students to explore and compare similar modules. If you click on a module in the sidebar, it brings you to the module comparison page with the currently selected module and the similar module.
 4.  Reviews: for past students of the module to leave reviews with the aim of building up a database of reviews for all data science programs in Singapore since module reviews for NTU and SMU are not available to the public.
 ----
 ### Module Comparison page
