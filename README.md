@@ -105,7 +105,7 @@ To get started,
 ### Landing page
 #Add picture of home page
 
-In the landing page, you will see 4 Data Science Programs in Singapore. You can either:
+In the landing page, you will see 4 Data Science Programs in the local universiites of Singapore. You can either:
 
 1. Click on a program and view the course page
 2. Click two of the checkboxes and use the compare button to view a course comparison page
@@ -138,13 +138,13 @@ The module page provides information on the selected module. In the module page,
 ### Module Comparison page
 #Add pictures of module comparison page
 
-THe module comparison page brings up the module description and key concepts bar side by side for ease of comparison. To return to a single module page, click on read more for additional details as well as recommended modules.
+The module comparison page brings up the module description and key concepts bar side by side for ease of comparison. To return to a single module page, click on read more for additional details as well as recommended modules.
 
 ----
 ### Search bar and results page
 #Add pictures of search results page
 
-If you are not in the mood for exploring modules and courses through the pages, you can directly type the module code or concept that you want to elarn more about into the search bar. Doing so will bring you to the search results page with all modules containing your search phrase.
+If you are not in the mood for exploring modules and courses through the pages, you can directly type the module code or concept that you want to learn more about into the search bar. Doing so will bring you to the search results page with all modules containing your search phrase.
 
 ----
 
