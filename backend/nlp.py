@@ -77,5 +77,13 @@ for word, desc in additional_words.items():
         glossary_dic[t] = desc
 glossary_dic['statistics'] = 'Statistics is a branch of mathematics that involves collecting, analyzing, interpreting, presenting, and organizing data. It provides methods and techniques for making inferences and drawing conclusions about populations based on sample'
 
+# returns {key_concept: description}
 def get_glossary_dic():
     return glossary_dic
+
+# returns the list of all the key_concepts
+def get_glossary_list():
+    glossary_list = []
+    for name, desc in glossary_dic.items():
+        glossary_list.append(name)
+    return glossary_list
