@@ -12,7 +12,7 @@ dash.register_page(__name__, path_template = '/modcompare/<uni1>&<mod1>/<uni2>&<
 
 def fetch_data(uni_code, mod_code):
     mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://localhost:5001/{uni_code}/{mod_code}"
+    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
 
 def endindex(uni_code, mod_code):
@@ -48,7 +48,7 @@ def half_page_layout(uni_code, mod_code):
 
     link = html.A(
         children = [html.H5("See More Here")], 
-        href = f"http://localhost:9001/module/{uni_code}/{mod_code}",
+        href = f"http://backend-1:5001/module/{uni_code}/{mod_code}",
         className = 'modInfo--desc'
     )
     
