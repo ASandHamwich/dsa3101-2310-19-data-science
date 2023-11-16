@@ -28,7 +28,7 @@ def descShorten(desc):
 
 
 def fetch_data():
-    url = "http://localhost:5001/nus-ntu-smu/all-modules/"
+    url = "http://backend-1:5001/nus-ntu-smu/all-modules/"
     data_dict = eval(str(requests.get(url).text))
 
     return data_dict
