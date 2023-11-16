@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
 import re
-# from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import nlp
 
 ############################################### MODULE SCRAPING ###############################################
@@ -34,11 +34,11 @@ for i in range(len(course_options)):
     for course in courses:
         rows = course.find_elements(By.TAG_NAME, "tr")
         course_code = rows[0].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text
-        CCode_list.append(course_code)
+        CCode_list.append(course_code.strip())
 
-        CName_list.append(rows[0].find_element(By.XPATH, "td[2]").find_element(By.TAG_NAME, "font").text)
+        CName_list.append(rows[0].find_element(By.XPATH, "td[2]").find_element(By.TAG_NAME, "font").text.strip())
 
-        CDesc_list.append(rows[-1].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text)
+        CDesc_list.append(rows[-1].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text.strip())
 
         prereqs = ""
         if len(rows) > 1 and rows[1].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text.lower() == "prerequisite:":
@@ -55,9 +55,9 @@ driver.quit()
 # Initialize an empty list to store the merged items
 preqs_clean = []
 
-valid_module_code_format = re.compile(r"^[A-Z]{2}[0-9]{4}$")
+valid_module_code_format = re.compile("[A-Z]{2}[0-9]{4}|^OR$|^&$")
 for prereq in Preqs_list:
-    preqs_clean.append(" ".join(filter(lambda x : x in ["OR", "&"] or valid_module_code_format.match(x), prereq.split())))
+    preqs_clean.append(" ".join(list(map(lambda x : valid_module_code_format.findall(x)[0] if valid_module_code_format.match(x) else '', prereq.split()))).strip())
 
 # # Iterate through the original list: merging text properly (here i'm just joining the Prerequisite: texts, this part no issue)
 # i = 0
