@@ -6,4 +6,4 @@ This directory contains all the images as well as the css style sheet used for o
 	* Data Compass Logo
 	* School Logos of NUS, NTU and SMU
 * CSS
-	*Stores CSS elements for the corresponding python script file
+	* Stores CSS elements for the corresponding python script file
