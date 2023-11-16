@@ -27,7 +27,7 @@ departments using unsupervised learning techniques.
 ## Objective
 
 1. Providing a common platform for incoming undergraduate students and administration to compare 
-course information for better decision-making.
+course information between different Data Science Programs to aid them in informed decision-making.
 2. Assisting university administration in identifying the strengths and weaknesses of their Data 
 Science programmes relative to other universities.
 3. (UX) Designing a user-friendly interface that is easy to navigate and explore different modules.
