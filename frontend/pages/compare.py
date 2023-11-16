@@ -248,7 +248,10 @@ def key_subjects(uni_code):
     for mod_code in unique:
         mod_type.append(module_type(mod_code))
     df=pd.DataFrame([unique, counts, mod_type], index=['unique','Number of Modules', 'module_type']).T
-    fig = px.pie(df, values='Number of Modules', color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    fig = px.pie(df, values='Number of Modules', color=unique,
+                hover_name='module_type', 
+                labels={'module_type':'Module Type', 'values':'Number of Modules', 'color':'Module Code'},
+                color_discrete_sequence=px.colors.sequential.Sunset)
     return dcc.Graph(id='subject-pie', figure=fig)
 
 

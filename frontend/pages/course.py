@@ -9,6 +9,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 
+
 import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path_template = '/course/<uni_code>')
@@ -253,7 +254,10 @@ def key_subjects(uni_code):
     for mod_code in unique:
         mod_type.append(module_type(mod_code))
     df=pd.DataFrame([unique, counts, mod_type], index=['unique','counts', 'module_type']).T
-    fig = px.pie(df, values=counts, color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    fig = px.pie(df, values=counts, names='module_type', color=unique, 
+                 hover_name='module_type', 
+                 labels={'module_type':'Module Type', 'values':'Number of Modules', 'color':'Module Code'},
+                 color_discrete_sequence=px.colors.sequential.Sunset)
     return dcc.Graph(id='subject-pie', figure=fig)
 
 
@@ -345,6 +349,7 @@ def legend(uni_code):
                             ),
                         )
     return output
+
 
 
 def node_dict(module, uni_code):
