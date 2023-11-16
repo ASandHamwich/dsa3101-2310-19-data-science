@@ -17,6 +17,10 @@ def fetch_all():
     url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
     return eval(str(requests.get(url).text))
 
+def fetch_glossary():
+    url = 'http://localhost:5001/glossary_list/'
+    return eval(str(requests.get(url).text))
+
 def conceptsBar(uni_code, mod_code):
     #Load the relevant data concepts
     data_dict = fetch_data(uni_code, mod_code)
