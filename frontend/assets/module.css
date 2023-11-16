@@ -50,10 +50,9 @@
 
 .conceptBar {
     display: inline-block;
-    font-family: Inter;
-    background: #b2d8f0;
-    border-radius: 10px;
-    padding: 10px 20px;
+    inline-size: 60%;
+    height: 90px;
+    padding-bottom: 50px;
 }
 
 .bartitle {
