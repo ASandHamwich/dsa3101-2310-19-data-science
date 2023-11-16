@@ -2,7 +2,6 @@ from flask import Flask, jsonify, abort
 import csv
 import requests
 from pathlib import Path
-import nlp
 
 app = Flask(__name__)
 
@@ -194,13 +193,5 @@ def get_all_modules_endpoint():
     response.status_code = 200
     return response
 
-#====================================================================
-# endpoint to get key concepts together with its description
-
-@app.route('/glossary_list/', methods=['GET'])
-def get_glossary_list():
-    glossary = nlp.get_glossary_dic()
-    return jsonify(glossary)
-
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5001)
+    app.run(host='0.0.0.0', port=5001)
