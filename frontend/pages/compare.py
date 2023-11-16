@@ -1,3 +1,5 @@
+
+
 from pydoc import classname
 import dash
 from dash import Dash, html, dcc, callback, Output, Input
@@ -309,6 +311,8 @@ def half_layout(uni_code):
             )
         ]
     )
+
+
 
 
 def layout(uni_code_1, uni_code_2):
