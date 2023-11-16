@@ -314,6 +314,8 @@ def module_type(mod_code):
         return('Mathematics')
     if mod_code == 'st' or mod_code=='stat':
         return ('Statistics')
+    if mod_code == 'qf':
+        return ('Quantitative Finance')
     if mod_code == 'cz':
         return ('Computer Science (Before 21/22)')
     if mod_code == 'sc':
