@@ -2,6 +2,7 @@ flask
 pathlib
 selenium
 spacy
+scikit-learn
 pandas
 vaderSentiment
 bs4
