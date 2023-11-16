@@ -8,6 +8,8 @@ import dash_cytoscape as cyto
 import requests
 import regex as re
 import seaborn as sns
+import numpy as np
+import pandas as pd
 
 import dash_bootstrap_components as dbc
 
@@ -157,7 +159,7 @@ def nodepalette(uni_code):
                 break
         if prefix not in prefix_list:
             prefix_list.append(prefix)
-    palette = sns.color_palette("RdYlBu", len(prefix_list))
+    palette = sns.color_palette("pastel", len(prefix_list))
     hex = palette.as_hex()
     return prefix_list, hex
 
@@ -202,6 +204,8 @@ def module_type(mod_code):
         return('Mathematics')
     if mod_code == 'st' or mod_code=='stat':
         return ('Statistics')
+    if mod_code == 'qf':
+        return('Quantitative Finance')
     if mod_code == 'cz':
         return ('Computer Science (Before 21/22)')
     if mod_code == 'sc':
@@ -210,7 +214,7 @@ def module_type(mod_code):
         return ('Information Systems')
     if mod_code == 'cor-is':
         return ('Computational Thinking')
-    if mod_code == 'econ':
+    if mod_code == 'econ' or mod_code == "ec":
         return ('Economics')
     if mod_code == 'mktg':
         return ('Marketing')
@@ -224,17 +228,30 @@ def legend(uni_code):
     output=[]
     for i in range(len(backgroundhex)):
         output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
-                             style={
-                                 'font-size': '14px', 
+                             style={ 
                                  'background-color':f"{backgroundhex[i]}",
-                                 'padding':'0px 30px 0px 30px',
-                                 'width': '200px'
                                 },
-                            className = "coursepage--desc"
+                            className = "coursepage--legend2"
                             ),
                         )
     return output
 
+def key_subjects(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    prefix_list=[]
+    for mod in mod_list:
+        for index, char in enumerate(mod):
+            if char in "0123456789":
+                prefix=mod[:index].lower()
+                break
+        prefix_list.append(prefix)
+    unique, counts = np.unique(prefix_list, return_counts=True)
+    mod_type=[]
+    for mod_code in unique:
+        mod_type.append(module_type(mod_code))
+    df=pd.DataFrame([unique, counts, mod_type], index=['unique','Number of Modules', 'module_type']).T
+    fig = px.pie(df, values='Number of Modules', color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    return dcc.Graph(id='subject-pie', figure=fig)
 
 
 
@@ -260,12 +277,13 @@ def half_layout(uni_code):
                     html.H4('What you will learn', className = "coursepage--desc")
                 ]
             ),
+            key_subjects(uni_code),
             html.Div(
                 children=[
                     html.H3('Course Tree',className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.',className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
-                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--legend1"),
                 ]
             ),
             html.Div(
@@ -279,23 +297,12 @@ def half_layout(uni_code):
                         # id='cytoscape',
                         id='cytoscape-layout-4',
                         elements= generate_content(uni_code),
-                        #layout={'name': 'cose'},
                         layout=treelayout(uni_code),
-                        #style={'width': '600px', 'height': '400px'},
                         style={'width': '100%', 'height': '100vh'},
                         minZoom=0.5,
                         maxZoom=2,
                         stylesheet=treestylesheet(uni_code)
                     )
-                    
-                    # Legend beside the course tree ( for some reason i cant make it go beside and its stuck beneath :( ))
-                    #html.Div(
-                        #className='legend',
-                        #children=[
-                            #html.H5('Legend', style={'font-size': '16px', 'margin-bottom': '1px'}),
-                            #html.P('Module A → Module B : A needs to be taken before B can be taken', style={'font-size': '14px', 'margin-bottom': '1px'}),
-                        #]
-                    #)
                 ]
             )
         ]
@@ -312,4 +319,5 @@ def layout(uni_code_1, uni_code_2):
         ],
         className = 'compare'
     )
+
 

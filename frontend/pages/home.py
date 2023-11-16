@@ -32,8 +32,8 @@ def buttonFormat(name, id, image_url, img_style=None):
     return html.Div(
         children=[
             html.Img(src=image_url, className='checkbox-image', style=img_style),
-            dbc.Checkbox(id=f'checkbox_{id}', className='course--add', style={'margin-top': '0px'}),
-            html.Button(name, id=id, className='course--link', style={'margin-top': '0px', 'color': '#0A1173'})
+            dbc.Checkbox(id=f'checkbox_{id}', className='course--add'),
+            html.Button(name, id=id, className='course--link')
         ],
         className='course--rect'
     )
@@ -61,16 +61,13 @@ layout = html.Div(
         ),
 
         html.Div(
-            html.Button('Compare', id='comp', style={
-                'background-color': '#F9CA84', 'border-color': '#F9CA84', 'font-size': '25px',
-                'border-radius': '10px', 'margin': '0px 20px 20px 20px', 'color': '#591414', 'font-weight':'bold'
-            }),
-            style={'display': 'flex', 'margin': '20px', 'justifyContent': 'center'}
+            html.Button('Compare', id='comp'),
+            className='compare-container'
         ),
 
         html.Br()
     ],
-    style={'background-color': 'white'}
+    className = 'container'
 )
 
 @callback(
@@ -106,10 +103,11 @@ def buttonPress(nus1_clicks, nus2_clicks, ntu1_clicks, smu1_clicks, comp, checkb
             cb_dict = {'nus-dsa': checkbox_nus1, 'nus-dse': checkbox_nus2, 'ntu-dsa': checkbox_ntu1,
                        'smu-dsa': checkbox_smu1}
             for key in cb_dict:
-                if cb_dict[key] is None:
+                if not cb_dict[key]:
                     continue
                 else:
                     checkbox.append(key)
+                    print(cb_dict[key])
 
             if len(checkbox) == 2:
                 return f'/compare/course1={checkbox[0]}&course2={checkbox[1]}'

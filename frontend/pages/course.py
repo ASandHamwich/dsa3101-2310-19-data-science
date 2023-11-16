@@ -6,6 +6,8 @@ import dash_cytoscape as cyto
 import regex as re
 import requests
 import seaborn as sns
+import numpy as np
+import pandas as pd
 
 import dash_bootstrap_components as dbc
 
@@ -216,6 +218,46 @@ def fetch_data(uni_code):
     
     return mod_list, full_module_data
 
+def fetch_all():
+    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
+    return eval(str(requests.get(url).text))
+
+
+
+def key_concepts(uni_code):
+    full_dict = fetch_all()
+    all_key_concepts = []
+    # For NTU/SMU: 
+    if not uni_code.startswith("nus"):
+        uni_code = uni_code[:3]
+    uni_mods=full_dict[uni_code]
+    for mod in uni_mods:
+        key_concepts=mod["Key Concepts"].split(", ")
+        all_key_concepts.extend(key_concepts)
+    unique, counts = np.unique(all_key_concepts, return_counts=True)
+    df=pd.DataFrame([unique, counts], index=['unique','counts']).T
+    fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
+    return dcc.Graph(id='concept-pie', figure=fig)
+
+def key_subjects(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    prefix_list=[]
+    for mod in mod_list:
+        for index, char in enumerate(mod):
+            if char in "0123456789":
+                prefix=mod[:index].lower()
+                break
+        prefix_list.append(prefix)
+    unique, counts = np.unique(prefix_list, return_counts=True)
+    mod_type=[]
+    for mod_code in unique:
+        mod_type.append(module_type(mod_code))
+    df=pd.DataFrame([unique, counts, mod_type], index=['unique','counts', 'module_type']).T
+    fig = px.pie(df, values=counts, color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    return dcc.Graph(id='subject-pie', figure=fig)
+
+
+    
 
 def nodepalette(uni_code):
     mod_list, full_module_data = fetch_data(uni_code)
@@ -227,7 +269,7 @@ def nodepalette(uni_code):
                 break
         if prefix not in prefix_list:
             prefix_list.append(prefix)
-    palette = sns.color_palette("RdYlBu", len(prefix_list))
+    palette = sns.color_palette("pastel", len(prefix_list))
     hex = palette.as_hex()
     return prefix_list, hex
 
@@ -272,6 +314,8 @@ def module_type(mod_code):
         return('Mathematics')
     if mod_code == 'st' or mod_code=='stat':
         return ('Statistics')
+    if mod_code == 'qf':
+        return ('Quantitative Finance')
     if mod_code == 'cz':
         return ('Computer Science (Before 21/22)')
     if mod_code == 'sc':
@@ -280,7 +324,7 @@ def module_type(mod_code):
         return ('Information Systems')
     if mod_code == 'cor-is':
         return ('Computational Thinking')
-    if mod_code == 'econ':
+    if mod_code == 'econ' or mod_code == 'ec':
         return ('Economics')
     if mod_code == 'mktg':
         return ('Marketing')
@@ -295,12 +339,9 @@ def legend(uni_code):
     for i in range(len(backgroundhex)):
         output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
                              style={
-                                 'font-size': '14px', 
                                  'background-color':f"{backgroundhex[i]}",
-                                 'padding':'0px 30px 0px 30px',
-                                 'width': '200px'
                                 },
-                            className = "coursepage--desc"
+                            className = "coursepage--legend2"
                             ),
                         )
     return output
@@ -421,18 +462,18 @@ def layout(uni_code):
         className="coursepage",
         children=[
             html.Div(
-                style={'display': "inline-block", 'width': '700px'},
                 children=[
                     html.H1(name, className = "coursepage--name"),
                     html.H3(school, className = "coursepage--school"),
                     html.P(desc, className = "coursepage--desc")
-                ]
+                ],
+                className = "coursepage--courseinfo"
             ),
 
-            html.Div(
-                style={'display': 'inline-block', 'margin': '10px 30px 0 30px'}, # Adjusted margin-top to reduce the gap 
+            html.Div( # Adjusted margin-top to reduce the gap 
+                className = "coursepage--schimg",
                 children=[
-                    html.Img(src=img_path, style={'height': '200px', 'width': '400px'}),
+                    html.Img(src=img_path, className = "coursepage--courseimg"),
                 ]
             ),
 
@@ -443,12 +484,14 @@ def layout(uni_code):
                 ]
             ),
 
+            key_subjects(uni_code),
+
             html.Div(
                 children = [
                     html.H4('Course Tree', className = "coursepage--school"),
                     html.P('The course tree aims to provide an overview of the relationship between core courses in the programme.', className = "coursepage--desc"),
                     html.H4('Legend', className = "coursepage--desc"),
-                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--desc", style = {'font-size':'14px'}),
+                    html.P('Module A → Module B : A needs to be taken before B can be taken', className = "coursepage--legend1")
                 ]
             ),
 
@@ -470,7 +513,6 @@ def layout(uni_code):
                         minZoom=0.5,
                         maxZoom=1.5,
                         stylesheet=treestylesheet(uni_code)
-
                     )
                 ]
             ),
@@ -486,3 +528,11 @@ def layout(uni_code):
 )
 def navigate_to_url(node_data):
     return f"{node_data['url']}"
+
+
+# @callback(
+#     Output('nodeHover', 'children'),
+#     Input('cytoscape', 'mouseoverNodeData'))
+# def displayTapNodeData(node_data):
+#     if node_data:
+#         return f"The module you are looking at is: {node_data['label']}"

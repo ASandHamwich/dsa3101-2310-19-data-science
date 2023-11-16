@@ -17,9 +17,36 @@
     font-family: Inter;
 }
 
+.coursepage .coursepage--legend1{
+    font-family: Inter;
+    font-size: 14px;
+}
+
+.coursepage .coursepage--legend2{
+    font-family: Inter;
+    padding:0px 30px 0px 30px;
+    width:200px;
+    font-size:14px;
+}
+
 .coursepage .coursepage--link{
     font-family: Inter;
     text-decoration: underline;
+}
+
+.coursepage .coursepage--courseinfo{
+    display: inline-block;
+    width: 700px
+}
+
+.coursepage .coursepage--schimg{
+    display: inline-block;
+    margin: 10px 30px 0 30px
+}
+
+.coursepage .coursepage--courseimg{
+    height: 200px;
+    width: 400px
 }
 
 
