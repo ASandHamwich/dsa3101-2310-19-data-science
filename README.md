@@ -55,4 +55,81 @@ To get started,
 
 ---
 
+## File Structure
+```bash
+C:.
+│   .gitignore
+│   High fidelity wireframe.pdf
+│   README.md
+│   requirements.txt
+│
+├───backend
+│       flask-backend.py
+│       nlp.py
+│       ntu.csv
+│       ntu.py
+│       ntu_db_sentiment.csv
+│       nus-dsa.csv
+│       nus-dse.csv
+│       nus.py
+│       smu.csv
+│       smu.py
+│       smuMods.csv
+│
+└───frontend
+    │   .gitignore
+    │   app.py
+    │   docker-compose.yml
+    │   Dockerfile
+    │   requirements.txt
+    │
+    ├───assets
+    │       app.css
+    │       course.css
+    │       glass_logo.png
+    │       home.css
+    │       logo.pdf
+    │       logo.png
+    │       magnifying_logo.png
+    │       module.css
+    │       ntu-logo.png
+    │       ntu_logo.png
+    │       ntu_pic.jpg
+    │       nus-img.jpg
+    │       nus_logo.png
+    │       nus_pic.png
+    │       README.md
+    │       search.css
+    │       smu-logo.png
+    │       smu_logo.png
+    │       smu_pic.jpg
+    │
+    ├───pages
+    │   │   compare.py
+    │   │   course.py
+    │   │   home.css
+    │   │   home.py
+    │   │   modcompare.py
+    │   │   module.py
+    │   │   ntu_with_concepts.csv
+    │   │   README.md
+    │   │   search.py
+    │   │
+    │   └───__pycache__
+    │           compare.cpython-310.pyc
+    │           compare.cpython-311.pyc
+    │           course.cpython-310.pyc
+    │           course.cpython-311.pyc
+    │           home.cpython-310.pyc
+    │           home.cpython-311.pyc
+    │           modcompare.cpython-310.pyc
+    │           modcompare.cpython-311.pyc
+    │           module.cpython-310.pyc
+    │           module.cpython-311.pyc
+    │           search.cpython-310.pyc
+    │
+    └───__pycache__
+            app.cpython-310.pyc
+```
+
 Have fun planning using DataCompass!
