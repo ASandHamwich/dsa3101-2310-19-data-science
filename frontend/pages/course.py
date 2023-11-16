@@ -6,7 +6,6 @@ import dash_cytoscape as cyto
 import regex as re
 import requests
 import seaborn as sns
-from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -239,6 +238,25 @@ def key_concepts(uni_code):
     df=pd.DataFrame([unique, counts], index=['unique','counts']).T
     fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
     return dcc.Graph(id='concept-pie', figure=fig)
+
+def key_subjects(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    prefix_list=[]
+    for mod in mod_list:
+        for index, char in enumerate(mod):
+            if char in "0123456789":
+                prefix=mod[:index].lower()
+                break
+        prefix_list.append(prefix)
+    unique, counts = np.unique(prefix_list, return_counts=True)
+    mod_type=[]
+    for mod_code in unique:
+        mod_type.append(module_type(mod_code))
+    df=pd.DataFrame([unique, counts, mod_type], index=['unique','counts', 'module_type']).T
+    fig = px.pie(df, values=counts, color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    return dcc.Graph(id='subject-pie', figure=fig)
+
+
     
 
 def nodepalette(uni_code):
@@ -464,7 +482,7 @@ def layout(uni_code):
                 ]
             ),
 
-            key_concepts(uni_code),
+            key_subjects(uni_code),
 
             html.Div(
                 children = [
