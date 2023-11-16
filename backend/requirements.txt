@@ -1,6 +1,7 @@
 flask
 pathlib
 selenium
+spacy
 pandas
 vaderSentiment
 bs4
