@@ -104,7 +104,7 @@ def sidebar(concepts, data_dict, uni_code, mod_code):
         )
         concept_children.append(res)
 
-    if concepts:
+    if len(concepts) > 1:
         return html.Div(concept_children, className = 'mod_sidebar')
     else:
         return html.Div("NO RELATED MODS FOUND", className = 'mod_sidebar')
