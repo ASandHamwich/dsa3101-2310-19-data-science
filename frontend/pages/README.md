@@ -2,15 +2,15 @@
 
 This directory contains the all the web pages in the form of python scripts for visualizations in our web application.
 
-### File Descriptions
+## File Descriptions
 
 ---
 
-#### [**home.py**](home.py)
+### [**home.py**](home.py)
 
 * Python script defining layout of the home page/landing page
 
-#### [**course.py**](course.py)
+### [**course.py**](course.py)
 
 * Implements UI layout of the main page for the respective univeristy programmes
 
