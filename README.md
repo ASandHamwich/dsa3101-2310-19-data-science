@@ -55,4 +55,49 @@ To get started,
 
 ---
 
+## File Structure
+```bash
+.
+│   High fidelity wireframe.pdf
+│   README.md
+│   requirements.txt
+│
+├───backend
+│       flask-backend.py
+│       nlp.py
+│       ntu.csv
+│       ntu.py
+│       ntu_db_sentiment.csv
+│       nus-dsa.csv
+│       nus-dse.csv
+│       nus.py
+│       smu.csv
+│       smu.py
+│       smuMods.csv
+│
+└───frontend
+    │   app.py
+    │
+    ├───assets
+    │       app.css
+    │       course.css
+    │       home.css
+    │       module.css
+    │       README.md
+    │       search.css
+    │
+    ├───pages
+            compare.py
+            course.py
+            home.css
+            home.py
+            modcompare.py
+            module.py
+            ntu_with_concepts.csv
+            README.md
+            search.py
+        
+    
+```
+
 Have fun planning using DataCompass!
