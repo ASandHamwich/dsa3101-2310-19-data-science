@@ -8,6 +8,8 @@ import dash_cytoscape as cyto
 import requests
 import regex as re
 import seaborn as sns
+import numpy as np
+import pandas as pd
 
 import dash_bootstrap_components as dbc
 
@@ -202,6 +204,8 @@ def module_type(mod_code):
         return('Mathematics')
     if mod_code == 'st' or mod_code=='stat':
         return ('Statistics')
+    if mod_code == 'qf':
+        return('Quantitative Finance')
     if mod_code == 'cz':
         return ('Computer Science (Before 21/22)')
     if mod_code == 'sc':
@@ -232,6 +236,22 @@ def legend(uni_code):
                         )
     return output
 
+def key_subjects(uni_code):
+    mod_list, full_module_data = fetch_data(uni_code)
+    prefix_list=[]
+    for mod in mod_list:
+        for index, char in enumerate(mod):
+            if char in "0123456789":
+                prefix=mod[:index].lower()
+                break
+        prefix_list.append(prefix)
+    unique, counts = np.unique(prefix_list, return_counts=True)
+    mod_type=[]
+    for mod_code in unique:
+        mod_type.append(module_type(mod_code))
+    df=pd.DataFrame([unique, counts, mod_type], index=['unique','Number of Modules', 'module_type']).T
+    fig = px.pie(df, values='Number of Modules', color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    return dcc.Graph(id='subject-pie', figure=fig)
 
 
 
@@ -257,6 +277,7 @@ def half_layout(uni_code):
                     html.H4('What you will learn', className = "coursepage--desc")
                 ]
             ),
+            key_subjects(uni_code),
             html.Div(
                 children=[
                     html.H3('Course Tree',className = "coursepage--school"),
