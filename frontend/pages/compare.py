@@ -1,5 +1,6 @@
 
 
+from pydoc import classname
 import dash
 from dash import Dash, html, dcc, callback, Output, Input
 import plotly.express as px
@@ -227,13 +228,13 @@ def legend(uni_code):
     lst, backgroundhex = nodepalette(uni_code)
     output=[]
     for i in range(len(backgroundhex)):
-        output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
-                             style={ 
-                                 'background-color':f"{backgroundhex[i]}",
-                                },
-                            className = "coursepage--legend2"
-                            ),
-                        )
+        output.append(html.Div(
+            children = [
+                html.Img(src = "/assets/rect.png", style = {'background-color':f'{backgroundhex[i]}'}, className = 'coursepage--legendimg'),
+                html.Span(f"{module_type(lst[i])}", className = 'coursepage--legend2')
+            ],
+            className='coursepage--modlegend'
+        ))
     return output
 
 def key_subjects(uni_code):

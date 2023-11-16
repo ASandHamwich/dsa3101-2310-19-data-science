@@ -24,9 +24,16 @@
 
 .coursepage .coursepage--legend2{
     font-family: Inter;
-    padding:0px 30px 0px 30px;
-    width:200px;
-    font-size:14px;
+    padding:0px 20px 0px 5px
+}
+
+.coursepage .coursepage--legendimg{
+    height:10px;
+    width:10px
+}
+
+.coursepage .coursepage--modlegend{
+    display:inline-block
 }
 
 .coursepage .coursepage--link{
@@ -60,6 +67,7 @@
     margin: 25px;
     padding: 5px;
 }
+
 
 
 
