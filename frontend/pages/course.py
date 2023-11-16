@@ -337,13 +337,10 @@ def legend(uni_code):
     lst, backgroundhex = nodepalette(uni_code)
     output=[]
     for i in range(len(backgroundhex)):
-        output.append(html.P(f"{lst[i].upper()}" ' : ' f"{module_type(lst[i])}", 
-                             style={
-                                 'background-color':f"{backgroundhex[i]}",
-                                },
-                            className = "coursepage--legend2"
-                            ),
-                        )
+        output.append({'label':[
+            html.Img(src = "/assets/glass_logo.png"),
+            html.Span(f"{lst[i].upper()} : {module_type(lst[i])}")], 
+            'value':f"{lst[i]}"},)
     return output
 
 
@@ -417,35 +414,38 @@ def generate_edge(mod_list, curr_data, uni_code, mod):
 
 
 
-def generate_content(uni_code):
+def generate_content(uni_code, filter123 = None):
     mod_list, full_module_data = fetch_data(uni_code)
+    content=[]
+    if filter123:
+        #String parsing to remove the unnecessary mods from the modlist
+        for mod in mod_list: 
+            if filter123 in mod:
+                node_data = node_dict(mod,uni_code)
+                content.append(node_data)
+    else:
+        for index in range(len(mod_list)):
+            mod = mod_list[index]
 
-    content = []
-    
-    # Add all the Node data in first.
-    for index in range(len(mod_list)):
-        mod = mod_list[index]
+            # Node data
+            node_data = node_dict(mod, uni_code)
+            content.append(node_data)
 
-        # Node data
-        node_data = node_dict(mod, uni_code)
-        content.append(node_data)
-    
-    #Add all the edge data in.
-    for index in range(len(mod_list)):
-        mod = mod_list[index]
-        curr_data = full_module_data[index]
-        #print("CHECKPOINT 1")
-        #print(curr_data)
+        for index in range(len(mod_list)):
+            mod = mod_list[index]
+            curr_data = full_module_data[index]
+            #print("CHECKPOINT 1")
+            #print(curr_data)
 
-        # Edge data
-        edge_list = generate_edge(mod_list, curr_data, uni_code, mod)
-        content.extend(edge_list)
+            # Edge data
+            edge_list = generate_edge(mod_list, curr_data, uni_code, mod)
+            content.extend(edge_list)
 
     return content
 
 
-def treelayout(uni_code):
-    if 'smu' in uni_code:
+def treelayout(uni_code, filter123 = None):
+    if filter123 or 'smu' in uni_code :
         layout = {
             'name': 'grid'
         }
@@ -453,6 +453,18 @@ def treelayout(uni_code):
         layout={'name': 'breadthfirst',
                 'roots': root(uni_code)}
     return layout
+
+def treegen(uni_code, filter123 = None):
+    tree = cyto.Cytoscape(
+                        id='cytoscape',
+                        elements=generate_content(uni_code, filter123),
+                        layout = treelayout(uni_code, filter123),
+                        style={'width': '100%', 'height': '100vh'},
+                        minZoom=0.5,
+                        maxZoom=1.5,
+                        stylesheet=treestylesheet(uni_code)
+                    )
+    return tree
 
 
 def layout(uni_code):
@@ -496,7 +508,7 @@ def layout(uni_code):
             ),
 
             html.Div(
-                children = legend(uni_code)
+                children = dcc.RadioItems(id = "radio", options = legend(uni_code)),
             ),
 
             html.Div(
@@ -504,16 +516,7 @@ def layout(uni_code):
                 children=[
                     dcc.Location(id='location'),
                     # INSERT TREE HERE
-                    cyto.Cytoscape(
-                        id='cytoscape',
-                        elements=generate_content(uni_code),
-                        layout = treelayout(uni_code),
-                        #style={'width': '1200px', 'height': '800px'},
-                        style={'width': '100%', 'height': '100vh'},
-                        minZoom=0.5,
-                        maxZoom=1.5,
-                        stylesheet=treestylesheet(uni_code)
-                    )
+                    html.Div(id = "cyto")
                 ]
             ),
             course_links(uni_code)
@@ -522,10 +525,22 @@ def layout(uni_code):
 
 
 @callback(
+    Output('cyto', 'children'),
+    [Input(component_id='radio', component_property='value')],
+    prevent_initial_call = False
+
+)
+
+def functionthatdoesthings(value):
+    if not value:
+        return html.Div(treegen()
+
+@callback(
     Output("location", "href"),
     Input("cytoscape", "tapNodeData"),
     prevent_initial_call=True,
 )
+
 def navigate_to_url(node_data):
     return f"{node_data['url']}"
 
