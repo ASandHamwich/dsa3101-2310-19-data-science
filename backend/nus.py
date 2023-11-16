@@ -1,8 +1,13 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import time
 import nlp
+import csv
 
 ############################################### MODULE SCRAPING ###############################################
 
@@ -76,9 +81,6 @@ for i in range(len(tokenised)):
 keywords = [', '.join(inner_list) for inner_list in keywords]
 dsa_df['key_concepts'] = keywords
 
-csv_file = "nus-dsa.csv"
-dsa_df.to_csv(csv_file, index = False)
-
 # NUS DSE
 glossary_list = nlp.get_glossary_list()
 tokenised = []
@@ -98,5 +100,63 @@ for i in range(len(tokenised)):
 keywords = [', '.join(inner_list) for inner_list in keywords]
 dse_df['key_concepts'] = keywords
 
-csv_file = "nus-dse.csv"
-dse_df.to_csv(csv_file, index = False)
+############################################### SENTIMENT ANALYSIS #########################################
+
+# load the website and data
+driver = webdriver.Chrome()
+sentiment = SentimentIntensityAnalyzer()
+nusDsaModuleScores = []
+dsa_mods = dsa_df['module_code']
+nusDseModuleScores = []
+dse_mods = dse_df['module_code']
+
+# extracting reviews and getting sentiment score for DSA modules
+for mod_name in dsa_mods:
+    print(mod_name)
+    baseurl = "https://nusmods.com/courses/"
+    nusmods_url = baseurl+mod_name
+    driver.get(nusmods_url)
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[src^='https://disqus']")))
+    url2 = element.get_attribute("src")
+    driver.get(url2)
+    wait.until(EC.presence_of_element_located((By.ID, "email-signup")))
+    time.sleep(2)
+    reviews = driver.find_elements(By.XPATH, "//div[@class='post-message ']")
+    all_reviews = ''
+    for i in range(len(reviews)):
+        pElements = reviews[i].find_elements(By.TAG_NAME, "p")
+        review = ""
+        for p in pElements:
+            text = p.text
+            if text!='':
+                review = review + " " + text
+        all_reviews = all_reviews + review.strip()
+    nusDsaModuleScores.append(sentiment.polarity_scores(all_reviews)['compound'])
+dsa_df['module_score'] = nusDsaModuleScores
+dsa_df.to_csv('nus_dsa.csv', index = False)
+
+# extracting reviews and getting sentiment score for DSE modules
+for mod_name in dse_mods:
+    baseurl = "https://nusmods.com/courses/"
+    nusmods_url = baseurl+mod_name
+    driver.get(nusmods_url)
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[src^='https://disqus']")))
+    url2 = element.get_attribute("src")
+    driver.get(url2)
+    wait.until(EC.presence_of_element_located((By.ID, "email-signup")))
+    time.sleep(2)
+    reviews = driver.find_elements(By.XPATH, "//div[@class='post-message ']")
+    all_reviews = ''
+    for i in range(len(reviews)):
+        pElements = reviews[i].find_elements(By.TAG_NAME, "p")
+        review = ""
+        for p in pElements:
+            text = p.text
+            if text!='':
+                review = review + " " + text
+        all_reviews = all_reviews + review.strip()
+    nusDseModuleScores.append(sentiment.polarity_scores(all_reviews)['compound'])
+dse_df['module_score'] = nusDseModuleScores
+dse_df.to_csv('nus_dse.csv', index = False)
