@@ -1,12 +1,13 @@
 FROM python:3.10.6-slim-buster
 
 WORKDIR /app
-COPY app.py app.py
-COPY assets/ assets/
-COPY pages/ pages/
-COPY requirements.txt requirements.txt
+COPY frontend/app.py app.py
+COPY frontend/assets/ assets/
+COPY frontend/pages/ pages/
+COPY frontend/requirements.txt requirements.txt
 
 RUN pip3 install --upgrade pip
 RUN pip install -r requirements.txt
 
 CMD ["python", "app.py"]
+
