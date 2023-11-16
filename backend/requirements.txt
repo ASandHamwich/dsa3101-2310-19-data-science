@@ -1,7 +1,9 @@
 flask
 pathlib
 selenium
+scikit-learn
 pandas
 vaderSentiment
 bs4
 requests
+matplotlib

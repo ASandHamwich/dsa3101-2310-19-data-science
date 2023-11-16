@@ -18,7 +18,7 @@ def fetch_all():
     return eval(str(requests.get(url).text))
 
 def fetch_glossary():
-    url = 'http://localhost:5001/glossary_list/'
+    url = 'http://backend-1:5001/glossary_list/'
     return eval(str(requests.get(url).text))
 
 def conceptsBar(uni_code, mod_code):
