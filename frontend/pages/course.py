@@ -228,6 +228,9 @@ def fetch_all():
 def key_concepts(uni_code):
     full_dict = fetch_all()
     all_key_concepts = []
+    # For NTU/SMU: 
+    if not uni_code.startswith("nus"):
+        uni_code = uni_code[:3]
     uni_mods=full_dict[uni_code]
     for mod in uni_mods:
         key_concepts=mod["Key Concepts"].split(", ")
