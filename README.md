@@ -50,6 +50,7 @@ To get started,
 
 4. You should have 2 container up and running:
    1. `frontend-web` - This will be hosting our frontend website (Served on port 9001)
+   2. `backend-1` - This will contain the flask-api which connects the database with the frontend website (Served on port 5001)
 
 5. Go to `http://localhost:9001` and you should be able to see the website
 
