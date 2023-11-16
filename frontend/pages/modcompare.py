@@ -48,7 +48,7 @@ def half_page_layout(uni_code, mod_code):
 
     link = html.A(
         children = [html.H5("See More Here")], 
-        href = f"http://backend-1:5001/module/{uni_code}/{mod_code}",
+        href = f"http://localhost:9001/module/{uni_code}/{mod_code}",
         className = 'modInfo--desc'
     )
     
