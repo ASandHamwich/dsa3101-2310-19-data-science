@@ -95,9 +95,57 @@ To get started,
             module.py
             ntu_with_concepts.csv
             README.md
-            search.py
-        
+            search.py      
     
 ```
+----
+
+## How our website works
+----
+### Landing page
+#Add picture of home page
+
+In the landing page, you will see 4 Data Science Programs in Singapore. You can either:
+
+1. Click on a program and view the course page
+2. Click two of the checkboxes and use the compare button to view a course comparison page
+----
+### Course page
+#Add picture of course page
+
+The purpose of the course page is to provide you with information about the selected Data Science Program in a simple, condensed manner. In this page, you will find:
+1. Course Description: a short description about the program
+2. What you will learn: a pie chart showing the proportion of each subject offered under the Data Science Program, this provides additional information on the subjects the program focuses on. Hovering over a section of the pie chart will provide additional information about what the subject is and how many modules are offered.
+3. Course Tree: a course tree depicting the prerequisites and relationships between the modules in the program. If you are interested in learning more about a module, clicking on its node will bring you to the corresponding module page of the selected module
+   (SMU does not have links in their course tree as their prerequisite information was inaccessible to the public)
+----
+### Course Comparison page
+#Add picture of course comparison page
+
+The course comparison page provides a side by side view of two of your selected courses. By showing a direct comparison of two courses, it aims to:
+1. Improve convenience: proespective students can look at one page instead of two or more pages to get the same amount of information on the two programs
+2. Direct comparison: prospective students can view the subject pie charts and course trees together and choose the program that offers more of the subject they are interested in
+----
+### Module page
+#Add pictures of module page 
+
+The module page provides information on the selected module. In the module page, you will find:
+1. Module description:  the module description was taken from the respective universities official module websites
+2. Key concepts bar: key concepts identified in the module description are placed in the key concepts bar for prospecctive students to easily see the key concepts they will learn in this module without having to read the description for more detail. Hovering on each key concept brings up a short explanation of the concept for students who are not familiar with the technical terms
+3.  Module recommendation sidebar: the sidebar contains similar modules to the currently selected module. The top 5 most similar modules from other universities are selected based on the similarity of their key concepts to allow proespective students to explore and compare similar modules. If you click on a module in the sidebar, it brings you to the module comparison page with the currently selected module and the similar module.
+4.  Reviews: for past students of the module to leave reviews with the aim of building up a database of reviews for all data science programs in Singapore since module reviews for NTU and SMU are not available to the public.
+----
+### Module Comparison page
+#Add pictures of module comparison page
+
+THe module comparison page brings up the module description and key concepts bar side by side for ease of comparison. To return to a single module page, click on read more for additional details as well as recommended modules.
+
+----
+### Search bar and results page
+#Add pictures of search results page
+
+If you are not in the mood for exploring modules and courses through the pages, you can directly type the module code or concept that you want to elarn more about into the search bar. Doing so will bring you to the search results page with all modules containing your search phrase.
+
+----
 
 Have fun planning using DataCompass!
