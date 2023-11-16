@@ -12,8 +12,21 @@ dash.register_page(__name__, path_template = '/modcompare/<uni1>&<mod1>/<uni2>&<
 
 def fetch_data(uni_code, mod_code):
     mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://localhost:5001/{uni_code}/{mod_code}"
+    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
+
+def endindex(uni_code, mod_code):
+    data_dict = fetch_data(uni_code, mod_code)
+    desc = data_dict["module_description"]
+    count = 0
+    index = -1
+    for i, char in enumerate(desc):
+        if char == '.':
+            count += 1
+            if count == 3:
+                index = i
+                break
+    return index
 
 def half_page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
@@ -46,7 +59,11 @@ def half_page_layout(uni_code, mod_code):
                 children = [
                     html.H1(header, className = 'modInfo--header'),
                     html.H2(title, className = 'modInfo--title'),
-                    html.P(desc, className = 'modInfo--desc'),
+                    html.P(desc[:endindex(uni_code, mod_code)+1], className = 'modInfo--desc'),
+                    html.Details([
+                        html.Summary("Read More"),
+                        html.P(desc[endindex(uni_code, mod_code)+1:], className = 'modInfo--desc')
+                    ]),
                     html.H3("Key Concepts:", className = 'bartitle'),
                     html.H4(concepts, className = 'conceptBar'),
                     link

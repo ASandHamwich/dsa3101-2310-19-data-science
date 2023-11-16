@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend_dockerfile
+    ports:
+      - "9001:9001"
+    depends_on:
+      - backend
+    links:
+      - backend
+    
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend_dockerfile
+    ports:
+      - "5001:5001"
