@@ -256,8 +256,8 @@ def key_subjects(uni_code):
     df=pd.DataFrame([unique, counts, mod_type], index=['unique','counts', 'module_type']).T
     fig = px.pie(df, values=counts, names='module_type', color=unique, 
                  hover_name='module_type', 
+                 labels={'module_type':'Module Type', 'values':'Number of Modules', 'color':'Module Code'},
                  color_discrete_sequence=px.colors.sequential.Sunset)
-    #fig.update_traces(hover_info='module_type+percent', textinfo='module_type')
     return dcc.Graph(id='subject-pie', figure=fig)
 
 
