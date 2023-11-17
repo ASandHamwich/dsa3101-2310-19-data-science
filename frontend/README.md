@@ -18,6 +18,6 @@ This directory contains all files created for the frontend application of Data C
 
 * Contains python script files for all pages of the web applicaiton
 
-### ***Function.py**
+### **_Function.py**
 
 * _Function.py contains all helper functions which helps to generate elements for the corresponding page
