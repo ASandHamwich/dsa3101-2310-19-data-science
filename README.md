@@ -123,14 +123,16 @@ The purpose of the course page is to provide you with information about the sele
 ![Course_tree](frontend/assets/course_tree.png)
 ----
 ### Course Comparison page
-#Add picture of course comparison page
+![course_compare](frontend/assets/course_compare.png)
 
 The course comparison page provides a side by side view of two of your selected courses. By showing a direct comparison of two courses, it aims to:
 1. Improve convenience: proespective students can look at one page instead of two or more pages to get the same amount of information on the two programs
 2. Direct comparison: prospective students can view the subject pie charts and course trees together and choose the program that offers more of the subject they are interested in
+![compare_pie](frontend/assets/course_compare_pie.png)
+![compare_tree](frontend/assets/course_compare_tree.png)
 ----
 ### Module page
-#Add pictures of module page 
+![module](frontend/assets/module.png)
 
 The module page provides information on the selected module. In the module page, you will find:
 1. Module description:  the module description was taken from the respective universities official module websites
@@ -145,7 +147,7 @@ The module comparison page brings up the module description and key concepts bar
 
 ----
 ### Search bar and results page
-#Add pictures of search results page
+![search](frontend/assets/search.png)
 
 If you are not in the mood for exploring modules and courses through the pages, you can directly type the module code or concept that you want to learn more about into the search bar. Doing so will bring you to the search results page with all modules containing your search phrase.
 
