@@ -4,16 +4,14 @@ import plotly.express as px
 import pandas as pd
 import requests
 
+from fetchFunction import *
+from moduleFunction import *
+
 import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path_template = '/modcompare/<uni1>&<mod1>/<uni2>&<mod2>')
 
 #Layout for each individual course information page.
-
-def fetch_data(uni_code, mod_code):
-    mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
-    return eval(str(requests.get(url).text))
 
 def endindex(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
