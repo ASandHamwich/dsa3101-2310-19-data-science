@@ -141,7 +141,7 @@ The module page provides information on the selected module. In the module page,
 4.  Reviews: for past students of the module to leave reviews with the aim of building up a database of reviews for all data science programs in Singapore since module reviews for NTU and SMU are not available to the public.
 ----
 ### Module Comparison page
-#Add pictures of module comparison page
+![mod_compare](frontend/assets/mod_compare.png)
 
 The module comparison page brings up the module description and key concepts bar side by side for ease of comparison. To return to a single module page, click on read more for additional details as well as recommended modules.
 
