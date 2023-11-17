@@ -268,7 +268,7 @@ python flask-backend.py
 
 | File | Description |
 |------|-------------|
-| `nus_dsa.py`, `nus_dse.py` | Code to get module data and sentiment analysis for NUS Data Science and Analytics (DSA) and Data Science and Economics (DSE) |
+| `nus.py` | Code to get module data and sentiment analysis for NUS Data Science and Analytics (DSA) and Data Science and Economics (DSE) |
 | `ntu.py` | Code to get module data and sentiment analysis for NTU |
 | `smu.py` | Code to get module data and sentiment analysis for SMU |
 | `nlp.py` | Natural Language Processing Code to summarise and generate key concepts column from module descriptuion |
