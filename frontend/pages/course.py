@@ -9,6 +9,8 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 
+from fetchFunction import *
+
 import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path_template = '/course/<uni_code>')
@@ -205,40 +207,11 @@ def course_links(uni_code):
         # DICTIONARY OF SOURCE + TARGET
 
 
-def fetch_data(uni_code):
-    url = f"http://backend-1:5001/{uni_code}" #prereq information 
-    uni = uni_code[0:3]
-    full_module_data = eval(str(requests.get(url).text))[uni]["modules"] # returns a list of dictionaries for all mods
-    # Note that some prereqs are not part of the core curriculum; those will be left out of the final graph.
 
-    # Fetch list of mods that will show up in the tree itself; i.e. the mods that are directly related to data science
-    mod_list = []
-    for dct in full_module_data:
-        mod_list.append(dct['name'])
-    
-    return mod_list, full_module_data
 
-def fetch_all():
-    url = 'http://backend-1:5001/nus-ntu-smu/all-modules/'
-    return eval(str(requests.get(url).text))
-
-# def key_concepts(uni_code):
-#     full_dict = fetch_all()
-#     all_key_concepts = []
-#     # For NTU/SMU: 
-#     if not uni_code.startswith("nus"):
-#         uni_code = uni_code[:3]
-#     uni_mods=full_dict[uni_code]
-#     for mod in uni_mods:
-#         key_concepts=mod["Key Concepts"].split(", ")
-#         all_key_concepts.extend(key_concepts)
-#     unique, counts = np.unique(all_key_concepts, return_counts=True)
-#     df=pd.DataFrame([unique, counts], index=['unique','counts']).T
-#     fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
-#     return dcc.Graph(id='concept-pie', figure=fig)
 
 def key_subjects(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     prefix_list=[]
 
     for mod in mod_list:
@@ -262,7 +235,7 @@ def key_subjects(uni_code):
     return dcc.Graph(id='subject-pie', figure=fig)
 
 def nodepalette(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     prefix_list = []
 
     for mod in mod_list:
@@ -379,7 +352,7 @@ def flattenCheck(mod_list, curr_data):
     return source_list
 
 def root(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     is_root = True
     root_list = ''
     for index in range(len(mod_list)):
@@ -418,7 +391,7 @@ def generate_edge(mod_list, curr_data, uni_code, mod):
 
 
 def generate_content(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
 
     content = []
     

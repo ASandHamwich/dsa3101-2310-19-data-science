@@ -10,6 +10,8 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 
+from fetchFunction import *
+
 import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path_template = '/compare/course1=<uni_code_1>&course2=<uni_code_2>')
@@ -42,20 +44,6 @@ def course_layout(uni_code):
     return name, school, desc
 
 
-def fetch_data(uni_code):
-    url = f"http://backend-1:5001/{uni_code}" #prereq information 
-    uni = uni_code[0:3]
-    full_module_data = eval(str(requests.get(url).text))[uni]["modules"] # returns a list of dictionaries for all mods
-    # Note that some prereqs are not part of the core curriculum; those will be left out of the final graph.
-
-    # Fetch list of mods that will show up in the tree itself; i.e. the mods that are directly related to data science
-    mod_list = []
-    for dct in full_module_data:
-        mod_list.append(dct['name'])
-    
-    return mod_list, full_module_data
-
-
 def node_dict(module, uni_code):
     node_id = module.lower()
     label = module.upper()
@@ -86,7 +74,7 @@ def flattenCheck(mod_list, curr_data):
     return source_list
 
 def root(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     is_root = True
     root_list = ''
     for index in range(len(mod_list)):
@@ -123,7 +111,7 @@ def generate_edge(mod_list, curr_data, uni_code, mod):
 
 
 def generate_content(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
 
     content = []
     
@@ -149,7 +137,7 @@ def generate_content(uni_code):
     return content
 
 def nodepalette(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     prefix_list = []
     for mod in mod_list:
         for index, char in enumerate(mod):
@@ -236,7 +224,7 @@ def legend(uni_code):
     return output
 
 def key_subjects(uni_code):
-    mod_list, full_module_data = fetch_data(uni_code)
+    mod_list, full_module_data = fetch_uni_data(uni_code)
     prefix_list=[]
     for mod in mod_list:
         for index, char in enumerate(mod):

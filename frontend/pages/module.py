@@ -6,20 +6,10 @@ import requests
 
 import dash_bootstrap_components as dbc
 
+from fetchFunction import *
+
 dash.register_page(__name__, path_template = '/module/<uni_code>/<mod_code>')
 
-def fetch_data(uni_code, mod_code):
-    mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
-    return eval(str(requests.get(url).text))
-
-def fetch_all():
-    url = 'http://backend-1:5001/nus-ntu-smu/all-modules/'
-    return eval(str(requests.get(url).text))
-
-def fetch_glossary():
-    url = 'http://backend-1:5001/glossary_list/'
-    return eval(str(requests.get(url).text))
 
 def conceptsBar(uni_code, mod_code):
     #Load the relevant data concepts

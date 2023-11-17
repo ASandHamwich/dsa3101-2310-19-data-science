@@ -4,6 +4,8 @@ import pandas as pd
 import requests
 import dash_bootstrap_components as dbc
 
+from fetchFunction import *
+
 dash.register_page(__name__, path_template = '/search=<query>')
 
 #Idea
@@ -26,15 +28,8 @@ def descShorten(desc):
     else:
         return desc
 
-
-def fetch_data():
-    url = "http://backend-1:5001/nus-ntu-smu/all-modules/"
-    data_dict = eval(str(requests.get(url).text))
-
-    return data_dict
-
 def queryCheck(query):
-    data_dict = fetch_data()
+    data_dict = fetch_all()
     query = cleanQuery(query)
     uni_code_list = ['nus-dsa', 'nus-dse', 'ntu', 'smu']
     
@@ -74,9 +69,6 @@ def queryCheck(query):
         results.append(html.H2("Sorry, your search has no results. Try some other keywords!", className = 'searchpage--desc'))
 
     return results
-
-
-
 
 
 def layout(query):
