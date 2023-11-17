@@ -90,6 +90,7 @@ To get started,
     ├───pages
             compare.py
             course.py
+            function.py
             home.css
             home.py
             modcompare.py
@@ -110,6 +111,9 @@ In the landing page, you will see 4 Data Science Programs in the local universii
 
 1. Click on a program and view the course page
 2. Click two of the checkboxes and use the compare button to view a course comparison page
+
+To return to the home page, click on the **DataCompass logo** on the top left hand corner of the page
+
 ----
 ### Course page
 ![Course_page](frontend/assets/course_page.png)
@@ -121,6 +125,9 @@ The purpose of the course page is to provide you with information about the sele
 3. Course Tree: a course tree depicting the prerequisites and relationships between the modules in the program. If you are interested in learning more about a module, clicking on its node will bring you to the corresponding module page of the selected module
    (SMU does not have links in their course tree as their prerequisite information is inaccessible to the public)
 ![Course_tree](frontend/assets/course_tree.png)
+
+To return to the home page, click on the **DataCompass logo** on the top left hand corner of the page
+
 ----
 ### Course Comparison page
 ![course_compare](frontend/assets/course_compare.png)
@@ -130,6 +137,9 @@ The course comparison page provides a side by side view of two of your selected 
 2. Direct comparison: prospective students can view the subject pie charts and course trees together and choose the program that offers more of the subject they are interested in
 ![compare_pie](frontend/assets/course_compare_pie.png)
 ![compare_tree](frontend/assets/course_compare_tree.png)
+
+To return to the home page, click on the **DataCompass logo** on the top left hand corner of the page
+
 ----
 ### Module page
 ![module](frontend/assets/module.png)
