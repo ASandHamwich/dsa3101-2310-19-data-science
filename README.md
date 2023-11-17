@@ -61,26 +61,25 @@ To get started,
 .
 │   High fidelity wireframe.pdf
 │   README.md
-│   requirements.txt
+│   backend_dockerfile
+│   docker-compose.yml
+│   frontend_dockerfile
 │
 ├───backend
+│       README.md
 │       flask-backend.py
 │       nlp.py
 │       ntu.csv
 │       ntu.py
-│       ntu_db_sentiment.csv
 │       nus-dsa.csv
 │       nus-dse.csv
 │       nus.py
+│       requirements.txt
 │       smu.csv
 │       smu.py
 │       smuMods.csv
 │
 └───frontend
-    │   app.py
-    │   courseFunction.py
-    │   fetchFunction.py
-    │   moduleFunction.py
     │
     ├───assets
     │       app.css
@@ -100,7 +99,14 @@ To get started,
             module.py
             ntu_with_concepts.csv
             README.md
-            search.py      
+            search.py
+    │  
+    │   README.md
+    │   app.py
+    │   courseFunction.py
+    │   fetchFunction.py
+    │   moduleFunction.py
+    │   requirements.txt     
     
 ```
 ----
