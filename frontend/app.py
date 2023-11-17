@@ -3,8 +3,6 @@ import dash
 from dash import html, dcc, callback, Output, Input
 import dash_bootstrap_components as dbc
 
-from fetchFunction import *
-
 app = dash.Dash(__name__, use_pages=True, suppress_callback_exceptions=True)
 
 # Top header
