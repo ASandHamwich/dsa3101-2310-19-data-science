@@ -27,7 +27,7 @@ departments using unsupervised learning techniques.
 ## Objective
 
 1. Providing a common platform for incoming undergraduate students and administration to compare 
-course information for better decision-making.
+course information between different Data Science Programs to aid them in informed decision-making.
 2. Assisting university administration in identifying the strengths and weaknesses of their Data 
 Science programmes relative to other universities.
 3. (UX) Designing a user-friendly interface that is easy to navigate and explore different modules.
@@ -48,11 +48,109 @@ To get started,
 
 `docker compose up -d`
 
-4. You should have 1 container up and running:
-   1. `frontend-web` - This will be hosting our frontend website (Served on port 9001)
+4. You should have 2 container up and running:
+   1. `frontend-1` - This will be hosting our frontend website (Served on port 9001)
+   2. `backend-1` - This will contain the flask-api which connects the database with the frontend website (Served on port 5001)
 
 5. Go to `http://localhost:9001` and you should be able to see the website
 
 ---
+
+## File Structure
+```bash
+.
+│   High fidelity wireframe.pdf
+│   README.md
+│   requirements.txt
+│
+├───backend
+│       flask-backend.py
+│       nlp.py
+│       ntu.csv
+│       ntu.py
+│       ntu_db_sentiment.csv
+│       nus-dsa.csv
+│       nus-dse.csv
+│       nus.py
+│       smu.csv
+│       smu.py
+│       smuMods.csv
+│
+└───frontend
+    │   app.py
+    │
+    ├───assets
+    │       app.css
+    │       course.css
+    │       home.css
+    │       module.css
+    │       README.md
+    │       search.css
+    │
+    ├───pages
+            compare.py
+            course.py
+            home.css
+            home.py
+            modcompare.py
+            module.py
+            ntu_with_concepts.csv
+            README.md
+            search.py      
+    
+```
+----
+
+## How our website works
+----
+### Landing page
+![Landing_page](frontend/assets/landing_page.png)
+
+In the landing page, you will see 4 Data Science Programs in the local universiites of Singapore. You can either:
+
+1. Click on a program and view the course page
+2. Click two of the checkboxes and use the compare button to view a course comparison page
+----
+### Course page
+![Course_page](frontend/assets/course_page.png)
+
+The purpose of the course page is to provide you with information about the selected Data Science Program in a simple, condensed manner. In this page, you will find:
+1. Course Description: a short description about the program
+2. What you will learn: a pie chart showing the proportion of each subject offered under the Data Science Program, this provides additional information on the subjects the program focuses on. Hovering over a section of the pie chart will provide additional information about what the subject is and how many modules are offered.
+![Course_pie_chart](frontend/assets/course_pie_chart.png)
+3. Course Tree: a course tree depicting the prerequisites and relationships between the modules in the program. If you are interested in learning more about a module, clicking on its node will bring you to the corresponding module page of the selected module
+   (SMU does not have links in their course tree as their prerequisite information is inaccessible to the public)
+![Course_tree](frontend/assets/course_tree.png)
+----
+### Course Comparison page
+![course_compare](frontend/assets/course_compare.png)
+
+The course comparison page provides a side by side view of two of your selected courses. By showing a direct comparison of two courses, it aims to:
+1. Improve convenience: proespective students can look at one page instead of two or more pages to get the same amount of information on the two programs
+2. Direct comparison: prospective students can view the subject pie charts and course trees together and choose the program that offers more of the subject they are interested in
+![compare_pie](frontend/assets/course_compare_pie.png)
+![compare_tree](frontend/assets/course_compare_tree.png)
+----
+### Module page
+![module](frontend/assets/module.png)
+
+The module page provides information on the selected module. In the module page, you will find:
+1. Module description:  the module description was taken from the respective universities official module websites
+2. Key concepts bar: key concepts identified in the module description are placed in the key concepts bar for prospecctive students to easily see the key concepts they will learn in this module without having to read the description for more detail. Hovering on each key concept brings up a short explanation of the concept for students who are not familiar with the technical terms
+3.  Related modules sidebar: the sidebar contains similar modules to the currently selected module. The top 5 most similar modules from other universities are selected based on the similarity of their key concepts to allow proespective students to explore and compare similar modules. If you click on a module in the sidebar, it brings you to the module comparison page with the currently selected module and the similar module.
+4.  Reviews: for past students of the module to leave reviews with the aim of building up a database of reviews for all data science programs in Singapore since module reviews for NTU and SMU are not available to the public.
+----
+### Module Comparison page
+![mod_compare](frontend/assets/mod_compare.png)
+
+The module comparison page brings up the module description and key concepts bar side by side for ease of comparison. To return to a single module page, click on read more for additional details as well as recommended modules.
+
+----
+### Search bar and results page
+![search](frontend/assets/search.png)
+
+If you are not in the mood for exploring modules and courses through the pages, you can directly type the module code or concept that you want to learn more about into the search bar. Doing so will bring you to the search results page with all modules containing your search phrase.
+
+----
 
 Have fun planning using DataCompass!
