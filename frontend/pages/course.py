@@ -222,26 +222,25 @@ def fetch_all():
     url = 'http://backend-1:5001/nus-ntu-smu/all-modules/'
     return eval(str(requests.get(url).text))
 
-
-
-def key_concepts(uni_code):
-    full_dict = fetch_all()
-    all_key_concepts = []
-    # For NTU/SMU: 
-    if not uni_code.startswith("nus"):
-        uni_code = uni_code[:3]
-    uni_mods=full_dict[uni_code]
-    for mod in uni_mods:
-        key_concepts=mod["Key Concepts"].split(", ")
-        all_key_concepts.extend(key_concepts)
-    unique, counts = np.unique(all_key_concepts, return_counts=True)
-    df=pd.DataFrame([unique, counts], index=['unique','counts']).T
-    fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
-    return dcc.Graph(id='concept-pie', figure=fig)
+# def key_concepts(uni_code):
+#     full_dict = fetch_all()
+#     all_key_concepts = []
+#     # For NTU/SMU: 
+#     if not uni_code.startswith("nus"):
+#         uni_code = uni_code[:3]
+#     uni_mods=full_dict[uni_code]
+#     for mod in uni_mods:
+#         key_concepts=mod["Key Concepts"].split(", ")
+#         all_key_concepts.extend(key_concepts)
+#     unique, counts = np.unique(all_key_concepts, return_counts=True)
+#     df=pd.DataFrame([unique, counts], index=['unique','counts']).T
+#     fig = px.pie(df, values=counts, color=unique, hover_name=unique, labels=unique)
+#     return dcc.Graph(id='concept-pie', figure=fig)
 
 def key_subjects(uni_code):
     mod_list, full_module_data = fetch_data(uni_code)
     prefix_list=[]
+
     for mod in mod_list:
         for index, char in enumerate(mod):
             if char in "0123456789":
@@ -249,19 +248,23 @@ def key_subjects(uni_code):
                 break
         prefix_list.append(prefix)
     unique, counts = np.unique(prefix_list, return_counts=True)
+
     mod_type=[]
+
     for mod_code in unique:
         mod_type.append(module_type(mod_code))
+
     df=pd.DataFrame([unique, counts, mod_type], index=['unique','counts', 'module_type']).T
-    fig = px.pie(df, values=counts, color=unique, hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    fig = px.pie(df, values='counts', color='unique', labels = 'module_type', hover_name='module_type', color_discrete_sequence=px.colors.sequential.Sunset)
+    print("user_defined hovertemplate:", fig.data[0].hovertemplate)
+    #fig.update_traces(hovertemplate='%{customdata}')
+
     return dcc.Graph(id='subject-pie', figure=fig)
-
-
-    
 
 def nodepalette(uni_code):
     mod_list, full_module_data = fetch_data(uni_code)
     prefix_list = []
+
     for mod in mod_list:
         for index, char in enumerate(mod):
             if char in "01234956789":
@@ -269,6 +272,7 @@ def nodepalette(uni_code):
                 break
         if prefix not in prefix_list:
             prefix_list.append(prefix)
+
     palette = sns.color_palette("pastel", len(prefix_list))
     hex = palette.as_hex()
     return prefix_list, hex
@@ -366,16 +370,12 @@ def edge_dict(source, target):
 
 def flattenCheck(mod_list, curr_data):
     prereq_str = str(curr_data["pre-requisites"])
-    #print("CHECKPOINT 2")
-    #print(prereq_str)
     source_list = []
 
     for mod in mod_list:
         if prereq_str.find(mod) != -1:
             source_list.append(mod)
     
-    #print('CHECKPOINT 3')
-    #print(source_list)
     return source_list
 
 def root(uni_code):
@@ -434,8 +434,6 @@ def generate_content(uni_code):
     for index in range(len(mod_list)):
         mod = mod_list[index]
         curr_data = full_module_data[index]
-        #print("CHECKPOINT 1")
-        #print(curr_data)
 
         # Edge data
         edge_list = generate_edge(mod_list, curr_data, uni_code, mod)
@@ -528,11 +526,3 @@ def layout(uni_code):
 )
 def navigate_to_url(node_data):
     return f"{node_data['url']}"
-
-
-# @callback(
-#     Output('nodeHover', 'children'),
-#     Input('cytoscape', 'mouseoverNodeData'))
-# def displayTapNodeData(node_data):
-#     if node_data:
-#         return f"The module you are looking at is: {node_data['label']}"
