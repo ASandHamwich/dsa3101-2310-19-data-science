@@ -104,7 +104,7 @@ To get started,
 ## How our website works
 ----
 ### Landing page
-![Landing_page](frontend/assets/landing_page.jpg)
+![Landing_page](frontend/assets/landing_page.png)
 
 In the landing page, you will see 4 Data Science Programs in the local universiites of Singapore. You can either:
 
@@ -112,13 +112,15 @@ In the landing page, you will see 4 Data Science Programs in the local universii
 2. Click two of the checkboxes and use the compare button to view a course comparison page
 ----
 ### Course page
-#Add picture of course page
+![Course_page](frontend/assets/course_page.png)
 
 The purpose of the course page is to provide you with information about the selected Data Science Program in a simple, condensed manner. In this page, you will find:
 1. Course Description: a short description about the program
 2. What you will learn: a pie chart showing the proportion of each subject offered under the Data Science Program, this provides additional information on the subjects the program focuses on. Hovering over a section of the pie chart will provide additional information about what the subject is and how many modules are offered.
+![Course_pie_chart](frontend/assets/course_pie_chart.png)
 3. Course Tree: a course tree depicting the prerequisites and relationships between the modules in the program. If you are interested in learning more about a module, clicking on its node will bring you to the corresponding module page of the selected module
    (SMU does not have links in their course tree as their prerequisite information is inaccessible to the public)
+![Course_tree](frontend/assets/course_tree.png)
 ----
 ### Course Comparison page
 #Add picture of course comparison page
