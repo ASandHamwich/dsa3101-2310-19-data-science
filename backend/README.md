@@ -4,20 +4,6 @@
 
 This folder contains various datasets and Python files necessary for running the website associated with the Data Science courses.
 
-## Files:
-
-| File | Description |
-|------|-------------|
-| `nus_dsa.py`, `nus_dse.py` | Code to get module data and sentiment analysis for NUS Data Science and Analytics (DSA) and Data Science and Economics (DSE) |
-| `ntu.py` | Code to get module data and sentiment analysis for NTU |
-| `smu.py` | Code to get module data and sentiment analysis for SMU |
-| `nlp.py` | Natural Language Processing Code to summarise and generate key concepts column from module descriptuion |
-| `nus_dsa.csv`, `nus_dse.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for NUS DSA and DSE |
-| `ntu.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for NTU |
-| `smuMods.csv` | Contains the module code, module name and type of module to be cleared in SMU |
-| `smu.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for SMU |
-| `flask-backend.py` | Contains the multiple endpoints of our website |
-
 ## Getting Started
 
 ### Without Docker
@@ -277,6 +263,20 @@ python flask-backend.py
     <td>Not found</td>
 </tr>
 </table>
+
+## Files:
+
+| File | Description |
+|------|-------------|
+| `nus_dsa.py`, `nus_dse.py` | Code to get module data and sentiment analysis for NUS Data Science and Analytics (DSA) and Data Science and Economics (DSE) |
+| `ntu.py` | Code to get module data and sentiment analysis for NTU |
+| `smu.py` | Code to get module data and sentiment analysis for SMU |
+| `nlp.py` | Natural Language Processing Code to summarise and generate key concepts column from module descriptuion |
+| `nus_dsa.csv`, `nus_dse.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for NUS DSA and DSE |
+| `ntu.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for NTU |
+| `smuMods.csv` | Contains the module code, module name and type of module to be cleared in SMU |
+| `smu.csv` | CSV file containing module code, module name, module description, key concepts, reviews and sentiment rating for SMU |
+| `flask-backend.py` | Contains the multiple endpoints of our website |
 
 ## Authors
 
