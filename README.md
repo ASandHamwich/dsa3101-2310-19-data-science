@@ -78,6 +78,9 @@ To get started,
 │
 └───frontend
     │   app.py
+    │   courseFunction.py
+    │   fetchFunction.py
+    │   moduleFunction.py
     │
     ├───assets
     │       app.css
