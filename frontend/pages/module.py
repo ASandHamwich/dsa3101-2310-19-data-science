@@ -71,7 +71,6 @@ def sidebar(concepts, data_dict, uni_code, mod_code):
 
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
-    #Note: All unis have different keys.
 
     if(uni_code.startswith("nus")):
         header = "[NUS] " + data_dict["module_code"]
@@ -107,7 +106,7 @@ def layout(uni_code, mod_code):
     return html.Div(
         children = [
             page_layout(uni_code, mod_code),
-            conceptsBar(uni_code, mod_code, "conceptsbar"),
+            conceptsBar(uni_code, mod_code),
             html.H3("Reviews", style = {'font-family': 'Inter'}),
             dbc.Input(type = 'text', placeholder = "Leave your review here...", className = 'modreview')
         ],

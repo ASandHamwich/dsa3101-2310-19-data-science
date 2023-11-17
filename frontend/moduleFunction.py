@@ -8,7 +8,7 @@ import dash_bootstrap_components as dbc
 
 from fetchFunction import *
 
-def conceptsBar(uni_code, mod_code, id):
+def conceptsBar(uni_code, mod_code):
     #Load the relevant data concepts
     data_dict = fetch_data(uni_code, mod_code)
     concepts = data_dict["key_concepts"].upper().split(", ")
@@ -39,6 +39,6 @@ def conceptsBar(uni_code, mod_code, id):
     return html.Div(
         [
             html.H3("Key Concepts:", className = 'bartitle'),
-            dcc.Graph(figure = fig, id = id, className = 'conceptBar')
+            dcc.Graph(figure = fig, className = 'conceptBar')
         ]
     )
