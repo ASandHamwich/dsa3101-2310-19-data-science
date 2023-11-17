@@ -107,7 +107,7 @@ To get started,
 ### Landing page
 ![Landing_page](frontend/assets/landing_page.png)
 
-In the landing page, you will see 4 Data Science Programs in the local universiites of Singapore. You can either:
+In the landing page, you will see 4 Data Science Programs offered by the local universiites of Singapore. You can either:
 
 1. Click on a program and view the course page
 2. Click two of the checkboxes and use the compare button to view a course comparison page
