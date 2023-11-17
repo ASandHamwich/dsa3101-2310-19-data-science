@@ -92,12 +92,9 @@ To get started,
     ├───pages
     │       compare.py
     │       course.py
-    │       function.py
-    │       home.css
     │       home.py
     │       modcompare.py
     │       module.py
-    │       README.md
     │       search.py
     │  
     │   README.md
