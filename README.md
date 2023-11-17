@@ -104,7 +104,7 @@ To get started,
 ## How our website works
 ----
 ### Landing page
-![Landing page](/../frontend/assets/images/landing_page,jpg)
+![Landing page](/assets/images/landing_page,jpg)
 
 In the landing page, you will see 4 Data Science Programs in the local universiites of Singapore. You can either:
 
