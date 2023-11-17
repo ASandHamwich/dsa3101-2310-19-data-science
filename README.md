@@ -97,7 +97,6 @@ To get started,
     │       home.py
     │       modcompare.py
     │       module.py
-    │       ntu_with_concepts.csv
     │       README.md
     │       search.py
     │  
