@@ -90,16 +90,16 @@ To get started,
     │       search.css
     │
     ├───pages
-            compare.py
-            course.py
-            function.py
-            home.css
-            home.py
-            modcompare.py
-            module.py
-            ntu_with_concepts.csv
-            README.md
-            search.py
+    |       compare.py
+    |       course.py
+    |       function.py
+    |       home.css
+    |       home.py
+    |       modcompare.py
+    |       module.py
+    |       ntu_with_concepts.csv
+    |       README.md
+    |       search.py
     │  
     │   README.md
     │   app.py
