@@ -3,6 +3,9 @@ FROM python:3.10.6-slim-buster
 WORKDIR /app
 COPY backend/. .
 
+RUN apt update
+RUN apt install -y dos2unix
+
 RUN pip3 install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install -U pip setuptools wheel
