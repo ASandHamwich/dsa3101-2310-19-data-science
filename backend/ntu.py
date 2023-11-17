@@ -17,7 +17,7 @@ for i in range(1,5):
 driver = webdriver.Chrome()
 CCode_list = []
 CName_list = []
-CDesc_list = []a
+CDesc_list = []
 Preqs_list = []
 
 for i in range(len(course_options)):
