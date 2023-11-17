@@ -20,4 +20,4 @@ This directory contains all files created for the frontend application of Data C
 
 ### **_Function.py**
 
-* _Function.py contains all helper functions which helps to generate elements for the corresponding page
+* _Function.py files contains all helper functions which helps to generate elements for the corresponding page
