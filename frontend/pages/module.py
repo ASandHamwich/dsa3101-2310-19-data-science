@@ -6,58 +6,11 @@ import requests
 
 import dash_bootstrap_components as dbc
 
+from fetchFunction import *
+from moduleFunction import *
+
 dash.register_page(__name__, path_template = '/module/<uni_code>/<mod_code>')
 
-def fetch_data(uni_code, mod_code):
-    mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
-    return eval(str(requests.get(url).text))
-
-def fetch_all():
-    url = 'http://backend-1:5001/nus-ntu-smu/all-modules/'
-    return eval(str(requests.get(url).text))
-
-def fetch_glossary():
-    url = 'http://backend-1:5001/glossary_list/'
-    return eval(str(requests.get(url).text))
-
-def conceptsBar(uni_code, mod_code):
-    #Load the relevant data concepts
-    data_dict = fetch_data(uni_code, mod_code)
-    concepts = data_dict["key_concepts"].upper().split(", ")
-    glossary_list = [fetch_glossary()[x.lower()] for x in concepts]
-
-    #Create dataframe 
-    data = {
-        "concept": concepts,
-        "explanation": glossary_list,
-        "val": [1 for i in range(len(concepts))],
-        "x": [1 for i in range(len(concepts))]
-    }
-    df = pd.DataFrame(data)
-
-    fig = px.bar(
-        df, x = "x", y = 'val', custom_data = "explanation",
-        color = 'concept', text = 'concept', orientation="h")
-
-
-    
-    fig.update_traces(textfont_size = 20, textposition="inside", insidetextanchor="middle", showlegend=False, width = 0.5)
-    fig.update_yaxes(showgrid = False, visible = False)
-    fig.update_xaxes(showgrid = False, visible = False)
-    fig.update_layout(plot_bgcolor = 'rgba(0, 0, 0, 0)')
-    fig.update_layout(margin = dict(l = 0.1, r = 0.1, t = 0.1, b = 0.1, pad = 0))
-    print("user_defined hovertemplate:", fig.data[0].hovertemplate)
-    fig.update_traces(hovertemplate='%{customdata}')
-    #print("user_defined hovertemplate:", fig.data[0].hovertemplate)
-
-
-    return html.Div(
-        [
-            html.H3("Key Concepts:", className = 'bartitle'),
-            dcc.Graph(figure = fig, className = 'conceptBar')
-        ]
-    )
 
 
 def sidebar(concepts, data_dict, uni_code, mod_code):
@@ -118,7 +71,6 @@ def sidebar(concepts, data_dict, uni_code, mod_code):
 
 def page_layout(uni_code, mod_code):
     data_dict = fetch_data(uni_code, mod_code)
-    #Note: All unis have different keys.
 
     if(uni_code.startswith("nus")):
         header = "[NUS] " + data_dict["module_code"]
@@ -160,3 +112,4 @@ def layout(uni_code, mod_code):
         ],
         className="modlayout"
     )
+

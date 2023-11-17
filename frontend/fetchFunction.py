@@ -6,31 +6,25 @@ import dash_bootstrap_components as dbc
 
 
 #For search
-def fetch_data():
-    url = "http://localhost:5001/nus-ntu-smu/all-modules/"
-    data_dict = eval(str(requests.get(url).text))
-
-    return data_dict
+def fetch_all():
+    url = "http://backend-1:5001/nus-ntu-smu/all-modules/"
+    return eval(str(requests.get(url).text))
 
 
 #for module
 def fetch_data(uni_code, mod_code):
     mod_code = mod_code.upper() #to ensure all uppercase
-    url = f"http://localhost:5001/{uni_code}/{mod_code}"
+    url = f"http://backend-1:5001/{uni_code}/{mod_code}"
     return eval(str(requests.get(url).text))
 
-def fetch_all():
-    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
-    return eval(str(requests.get(url).text))
 
 def fetch_glossary():
-    url = 'http://localhost:5001/glossary_list/'
+    url = 'http://backend-1:5001/glossary_list/'
     return eval(str(requests.get(url).text))
 
 
-#for course
-def fetch_data(uni_code):
-    url = f"http://localhost:5001/{uni_code}" #prereq information 
+def fetch_uni_data(uni_code):
+    url = f"http://backend-1:5001/{uni_code}" #prereq information 
     uni = uni_code[0:3]
     full_module_data = eval(str(requests.get(url).text))[uni]["modules"] # returns a list of dictionaries for all mods
     # Note that some prereqs are not part of the core curriculum; those will be left out of the final graph.
@@ -41,9 +35,4 @@ def fetch_data(uni_code):
         mod_list.append(dct['name'])
     
     return mod_list, full_module_data
-
-def fetch_all():
-    url = 'http://localhost:5001/nus-ntu-smu/all-modules/'
-    return eval(str(requests.get(url).text))
-
 

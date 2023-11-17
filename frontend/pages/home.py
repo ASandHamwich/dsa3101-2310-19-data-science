@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 
 dash.register_page(__name__, path='/')
 
-def course_layout(uni_code): # thinking of implementing this so as to reduce hardcoding
+def course_layout(uni_code): 
     if uni_code == 'nus-dsa':
         name = "Data Science & Analytics"
         school = "NUS"

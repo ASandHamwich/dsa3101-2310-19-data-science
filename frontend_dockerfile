@@ -6,6 +6,10 @@ COPY frontend/assets/ assets/
 COPY frontend/pages/ pages/
 COPY frontend/requirements.txt requirements.txt
 
+COPY frontend/fetchFunction.py fetchFunction.py
+COPY frontend/moduleFunction.py moduleFunction.py
+COPY frontend/courseFunction.py courseFunction.py
+
 RUN pip3 install --upgrade pip
 RUN pip install -r requirements.txt
 

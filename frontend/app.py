@@ -5,9 +5,6 @@ import dash_bootstrap_components as dbc
 
 app = dash.Dash(__name__, use_pages=True, suppress_callback_exceptions=True)
 
-# Serve styles.css as an external file
-app.css.append_css({"external_url": "/assets/app.css"})
-
 # Top header
 header = html.Div(
     className='header',
