@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
+import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import nlp
 
@@ -16,7 +17,7 @@ for i in range(1,5):
 driver = webdriver.Chrome()
 CCode_list = []
 CName_list = []
-CDesc_list = []
+CDesc_list = []a
 Preqs_list = []
 
 for i in range(len(course_options)):
@@ -27,84 +28,87 @@ for i in range(len(course_options)):
 
     # course codes
     driver.switch_to.frame("subjects")
-    CCode = driver.find_elements(By.XPATH, "//td[@width='100']")
-    for i in range(len(CCode)):
-        if (CCode[i].text[:2]).isupper():
-            CCode_list.append(CCode[i].text)
 
-    # course names
-    CName = driver.find_elements(By.XPATH, "//td[@width='500']")
-    for j in range(len(CName)):
-        if (CName[j].text[:5]).isupper():
-            CName_list.append(CName[j].text)
+    courses = driver.find_elements(By.TAG_NAME, "table")
 
-    # course descriptions
-    CDesc = driver.find_elements(By.XPATH, "//td[@width='650']")
-    for k in range(len(CDesc)):
-        CDesc_list.append(CDesc[k].text)
+    for course in courses:
+        rows = course.find_elements(By.TAG_NAME, "tr")
+        course_code = rows[0].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text
+        CCode_list.append(course_code.strip())
 
-    # prereqs
-    Preqs = driver.find_elements(By.XPATH, "//font[@color='#FF00FF']")
-    for l in range(len(Preqs)):
-        Preqs_list.append(Preqs[l].text)
+        CName_list.append(rows[0].find_element(By.XPATH, "td[2]").find_element(By.TAG_NAME, "font").text.strip())
+
+        CDesc_list.append(rows[-1].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text.strip())
+
+        prereqs = ""
+        if len(rows) > 1 and rows[1].find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text.lower() == "prerequisite:":
+            for row in rows[1:]:
+                first_word = row.find_element(By.XPATH, "td[1]").find_element(By.TAG_NAME, "font").text.lower()
+                if first_word in ['prerequisite:', '']:
+                    prereqs += row.find_element(By.XPATH, "td[2]").find_element(By.TAG_NAME, "font").text + ' '
+                else:
+                    break
+        Preqs_list.append(prereqs.strip())
 
 driver.quit()
 
 # Initialize an empty list to store the merged items
-merged_Preqs = []
+preqs_clean = []
 
-# Iterate through the original list: merging text properly (here i'm just joining the Prerequisite: texts, this part no issue)
-i = 0
-while i < len(Preqs_list):
-    if Preqs_list[i] == 'Prerequisite:':
-        if i + 1 < len(Preqs_list):
-            merged_Preqs.append(Preqs_list[i] + " " + Preqs_list[i + 1])
-        i += 2  # Skip the next item
-    else:
-        merged_Preqs.append(Preqs_list[i])
-        i += 1
+valid_module_code_format = re.compile("[A-Z]{2}[0-9]{4}|^OR$|^&$")
+for prereq in Preqs_list:
+    preqs_clean.append(" ".join(list(map(lambda x : valid_module_code_format.findall(x)[0] if valid_module_code_format.match(x) else '', prereq.split()))).strip())
 
-# here i tried defining a function to recursively join the chunks that end with OR together
-def merging(x, term):
-    i = 0
-    merged = []
-    while i < len(x):
-        if x[i].endswith(term):
-            if i + 1 < len(x):
-                merged.append(x[i] + ' ' + x[i+1])
-                del x[i+1]
-            i += 1
-        else:
-            merged.append(x[i])
-            i += 1
-    return merged
+# # Iterate through the original list: merging text properly (here i'm just joining the Prerequisite: texts, this part no issue)
+# i = 0
+# while i < len(Preqs_list):
+#     if Preqs_list[i] == 'Prerequisite:':
+#         if i + 1 < len(Preqs_list):
+#             merged_Preqs.append(Preqs_list[i] + " " + Preqs_list[i + 1])
+#         i += 2  # Skip the next item
+#     else:
+#         merged_Preqs.append(Preqs_list[i])
+#         i += 1
 
-# should i condense this into a for loop?
-merged_Preqs = merging(merged_Preqs, 'OR')
-merged_Preqs = merging(merged_Preqs, 'OR ')
-merged_Preqs = merging(merged_Preqs, 'OR')
-merged_Preqs = merging(merged_Preqs, 'OR ')
-merged_Preqs = merging(merged_Preqs, 'OR')
-merged_Preqs = merging(merged_Preqs, 'OR ')
+# # here i tried defining a function to recursively join the chunks that end with OR together
+# def merging(x, term):
+#     i = 0
+#     merged = []
+#     while i < len(x):
+#         if x[i].endswith(term):
+#             if i + 1 < len(x):
+#                 merged.append(x[i] + ' ' + x[i+1])
+#                 del x[i+1]
+#             i += 1
+#         else:
+#             merged.append(x[i])
+#             i += 1
+#     return merged
 
-# further cleaning up prereqs column
-merged_Preqs2 = []
-counter = 0
-for i in range(len(merged_Preqs)):
-    if not merged_Preqs[i]:
-        counter += 1
-        if counter % 2 == 0 or merged_Preqs[i-1] == 'Prerequisite: for students who fail QET' or merged_Preqs[i-1] == 'Prerequisite: H2 Maths or equivalent' or merged_Preqs[i-1] == 'Prerequisite: Only for Premier Scholars Programme students.' or merged_Preqs[i-1] == 'Prerequisite: No prior knowledge of the language. Declaration is required.':
-            continue
-        merged_Preqs2.append(merged_Preqs[i])
-    elif merged_Preqs[i] == 'Prerequisite: Placement Test or' or merged_Preqs[i] == 'Prerequisite: Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Study Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Placement Test or Able to read simple Arabic scripts or':
-        continue
-    else:
-        merged_Preqs2.append(merged_Preqs[i])
+# # should i condense this into a for loop?
+# merged_Preqs = merging(merged_Preqs, 'OR')
+# merged_Preqs = merging(merged_Preqs, 'OR ')
+# merged_Preqs = merging(merged_Preqs, 'OR')
+# merged_Preqs = merging(merged_Preqs, 'OR ')
+# merged_Preqs = merging(merged_Preqs, 'OR')
+# merged_Preqs = merging(merged_Preqs, 'OR ')
 
-merged_Preqs_clean = [item.replace('Prerequisite: ', '') for item in merged_Preqs2]
+# # further cleaning up prereqs column
+# merged_Preqs2 = []
+# counter = 0
+# for i in range(len(merged_Preqs)):
+#     if not merged_Preqs[i]:
+#         counter += 1
+#         if counter % 2 == 0 or merged_Preqs[i-1] == 'Prerequisite: for students who fail QET' or merged_Preqs[i-1] == 'Prerequisite: H2 Maths or equivalent' or merged_Preqs[i-1] == 'Prerequisite: Only for Premier Scholars Programme students.' or merged_Preqs[i-1] == 'Prerequisite: No prior knowledge of the language. Declaration is required.':
+#             continue
+#         merged_Preqs2.append(merged_Preqs[i])
+#     elif merged_Preqs[i] == 'Prerequisite: Placement Test or' or merged_Preqs[i] == 'Prerequisite: Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Study Year 3 standing' or merged_Preqs[i] == 'Prerequisite: Placement Test or Able to read simple Arabic scripts or':
+#         continue
+#     else:
+#         merged_Preqs2.append(merged_Preqs[i])
 
 # writing lists into a csv file
-data = {'module_code': CCode_list, 'module_name': CName_list, 'module_description': CDesc_list, 'prerequisites': merged_Preqs_clean}
+data = {'module_code': CCode_list, 'module_name': CName_list, 'module_description': CDesc_list, 'prerequisites': preqs_clean}
 df = pd.DataFrame(data)
 df = df.drop_duplicates(subset='module_code')
 
